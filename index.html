@@ -52,34 +52,10 @@
             margin-bottom: 1rem;
         }
 
-        /* ロゴのサイズを制限するCSS */
         .logo {
-          max-height: 100px;
-          max-width: 100%;
-          object-fit: contain; /* アスペクト比を維持 */
-        }
-
-        .logo-upload {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .logo-upload:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .logo-upload input {
-            display: none;
+            max-height: 100px;
+            max-width: 100%;
+            object-fit: contain;
         }
 
         main {
@@ -277,8 +253,17 @@
             position: relative;
         }
 
-        .search-box .form-control {
-            padding-left: 40px;
+        .search-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-filters .form-control {
+            width: auto;
+            flex-grow: 1;
+            min-width: 150px;
         }
 
         .search-icon {
@@ -479,12 +464,19 @@
             opacity: 0.5;
         }
 
+        .filters-toggle {
+            margin-bottom: 1rem;
+            cursor: pointer;
+            color: var(--primary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
-            }
-            .logo {
-              max-height: 70px;
             }
 
             .control-panel, .records-panel {
@@ -512,6 +504,10 @@
             .table-responsive {
                 overflow-x: auto;
             }
+
+            .logo {
+                max-height: 70px;
+            }
         }
     </style>
 </head>
@@ -520,7 +516,7 @@
         <div class="logo-container">
             <img id="headerLogo" class="logo" src="./images/logo.png" alt="モンハン タイムアタックトラッカー">
         </div>
-        <h1>モンハン ワイルズ タイムアタックトラッカー</h1>
+        <h1>モンハン タイムアタックトラッカー</h1>
     </header>
 
     <main>
@@ -670,9 +666,52 @@
                         記録一覧
                     </div>
                     <div class="card-body">
-                        <div class="search-box">
-                            <i class="fas fa-search search-icon"></i>
-                            <input type="text" id="search-input" class="form-control" placeholder="モンスター名や武器種で検索...">
+                        <div class="filters-toggle" onclick="toggleFilterPanel()">
+                            <i class="fas fa-filter"></i> フィルター
+                        </div>
+
+                        <div id="filter-panel" class="search-box">
+                            <div class="search-filters">
+                                <select id="filter-monster" class="form-control">
+                                    <option value="">モンスター（全て）</option>
+                                    <!-- 動的に生成 -->
+                                </select>
+
+                                <select id="filter-weapon" class="form-control">
+                                    <option value="">武器種（全て）</option>
+                                    <option value="大剣">大剣</option>
+                                    <option value="太刀">太刀</option>
+                                    <option value="片手剣">片手剣</option>
+                                    <option value="双剣">双剣</option>
+                                    <option value="ハンマー">ハンマー</option>
+                                    <option value="狩猟笛">狩猟笛</option>
+                                    <option value="ランス">ランス</option>
+                                    <option value="ガンランス">ガンランス</option>
+                                    <option value="スラッシュアックス">スラッシュアックス</option>
+                                    <option value="チャージアックス">チャージアックス</option>
+                                    <option value="操虫棍">操虫棍</option>
+                                    <option value="ライトボウガン">ライトボウガン</option>
+                                    <option value="ヘビィボウガン">ヘビィボウガン</option>
+                                    <option value="弓">弓</option>
+                                </select>
+
+                                <select id="filter-quest" class="form-control">
+                                    <option value="">クエストタイプ（全て）</option>
+                                    <option value="通常">通常</option>
+                                    <option value="歴戦">歴戦</option>
+                                    <option value="狂竜化">狂竜化</option>
+                                </select>
+
+                                <select id="filter-stage" class="form-control">
+                                    <option value="">ステージ（全て）</option>
+                                    <!-- 動的に生成 -->
+                                </select>
+                            </div>
+
+                            <div class="search-text">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" id="search-input" class="form-control" placeholder="テキスト検索...">
+                            </div>
                         </div>
 
                         <div class="table-responsive">
@@ -685,6 +724,7 @@
                                         <th>ステージ</th>
                                         <th>強さ</th>
                                         <th>タイム</th>
+                                        <th>登録日</th>
                                         <th>画像</th>
                                         <th>操作</th>
                                     </tr>
@@ -726,9 +766,13 @@
             "狂竜化ネルスキュラ", "狂竜化ゲリョス", "狂竜化イャンクック", "歴戦王レダウ", "ラギアクルス"
         ];
 
+        // ステージリスト
+        const stages = [
+            "隔ての砂原", "緋の森", "油涌き谷", "氷霧の断崖", "竜都の跡形", "竜谷の跡地(闘技場)", "その他"
+        ];
+
         // ローカルストレージとIndexedDBのキー
         const STORAGE_KEY = 'mh-timeattack-records';
-        const LOGO_KEY = 'mh-timeattack-logo';
         const DB_NAME = 'MonsterHunterTimeAttack';
         const DB_VERSION = 1;
         const IMAGES_STORE = 'images';
@@ -736,6 +780,10 @@
         // 記録データを初期化
         let recordsData = [];
         let imageFile = null;
+
+        // フィルター用ユニーク値の保存
+        let uniqueMonsters = new Set();
+        let uniqueStages = new Set();
 
         // IndexedDB初期化
         function initDB() {
@@ -749,7 +797,6 @@
                         db.createObjectStore(IMAGES_STORE, { keyPath: 'id' });
                     }
                 };
-
                 request.onsuccess = function(event) {
                     resolve(event.target.result);
                 };
@@ -825,6 +872,7 @@
                 }).catch(reject);
             });
         }
+
         // 全ての画像を削除
         function deleteAllImages() {
             return new Promise((resolve, reject) => {
@@ -917,12 +965,17 @@
             // 保存されたデータを読み込む
             loadRecords();
 
-
             // フォーム送信イベントを設定
             document.getElementById('record-form').addEventListener('submit', saveRecord);
 
             // 検索イベントを設定
             document.getElementById('search-input').addEventListener('input', filterRecords);
+
+            // フィルターイベントを設定
+            document.getElementById('filter-monster').addEventListener('change', filterRecords);
+            document.getElementById('filter-weapon').addEventListener('change', filterRecords);
+            document.getElementById('filter-quest').addEventListener('change', filterRecords);
+            document.getElementById('filter-stage').addEventListener('change', filterRecords);
 
             // エクスポートボタンイベントを設定
             document.getElementById('export-json').addEventListener('click', exportToJson);
@@ -939,6 +992,16 @@
             // 画像モーダルイベントを設定
             setupImageModal();
         });
+
+        // フィルターパネルの表示/非表示切り替え
+        function toggleFilterPanel() {
+            const filterPanel = document.getElementById('filter-panel');
+            if (filterPanel.style.display === 'none') {
+                filterPanel.style.display = 'block';
+            } else {
+                filterPanel.style.display = 'none';
+            }
+        }
 
         // タブの切り替え
         function openTab(tabId) {
@@ -992,7 +1055,6 @@
             });
         }
 
-
         // 画像モーダル設定
         function setupImageModal() {
             const modal = document.getElementById('imageModal');
@@ -1012,17 +1074,17 @@
             });
         }
 
-        // 画像クリックでモーダルを表示
+        // 画像クリックでモーダルを表示（セキュリティ対策版）
         function showImageModal(imageUrl) {
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
+
             // XSS対策：Base64データの場合のみ表示
             if (imageUrl.startsWith('data:image/')) {
-              modalImage.src = imageUrl;
-              modal.style.display = 'block';
+                modalImage.src = imageUrl;
+                modal.style.display = 'block';
             }
         }
-
 
         // モンスターセレクトボックスにオプションを追加
         function populateMonsterSelect() {
@@ -1042,6 +1104,53 @@
             });
         }
 
+        // フィルター用のセレクトボックスを更新
+        function updateFilterSelects() {
+            // ユニーク値のセットを初期化
+            uniqueMonsters = new Set();
+            uniqueStages = new Set();
+
+            // 現在のデータからユニーク値を収集
+            recordsData.forEach(record => {
+                uniqueMonsters.add(record.monster);
+                if (record.stage) uniqueStages.add(record.stage);
+            });
+
+            // モンスターフィルターを更新
+            const monsterFilter = document.getElementById('filter-monster');
+            monsterFilter.innerHTML = '<option value="">モンスター（全て）</option>';
+
+            Array.from(uniqueMonsters).sort().forEach(monster => {
+                const option = document.createElement('option');
+                option.value = monster;
+                option.textContent = monster;
+                monsterFilter.appendChild(option);
+            });
+
+            // ステージフィルターを更新
+            const stageFilter = document.getElementById('filter-stage');
+            stageFilter.innerHTML = '<option value="">ステージ（全て）</option>';
+
+            Array.from(uniqueStages).sort().forEach(stage => {
+                const option = document.createElement('option');
+                option.value = stage;
+                option.textContent = stage;
+                stageFilter.appendChild(option);
+            });
+        }
+
+        // 日付をフォーマット
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ja-JP', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
         // 記録をローカルストレージから読み込む
         function loadRecords() {
             // ローカルストレージからデータを取得
@@ -1051,6 +1160,7 @@
                 try {
                     recordsData = JSON.parse(storedData);
                     renderRecordsTable();
+                    updateFilterSelects();
                 } catch (e) {
                     console.error('保存されたデータの読み込みに失敗しました:', e);
                     recordsData = [];
@@ -1062,6 +1172,7 @@
                     try {
                         recordsData = JSON.parse(cookieData);
                         renderRecordsTable();
+                        updateFilterSelects();
                     } catch (e) {
                         console.error('Cookieからのデータ読み込みに失敗しました:', e);
                         recordsData = [];
@@ -1153,6 +1264,9 @@
             // データを保存
             saveRecordsToStorage();
 
+            // フィルターセレクト更新
+            updateFilterSelects();
+
             // テーブルを更新
             renderRecordsTable();
 
@@ -1179,7 +1293,7 @@
             if (dataToRender.length === 0) {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td colspan="8" class="empty-state">
+                    <td colspan="9" class="empty-state">
                         <div>
                             <i class="fas fa-scroll empty-icon"></i>
                             <p>記録がありません</p>
@@ -1197,21 +1311,24 @@
                 let imageCell = '<td>-</td>';
 
                 if (record.hasImage) {
-                  try {
-                    const imageData = await getImage(record.id);
-                    if (imageData && typeof imageData === 'string' && imageData.startsWith('data:image/')) {
-                      // エスケープ処理をして安全に表示
-                      const escapedImageData = imageData.replace(/"/g, '&quot;');
-                      imageCell = `
-                          <td>
-                            <img src="${escapedImageData}" class="image-preview" alt="スクリーンショット" onclick="showImageModal('${escapedImageData}')">
-                          </td>
-                      `;
-            }
-        } catch (error) {
-            console.error('画像の取得に失敗しました:', error);
+                    try {
+                        const imageData = await getImage(record.id);
+                        if (imageData && typeof imageData === 'string' && imageData.startsWith('data:image/')) {
+                            // エスケープ処理をして安全に表示
+                            const escapedImageData = imageData.replace(/"/g, '&quot;');
+                            imageCell = `
+                                <td>
+                                    <img src="${escapedImageData}" class="image-preview" alt="スクリーンショット" onclick="showImageModal('${escapedImageData}')">
+                                </td>
+                            `;
+                        }
+                    } catch (error) {
+                        console.error('画像の取得に失敗しました:', error);
                     }
                 }
+
+                // 日付のフォーマット
+                const formattedDate = record.date ? formatDate(record.date) : '-';
 
                 row.innerHTML = `
                     <td>${record.monster}</td>
@@ -1220,6 +1337,7 @@
                     <td>${record.stage || '-'}</td>
                     <td>${record.strength || '-'}</td>
                     <td>${record.timeString}</td>
+                    <td>${formattedDate}</td>
                     ${imageCell}
                     <td class="actions-cell">
                         <span class="action-btn delete" onclick="deleteRecord('${record.id}')">
@@ -1235,17 +1353,31 @@
         // 記録を検索
         function filterRecords() {
             const searchQuery = document.getElementById('search-input').value.toLowerCase();
-
-            if (!searchQuery) {
-                renderRecordsTable();
-                return;
-            }
+            const monsterFilter = document.getElementById('filter-monster').value;
+            const weaponFilter = document.getElementById('filter-weapon').value;
+            const questFilter = document.getElementById('filter-quest').value;
+            const stageFilter = document.getElementById('filter-stage').value;
 
             const filteredData = recordsData.filter(record => {
-                return record.monster.toLowerCase().includes(searchQuery) ||
-                       record.weapon.toLowerCase().includes(searchQuery) ||
-                       (record.stage && record.stage.toLowerCase().includes(searchQuery)) ||
-                       (record.notes && record.notes.toLowerCase().includes(searchQuery));
+                // テキスト検索
+                const matchesText = !searchQuery ||
+                    record.monster.toLowerCase().includes(searchQuery) ||
+                    record.weapon.toLowerCase().includes(searchQuery) ||
+                    (record.notes && record.notes.toLowerCase().includes(searchQuery));
+
+                // モンスターフィルター
+                const matchesMonster = !monsterFilter || record.monster === monsterFilter;
+
+                // 武器フィルター
+                const matchesWeapon = !weaponFilter || record.weapon === weaponFilter;
+
+                // クエストタイプフィルター
+                const matchesQuest = !questFilter || record.questType === questFilter;
+
+                // ステージフィルター
+                const matchesStage = !stageFilter || record.stage === stageFilter;
+
+                return matchesText && matchesMonster && matchesWeapon && matchesQuest && matchesStage;
             });
 
             renderRecordsTable(filteredData);
@@ -1267,6 +1399,10 @@
 
                 recordsData = recordsData.filter(record => record.id !== id);
                 saveRecordsToStorage();
+
+                // フィルターセレクト更新
+                updateFilterSelects();
+
                 renderRecordsTable();
             }
         }
@@ -1285,8 +1421,7 @@
                 // JSONデータを作成
                 const exportData = {
                     records: recordsData,
-                    images: imageData,
-                    logo: localStorage.getItem(LOGO_KEY)
+                    images: imageData
                 };
 
                 const jsonData = JSON.stringify(exportData, null, 2);
@@ -1352,11 +1487,8 @@
                         await importAllImages(importedData.images);
                     }
 
-                    // ロゴがある場合はインポート
-                    if (importedData.logo) {
-                        localStorage.setItem(LOGO_KEY, importedData.logo);
-                        document.getElementById('headerLogo').src = importedData.logo;
-                    }
+                    // フィルターセレクト更新
+                    updateFilterSelects();
 
                     // テーブルを更新
                     renderRecordsTable();
@@ -1381,6 +1513,10 @@
                     // 記録データをクリア
                     recordsData = [];
                     saveRecordsToStorage();
+
+                    // フィルターセレクト更新
+                    updateFilterSelects();
+
                     renderRecordsTable();
 
                     alert('すべてのデータが削除されました');
