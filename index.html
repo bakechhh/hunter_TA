@@ -910,7 +910,7 @@
                                         <button class="tab-button active" onclick="openRankingTab('monster-ranking')">モンスター別</button>
                                         <button class="tab-button" onclick="openRankingTab('weapon-ranking')">武器種別</button>
                                     </div>
-                                    
+
                                     <div id="monster-ranking" class="ranking-content active">
                                         <div class="table-responsive">
                                             <table id="monster-ranking-table">
@@ -928,7 +928,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    
+
                                     <div id="weapon-ranking" class="ranking-content">
                                         <div class="table-responsive">
                                             <table id="weapon-ranking-table">
@@ -969,7 +969,7 @@
                                         <div id="most-used-weapon" class="stats-value">-</div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="stats-charts">
                                     <div class="stats-chart-container">
                                         <h3>モンスター別狩猟回数</h3>
@@ -992,7 +992,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="checklist-filters">
                                     <select id="checklist-filter" class="form-control">
                                         <option value="all">すべてのモンスター</option>
@@ -1000,7 +1000,7 @@
                                         <option value="incomplete">未攻略</option>
                                     </select>
                                 </div>
-                                
+
                                 <div id="checklist-container" class="checklist-container">
                                     <!-- チェックリストはJSで動的に生成 -->
                                 </div>
@@ -1014,7 +1014,7 @@
                                             <!-- 動的に生成 -->
                                         </select>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label for="trend-weapon" class="form-label">武器種（オプション）:</label>
                                         <select id="trend-weapon" class="form-control">
@@ -1036,11 +1036,11 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="trend-chart-container">
                                     <canvas id="trend-chart"></canvas>
                                 </div>
-                                
+
                                 <div class="trend-empty-state" id="trend-empty-state">
                                     <i class="fas fa-chart-line empty-icon"></i>
                                     <p>モンスターを選択すると、タイムの推移を表示します</p>
@@ -1181,7 +1181,7 @@
         let uniqueMonsters = new Set();
         let uniqueStages = new Set();
         let uniqueTags = new Set();
-        
+
         // IndexedDB初期化
         function initDB() {
             return new Promise((resolve, reject) => {
@@ -1418,38 +1418,38 @@
                 document.getElementById('avg-time').textContent = '00:00.00';
                 document.getElementById('most-hunted').textContent = '-';
                 document.getElementById('most-used-weapon').textContent = '-';
-                
+
                 // 空のチャートを表示
                 createEmptyCharts();
                 return;
             }
-            
+
             // 統計データの計算
             // モンスター別カウント
             const monsterCounts = {};
             recordsData.forEach(record => {
                 monsterCounts[record.monster] = (monsterCounts[record.monster] || 0) + 1;
             });
-            
+
             // 武器種別カウント
             const weaponCounts = {};
             recordsData.forEach(record => {
                 weaponCounts[record.weapon] = (weaponCounts[record.weapon] || 0) + 1;
             });
-            
+
             // 平均クリアタイム計算
             let totalTime = 0;
             recordsData.forEach(record => {
                 totalTime += record.timeValue;
             });
             const avgTime = totalTime / recordsData.length;
-            
+
             // 平均時間をフォーマット
             const avgMinutes = Math.floor(avgTime / (60 * 1000));
             const avgSeconds = Math.floor((avgTime % (60 * 1000)) / 1000);
             const avgMilliseconds = Math.floor((avgTime % 1000) / 10);
             const avgTimeString = `${avgMinutes}:${avgSeconds.toString().padStart(2, '0')}.${avgMilliseconds.toString().padStart(2, '0')}`;
-            
+
             // 最も狩猟したモンスターを見つける
             let mostHuntedMonster = '';
             let mostHuntedCount = 0;
@@ -1459,7 +1459,7 @@
                     mostHuntedCount = count;
                 }
             }
-            
+
             // 最も使用した武器を見つける
             let mostUsedWeapon = '';
             let mostUsedCount = 0;
@@ -1469,13 +1469,13 @@
                     mostUsedCount = count;
                 }
             }
-            
+
             // 統計表示を更新
             document.getElementById('total-hunts').textContent = recordsData.length;
             document.getElementById('avg-time').textContent = avgTimeString;
             document.getElementById('most-hunted').textContent = `${mostHuntedMonster} (${mostHuntedCount}回)`;
             document.getElementById('most-used-weapon').textContent = `${mostUsedWeapon} (${mostUsedCount}回)`;
-            
+
             // チャートを更新
             createMonsterChart(monsterCounts);
             createWeaponChart(weaponCounts);
@@ -1484,20 +1484,20 @@
           // モンスターチャートの作成
           function createMonsterChart(monsterCounts) {
               const ctx = document.getElementById('monsters-chart').getContext('2d');
-              
+
               // データを準備（上位5件）
               const sortedMonsters = Object.entries(monsterCounts)
                   .sort((a, b) => b[1] - a[1])
                   .slice(0, 5);
-              
+
               const labels = sortedMonsters.map(item => item[0]);
               const data = sortedMonsters.map(item => item[1]);
-              
+
               // 既存のチャートを破棄
               if (window.monstersChart) {
                   window.monstersChart.destroy();
               }
-              
+
               // 新しいチャートを作成
               window.monstersChart = new Chart(ctx, {
                   type: 'bar',
@@ -1543,22 +1543,22 @@
           // 武器チャートの作成
           function createWeaponChart(weaponCounts) {
               const ctx = document.getElementById('weapons-chart').getContext('2d');
-              
+
               // データを準備
               const labels = Object.keys(weaponCounts);
               const data = Object.values(weaponCounts);
-              
+
               // 色の配列
               const backgroundColors = [
                   '#e7c78e', '#d4a76a', '#c39b60', '#b28c50', '#a17f40',
                   '#906f30', '#8a5319', '#794612', '#683a0b', '#572e05'
               ];
-              
+
               // 既存のチャートを破棄
               if (window.weaponsChart) {
                   window.weaponsChart.destroy();
               }
-              
+
               // 新しいチャートを作成
               window.weaponsChart = new Chart(ctx, {
                   type: 'doughnut',
@@ -1601,7 +1601,7 @@
           function createEmptyCharts() {
               const monstersCtx = document.getElementById('monsters-chart').getContext('2d');
               const weaponsCtx = document.getElementById('weapons-chart').getContext('2d');
-              
+
               // 既存のチャートを破棄
               if (window.monstersChart) {
                   window.monstersChart.destroy();
@@ -1609,7 +1609,7 @@
               if (window.weaponsChart) {
                   window.weaponsChart.destroy();
               }
-              
+
               // 空のモンスターチャート
               window.monstersChart = new Chart(monstersCtx, {
                   type: 'bar',
@@ -1635,7 +1635,7 @@
                       }
                   }
               });
-              
+
               // 空の武器チャート
               window.weaponsChart = new Chart(weaponsCtx, {
                   type: 'doughnut',
@@ -1671,13 +1671,13 @@
         function updateChecklist() {
             const container = document.getElementById('checklist-container');
             const filter = document.getElementById('checklist-filter').value;
-            
+
             // 攻略済みモンスターのセット
             const completedMonsters = new Set();
             recordsData.forEach(record => {
                 completedMonsters.add(record.monster);
             });
-            
+
             // モンスターごとのベストタイム
             const monsterBestTimes = {};
             recordsData.forEach(record => {
@@ -1685,38 +1685,38 @@
                     monsterBestTimes[record.monster] = record;
                 }
             });
-            
+
             // コンテナをクリア
             container.innerHTML = '';
-            
+
             // モンスターリストをソート
             const sortedMonsters = [...monsters].sort();
-            
+
             // 進捗率の計算
             const completionRate = Math.round((completedMonsters.size / monsters.length) * 100);
             document.getElementById('completion-rate').textContent = `${completionRate}%`;
             document.getElementById('progress-fill').style.width = `${completionRate}%`;
-            
+
             // モンスターカードを生成
             sortedMonsters.forEach(monster => {
                 const isCompleted = completedMonsters.has(monster);
-                
+
                 // フィルタリング
                 if (filter === 'completed' && !isCompleted) return;
                 if (filter === 'incomplete' && isCompleted) return;
-                
+
                 const card = document.createElement('div');
                 card.className = `monster-card ${isCompleted ? 'completed' : ''}`;
-                
+
                 let timeInfo = '';
                 let weaponInfo = '';
-                
+
                 if (isCompleted && monsterBestTimes[monster]) {
                     const record = monsterBestTimes[monster];
                     timeInfo = `<div class="monster-time">ベストタイム: ${record.timeString}</div>`;
                     weaponInfo = `<div class="monster-weapon">使用武器: ${record.weapon}</div>`;
                 }
-                
+
                 card.innerHTML = `
                     <div class="monster-name">
                         ${monster}
@@ -1725,7 +1725,7 @@
                     ${timeInfo}
                     ${weaponInfo}
                 `;
-                
+
                 container.appendChild(card);
             });
         }
@@ -1743,7 +1743,7 @@
           // 指定されたタブをアクティブに
           document.getElementById(tabId).classList.add('active');
           document.querySelector(`.tab-button[onclick="openTab('${tabId}')"]`).classList.add('active');
-          
+
           // 統計タブが開かれたら統計データを更新
           if (tabId === 'statistics') {
               updateStatistics();
@@ -1851,14 +1851,14 @@
             // モンスター選択肢を更新
             const monsterSelect = document.getElementById('trend-monster');
             monsterSelect.innerHTML = '<option value="">モンスターを選択</option>';
-            
+
             Array.from(uniqueMonsters).sort().forEach(monster => {
                 const option = document.createElement('option');
                 option.value = monster;
                 option.textContent = monster;
                 monsterSelect.appendChild(option);
             });
-            
+
             // イベントリスナーを設定
             monsterSelect.addEventListener('change', updateTrendChart);
             document.getElementById('trend-weapon').addEventListener('change', updateTrendChart);
@@ -1868,28 +1868,28 @@
         function updateTrendChart() {
             const monsterSelect = document.getElementById('trend-monster');
             const weaponSelect = document.getElementById('trend-weapon');
-            
+
             const selectedMonster = monsterSelect.value;
             const selectedWeapon = weaponSelect.value;
-            
+
             const chartContainer = document.querySelector('.trend-chart-container');
             const emptyState = document.getElementById('trend-empty-state');
-            
+
             // モンスターが選択されていない場合
             if (!selectedMonster) {
                 chartContainer.style.display = 'none';
                 emptyState.style.display = 'block';
                 return;
             }
-            
+
             // フィルタリング
             let filteredRecords = recordsData.filter(record => record.monster === selectedMonster);
-            
+
             // 武器種のフィルタリング（指定されている場合）
             if (selectedWeapon) {
                 filteredRecords = filteredRecords.filter(record => record.weapon === selectedWeapon);
             }
-            
+
             // 記録がない場合
             if (filteredRecords.length === 0) {
                 chartContainer.style.display = 'none';
@@ -1900,10 +1900,10 @@
                 `;
                 return;
             }
-            
+
             // 日付でソート
             filteredRecords.sort((a, b) => new Date(a.date) - new Date(b.date));
-            
+
             // データの準備
             const labels = filteredRecords.map(record => {
                 const date = new Date(record.date);
@@ -1914,7 +1914,7 @@
                     minute: '2-digit'
                 });
             });
-            
+
             const timeData = filteredRecords.map(record => {
                 // 分:秒.ミリ秒 から秒数に変換
                 const parts = record.timeString.split(':');
@@ -1922,22 +1922,22 @@
                 const secondsParts = parts[1].split('.');
                 const secondsPart = parseInt(secondsParts[0]);
                 const millisecondsPart = parseInt(secondsParts[1] || 0);
-                
+
                 // 合計秒数を計算（グラフ表示用）
                 return minutesPart * 60 + secondsPart + (millisecondsPart / 100);
             });
-            
+
             // 既存のチャートを破棄
             if (window.trendChart) {
                 window.trendChart.destroy();
             }
-            
+
             // チャートを表示
             chartContainer.style.display = 'block';
             emptyState.style.display = 'none';
-            
+
             const ctx = document.getElementById('trend-chart').getContext('2d');
-            
+
             // 新しいチャートを作成
             window.trendChart = new Chart(ctx, {
                 type: 'line',
@@ -2302,10 +2302,17 @@
 
             // 統計情報を更新
             updateStatistics();
-            
+
             // チェックリストを更新
             updateChecklist();
+            // ランキングを更新
+            updateRankings();
             
+            // トレンドを更新（表示中の場合）
+            if (document.getElementById('trends').classList.contains('active')) {
+              updateTrendChart();
+            }
+
             alert('記録が保存されました！');
         }
 
@@ -2319,7 +2326,7 @@
             if (dataToRender.length === 0) {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td colspan="9" class="empty-state">
+                    <td colspan="10" class="empty-state">
                         <div>
                             <i class="fas fa-scroll empty-icon"></i>
                             <p>記録がありません</p>
@@ -2358,7 +2365,7 @@
                 // タグの表示を準備
                 let tagsDisplay = '-';
                 if (record.tags && record.tags.length > 0) {
-                    tagsDisplay = record.tags.map(tag => 
+                    tagsDisplay = record.tags.map(tag =>
                         `<span class="tag-badge">${tag}</span>`
                     ).join(' ');
                 }
@@ -2396,9 +2403,10 @@
             const filteredData = recordsData.filter(record => {
                 // テキスト検索
                 const matchesText = !searchQuery ||
-                    record.monster.toLowerCase().includes(searchQuery) ||
-                    record.weapon.toLowerCase().includes(searchQuery) ||
-                    (record.notes && record.notes.toLowerCase().includes(searchQuery));
+                record.monster.toLowerCase().includes(searchQuery) ||
+                record.weapon.toLowerCase().includes(searchQuery) ||
+                (record.notes && record.notes.toLowerCase().includes(searchQuery)) ||
+                (record.tags && record.tags.some(tag => tag.toLowerCase().includes(searchQuery)));
 
                 // モンスターフィルター
                 const matchesMonster = !monsterFilter || record.monster === monsterFilter;
@@ -2414,7 +2422,7 @@
                 // タグフィルター
                 const matchesTag = !tagFilter || (record.tags && record.tags.includes(tagFilter));  // ここを追加
 
-                return matchesText && matchesMonster && matchesWeapon && matchesQuest && matchesStage;
+                return matchesText && matchesMonster && matchesWeapon && matchesQuest && matchesStage && matchesTag;
             });
 
             renderRecordsTable(filteredData);
