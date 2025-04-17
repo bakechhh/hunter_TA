@@ -52,9 +52,11 @@
             margin-bottom: 1rem;
         }
 
+        /* ロゴのサイズを制限するCSS */
         .logo {
-            max-height: 100px;
-            max-width: 100%;
+          max-height: 100px;
+          max-width: 100%;
+          object-fit: contain; /* アスペクト比を維持 */
         }
 
         .logo-upload {
@@ -480,6 +482,9 @@
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
+            }
+            .logo {
+              max-height: 70px;
             }
 
             .control-panel, .records-panel {
