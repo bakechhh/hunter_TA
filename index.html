@@ -3218,9 +3218,23 @@
                 // Twitterで共有ボタンの処理
                 const twitterBtn = document.getElementById('shareTwitter');
                 twitterBtn.onclick = () => {
-                    const text = `Monster Hunter Time Attack: ${record.monster} / ${record.weapon} / ${record.timeString}`;
-                    const url = window.location.href.split('?')[0];
-                    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+                    // 共有用の記録データを作成
+                    const shareData = {
+                        type: 'record',
+                        data: record
+                    };
+
+                    // Base64エンコード（非ASCII文字対応）
+                    const shareString = utf8_to_b64(JSON.stringify(shareData));
+                    
+                    // 共有URLを生成
+                    const shareUrl = `${window.location.href.split('?')[0]}?share=${shareString}`;
+                    
+                    // ツイート本文
+                    const text = `Monster Hunter Wilds(モンスターハンターワイルズ) Time Attack: ${record.monster} / ${record.weapon} / ${record.timeString}`;
+                    
+                    // Twitter共有URL
+                    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`;
                     window.open(twitterUrl, '_blank');
                 };
             }, 50); // 少し遅延させる
