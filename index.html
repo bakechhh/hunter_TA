@@ -164,7 +164,144 @@
             display: block;
             animation: fadeIn 0.3s ease;
         }
+        .stats-overview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
 
+        .stats-card {
+            flex: 1;
+            min-width: 200px;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stats-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-title {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .stats-charts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stats-chart-container {
+            flex: 1;
+            min-width: 300px;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .stats-chart-container h3 {
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--text);
+        }
+        .checklist-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-container {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .progress-text {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: var(--background-dark);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .checklist-filters {
+            margin-bottom: 1.5rem;
+        }
+
+        .checklist-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .monster-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .monster-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .monster-card.completed {
+            border-left-color: #4caf50;
+        }
+
+        .monster-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .completion-icon {
+            color: #4caf50;
+        }
+
+        .monster-time {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .monster-weapon {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
         .tab-content.active {
             display: block;
             animation: fadeIn 0.3s ease;
@@ -578,8 +715,10 @@
                                 <button class="tab-button" onclick="openTab('import-export')">インポート/エクスポート</button>
                                 <button class="tab-button" onclick="openTab('rankings')">ランキング</button>
                                 <button class="tab-button" onclick="openTab('statistics')">統計</button>
+                                <button class="tab-button" onclick="openTab('checklist')">チェックリスト</button>
                             </div>
 
+                            <!-- 記録追加タブ -->
                             <div id="add-record" class="tab-content active">
                                 <form id="record-form">
                                     <div class="form-group">
@@ -662,6 +801,11 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="tags" class="form-label">タグ:</label>
+                                        <input type="text" id="tags" class="form-control" placeholder="カンマ区切りでタグを入力（例: 事故、練習中、装備検証）">
+                                    </div>
+
+                                    <div class="form-group">
                                         <label class="form-label">スクリーンショット:</label>
                                         <div class="image-upload" id="imageUploadContainer">
                                             <i class="fas fa-cloud-upload-alt image-upload-icon"></i>
@@ -682,8 +826,8 @@
                                 </form>
                             </div>
 
+                            <!-- インポート/エクスポートタブ -->
                             <div id="import-export" class="tab-content">
-                              </div>
                                 <div class="form-group">
                                     <button id="export-json" class="btn btn-secondary btn-block">JSONでエクスポート</button>
                                 </div>
@@ -703,49 +847,109 @@
                                     <button id="clear-data" class="btn btn-danger btn-block">全データ削除</button>
                                 </div>
                             </div>
+
+                            <!-- ランキングタブ -->
                             <div id="rankings" class="tab-content">
-                              <div class="tab-container">
-                                <div class="tab-buttons ranking-tabs">
-                                  <button class="tab-button active" onclick="openRankingTab('monster-ranking')">モンスター別</button>
-                                  <button class="tab-button" onclick="openRankingTab('weapon-ranking')">武器種別</button>
+                                <div class="tab-container">
+                                    <div class="tab-buttons ranking-tabs">
+                                        <button class="tab-button active" onclick="openRankingTab('monster-ranking')">モンスター別</button>
+                                        <button class="tab-button" onclick="openRankingTab('weapon-ranking')">武器種別</button>
+                                    </div>
+                                    
+                                    <div id="monster-ranking" class="ranking-content active">
+                                        <div class="table-responsive">
+                                            <table id="monster-ranking-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>モンスター</th>
+                                                        <th>ベストタイム</th>
+                                                        <th>武器種</th>
+                                                        <th>日付</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- ランキングデータはJSで動的に生成 -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="weapon-ranking" class="ranking-content">
+                                        <div class="table-responsive">
+                                            <table id="weapon-ranking-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>武器種</th>
+                                                        <th>モンスター</th>
+                                                        <th>ベストタイム</th>
+                                                        <th>日付</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- ランキングデータはJSで動的に生成 -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
 
-                                <div id="monster-ranking" class="ranking-content active">
-                                  <div class="table-responsive">
-                                    <table id="monster-ranking-table">
-                                      <thead>
-                                        <tr>
-                                          <th>モンスター</th>
-                                          <th>ベストタイム</th>
-                                          <th>武器種</th>
-                                          <th>日付</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <!-- ランキングデータはJSで動的に生成 -->
-                                      </tbody>
-                                    </table>
-                                  </div>
+                            <!-- 統計タブ -->
+                            <div id="statistics" class="tab-content">
+                                <div class="stats-overview">
+                                    <div class="stats-card">
+                                        <div class="stats-title">総ハント数</div>
+                                        <div id="total-hunts" class="stats-value">0</div>
+                                    </div>
+                                    <div class="stats-card">
+                                        <div class="stats-title">平均クリアタイム</div>
+                                        <div id="avg-time" class="stats-value">00:00.00</div>
+                                    </div>
+                                    <div class="stats-card">
+                                        <div class="stats-title">最も狩猟したモンスター</div>
+                                        <div id="most-hunted" class="stats-value">-</div>
+                                    </div>
+                                    <div class="stats-card">
+                                        <div class="stats-title">最も使用した武器</div>
+                                        <div id="most-used-weapon" class="stats-value">-</div>
+                                    </div>
                                 </div>
+                                
+                                <div class="stats-charts">
+                                    <div class="stats-chart-container">
+                                        <h3>モンスター別狩猟回数</h3>
+                                        <canvas id="monsters-chart"></canvas>
+                                    </div>
+                                    <div class="stats-chart-container">
+                                        <h3>武器種別使用回数</h3>
+                                        <canvas id="weapons-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
 
-                                <div id="weapon-ranking" class="ranking-content">
-                                  <div class="table-responsive">
-                                    <table id="weapon-ranking-table">
-                                      <thead>
-                                        <tr>
-                                          <th>武器種</th>
-                                          <th>モンスター</th>
-                                          <th>ベストタイム</th>
-                                          <th>日付</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <!-- ランキングデータはJSで動的に生成 -->
-                                      </tbody>
-                                    </table>
-                                  </div>
+                            <!-- チェックリストタブ -->
+                            <div id="checklist" class="tab-content">
+                                <div class="checklist-header">
+                                    <div class="progress-container">
+                                        <div class="progress-text">攻略率: <span id="completion-rate">0%</span></div>
+                                        <div class="progress-bar">
+                                            <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
+                                
+                                <div class="checklist-filters">
+                                    <select id="checklist-filter" class="form-control">
+                                        <option value="all">すべてのモンスター</option>
+                                        <option value="completed">攻略済み</option>
+                                        <option value="incomplete">未攻略</option>
+                                    </select>
+                                </div>
+                                
+                                <div id="checklist-container" class="checklist-container">
+                                    <!-- チェックリストはJSで動的に生成 -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1091,7 +1295,255 @@
 
             // テーマ切り替えボタンのイベントリスナー
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            // チェックリストフィルターのイベントリスナー
+            document.getElementById('checklist-filter').addEventListener('change', updateChecklist);
         });
+
+        // 統計データの生成と表示
+        function updateStatistics() {
+            if (recordsData.length === 0) {
+                document.getElementById('total-hunts').textContent = '0';
+                document.getElementById('avg-time').textContent = '00:00.00';
+                document.getElementById('most-hunted').textContent = '-';
+                document.getElementById('most-used-weapon').textContent = '-';
+                
+                // 空のチャートを表示
+                createEmptyCharts();
+                return;
+            }
+            
+            // 統計データの計算
+            // モンスター別カウント
+            const monsterCounts = {};
+            recordsData.forEach(record => {
+                monsterCounts[record.monster] = (monsterCounts[record.monster] || 0) + 1;
+            });
+            
+            // 武器種別カウント
+            const weaponCounts = {};
+            recordsData.forEach(record => {
+                weaponCounts[record.weapon] = (weaponCounts[record.weapon] || 0) + 1;
+            });
+            
+            // 平均クリアタイム計算
+            let totalTime = 0;
+            recordsData.forEach(record => {
+                totalTime += record.timeValue;
+            });
+            const avgTime = totalTime / recordsData.length;
+            
+            // 平均時間をフォーマット
+            const avgMinutes = Math.floor(avgTime / (60 * 1000));
+            const avgSeconds = Math.floor((avgTime % (60 * 1000)) / 1000);
+            const avgMilliseconds = Math.floor((avgTime % 1000) / 10);
+            const avgTimeString = `${avgMinutes}:${avgSeconds.toString().padStart(2, '0')}.${avgMilliseconds.toString().padStart(2, '0')}`;
+            
+            // 最も狩猟したモンスターを見つける
+            let mostHuntedMonster = '';
+            let mostHuntedCount = 0;
+            for (const [monster, count] of Object.entries(monsterCounts)) {
+                if (count > mostHuntedCount) {
+                    mostHuntedMonster = monster;
+                    mostHuntedCount = count;
+                }
+            }
+            
+            // 最も使用した武器を見つける
+            let mostUsedWeapon = '';
+            let mostUsedCount = 0;
+            for (const [weapon, count] of Object.entries(weaponCounts)) {
+                if (count > mostUsedCount) {
+                    mostUsedWeapon = weapon;
+                    mostUsedCount = count;
+                }
+            }
+            
+            // 統計表示を更新
+            document.getElementById('total-hunts').textContent = recordsData.length;
+            document.getElementById('avg-time').textContent = avgTimeString;
+            document.getElementById('most-hunted').textContent = `${mostHuntedMonster} (${mostHuntedCount}回)`;
+            document.getElementById('most-used-weapon').textContent = `${mostUsedWeapon} (${mostUsedCount}回)`;
+            
+            // チャートを更新
+            createMonsterChart(monsterCounts);
+            createWeaponChart(weaponCounts);
+        }
+
+          // モンスターチャートの作成
+          function createMonsterChart(monsterCounts) {
+              const ctx = document.getElementById('monsters-chart').getContext('2d');
+              
+              // データを準備（上位5件）
+              const sortedMonsters = Object.entries(monsterCounts)
+                  .sort((a, b) => b[1] - a[1])
+                  .slice(0, 5);
+              
+              const labels = sortedMonsters.map(item => item[0]);
+              const data = sortedMonsters.map(item => item[1]);
+              
+              // 既存のチャートを破棄
+              if (window.monstersChart) {
+                  window.monstersChart.destroy();
+              }
+              
+              // 新しいチャートを作成
+              window.monstersChart = new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                      labels: labels,
+                      datasets: [{
+                          label: '狩猟回数',
+                          data: data,
+                          backgroundColor: '#c39b60',
+                          borderColor: '#8a5319',
+                          borderWidth: 1
+                      }]
+                  },
+                  options: {
+                      responsive: true,
+                      plugins: {
+                          legend: {
+                              display: false
+                          },
+                          tooltip: {
+                              callbacks: {
+                                  title: function(tooltipItem) {
+                                      return tooltipItem[0].label;
+                                  },
+                                  label: function(context) {
+                                      return `${context.raw}回`;
+                                  }
+                              }
+                          }
+                      },
+                      scales: {
+                          y: {
+                              beginAtZero: true,
+                              ticks: {
+                                  precision: 0
+                              }
+                          }
+                      }
+                  }
+              });
+          }
+
+          // 武器チャートの作成
+          function createWeaponChart(weaponCounts) {
+              const ctx = document.getElementById('weapons-chart').getContext('2d');
+              
+              // データを準備
+              const labels = Object.keys(weaponCounts);
+              const data = Object.values(weaponCounts);
+              
+              // 色の配列
+              const backgroundColors = [
+                  '#e7c78e', '#d4a76a', '#c39b60', '#b28c50', '#a17f40',
+                  '#906f30', '#8a5319', '#794612', '#683a0b', '#572e05'
+              ];
+              
+              // 既存のチャートを破棄
+              if (window.weaponsChart) {
+                  window.weaponsChart.destroy();
+              }
+              
+              // 新しいチャートを作成
+              window.weaponsChart = new Chart(ctx, {
+                  type: 'doughnut',
+                  data: {
+                      labels: labels,
+                      datasets: [{
+                          data: data,
+                          backgroundColor: backgroundColors.slice(0, labels.length),
+                          borderColor: '#8a5319',
+                          borderWidth: 1
+                      }]
+                  },
+                  options: {
+                      responsive: true,
+                      plugins: {
+                          legend: {
+                              position: 'right',
+                              labels: {
+                                  boxWidth: 12,
+                                  padding: 10
+                              }
+                          },
+                          tooltip: {
+                              callbacks: {
+                                  label: function(context) {
+                                      const label = context.label || '';
+                                      const value = context.raw;
+                                      const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                      const percentage = Math.round((value / total) * 100);
+                                      return `${label}: ${value}回 (${percentage}%)`;
+                                  }
+                              }
+                          }
+                      }
+                  }
+              });
+          }
+
+          // 空のチャートを表示
+          function createEmptyCharts() {
+              const monstersCtx = document.getElementById('monsters-chart').getContext('2d');
+              const weaponsCtx = document.getElementById('weapons-chart').getContext('2d');
+              
+              // 既存のチャートを破棄
+              if (window.monstersChart) {
+                  window.monstersChart.destroy();
+              }
+              if (window.weaponsChart) {
+                  window.weaponsChart.destroy();
+              }
+              
+              // 空のモンスターチャート
+              window.monstersChart = new Chart(monstersCtx, {
+                  type: 'bar',
+                  data: {
+                      labels: ['データなし'],
+                      datasets: [{
+                          label: '狩猟回数',
+                          data: [0],
+                          backgroundColor: '#c39b60'
+                      }]
+                  },
+                  options: {
+                      responsive: true,
+                      plugins: {
+                          legend: {
+                              display: false
+                          }
+                      },
+                      scales: {
+                          y: {
+                              beginAtZero: true
+                          }
+                      }
+                  }
+              });
+              
+              // 空の武器チャート
+              window.weaponsChart = new Chart(weaponsCtx, {
+                  type: 'doughnut',
+                  data: {
+                      labels: ['データなし'],
+                      datasets: [{
+                          data: [1],
+                          backgroundColor: ['#e7c78e']
+                      }]
+                  },
+                  options: {
+                      responsive: true,
+                      plugins: {
+                          legend: {
+                              position: 'right'
+                          }
+                      }
+                  }
+              });
+          }
 
         // フィルターパネルの表示/非表示切り替え
         function toggleFilterPanel() {
@@ -1103,20 +1555,95 @@
             }
         }
 
+        // チェックリストを更新
+        function updateChecklist() {
+            const container = document.getElementById('checklist-container');
+            const filter = document.getElementById('checklist-filter').value;
+            
+            // 攻略済みモンスターのセット
+            const completedMonsters = new Set();
+            recordsData.forEach(record => {
+                completedMonsters.add(record.monster);
+            });
+            
+            // モンスターごとのベストタイム
+            const monsterBestTimes = {};
+            recordsData.forEach(record => {
+                if (!monsterBestTimes[record.monster] || record.timeValue < monsterBestTimes[record.monster].timeValue) {
+                    monsterBestTimes[record.monster] = record;
+                }
+            });
+            
+            // コンテナをクリア
+            container.innerHTML = '';
+            
+            // モンスターリストをソート
+            const sortedMonsters = [...monsters].sort();
+            
+            // 進捗率の計算
+            const completionRate = Math.round((completedMonsters.size / monsters.length) * 100);
+            document.getElementById('completion-rate').textContent = `${completionRate}%`;
+            document.getElementById('progress-fill').style.width = `${completionRate}%`;
+            
+            // モンスターカードを生成
+            sortedMonsters.forEach(monster => {
+                const isCompleted = completedMonsters.has(monster);
+                
+                // フィルタリング
+                if (filter === 'completed' && !isCompleted) return;
+                if (filter === 'incomplete' && isCompleted) return;
+                
+                const card = document.createElement('div');
+                card.className = `monster-card ${isCompleted ? 'completed' : ''}`;
+                
+                let timeInfo = '';
+                let weaponInfo = '';
+                
+                if (isCompleted && monsterBestTimes[monster]) {
+                    const record = monsterBestTimes[monster];
+                    timeInfo = `<div class="monster-time">ベストタイム: ${record.timeString}</div>`;
+                    weaponInfo = `<div class="monster-weapon">使用武器: ${record.weapon}</div>`;
+                }
+                
+                card.innerHTML = `
+                    <div class="monster-name">
+                        ${monster}
+                        ${isCompleted ? '<i class="fas fa-check-circle completion-icon"></i>' : ''}
+                    </div>
+                    ${timeInfo}
+                    ${weaponInfo}
+                `;
+                
+                container.appendChild(card);
+            });
+        }
         // タブの切り替え
         function openTab(tabId) {
-            // アクティブなタブを解除
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
+          // アクティブなタブを解除
+          document.querySelectorAll('.tab-content').forEach(content => {
+              content.classList.remove('active');
+          });
 
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
+          document.querySelectorAll('.tab-button').forEach(btn => {
+              btn.classList.remove('active');
+          });
 
-            // 指定されたタブをアクティブに
-            document.getElementById(tabId).classList.add('active');
-            document.querySelector(`.tab-button[onclick="openTab('${tabId}')"]`).classList.add('active');
+          // 指定されたタブをアクティブに
+          document.getElementById(tabId).classList.add('active');
+          document.querySelector(`.tab-button[onclick="openTab('${tabId}')"]`).classList.add('active');
+          
+          // 統計タブが開かれたら統計データを更新
+          if (tabId === 'statistics') {
+              updateStatistics();
+          }
+          // ランキングタブが開かれたらランキングデータを更新
+          else if (tabId === 'rankings') {
+              updateRankings();
+          }
+          // チェックリストタブが開かれたらチェックリストを更新
+          else if (tabId === 'checklist') {
+              updateChecklist();
+          }
         }
 
         // 画像アップロード設定
@@ -1484,6 +2011,12 @@
             document.getElementById('formPreviewImage').src = '';
             document.getElementById('imageUpload').value = '';
 
+            // 統計情報を更新
+            updateStatistics();
+            
+            // チェックリストを更新
+            updateChecklist();
+            
             alert('記録が保存されました！');
         }
 
