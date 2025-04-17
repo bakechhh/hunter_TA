@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>モンハン タイムアタックトラッカー</title>
+    <style>
+        :root {
+            --primary: #6a3d0f;
+            --secondary: #b9935a;
+            --accent: #e7c78e;
+            --background: #f5f0e6;
+            --text: #2e1a05;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .control-panel {
+            flex: 1;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            min-width: 300px;
+        }
+        .records-panel {
+            flex: 2;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            min-width: 300px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: var(--secondary);
+            color: white;
+        }
+        tr:hover {
+            background-color: var(--accent);
+        }
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem 0;
+        }
+        button:hover {
+            background-color: var(--primary);
+        }
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .time-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .time-input input {
+            width: 50px;
+            text-align: center;
+        }
+        .search-box {
+            margin-bottom: 1rem;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            border-radius: 4px 4px 0 0;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 10px 16px;
+            transition: 0.3s;
+            font-size: 16px;
+            color: var(--text);
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            background-color: white;
+        }
+        .show {
+            display: block;
+        }
+        .danger {
+            background-color: #d9534f;
+        }
+        .danger:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>モンハン タイムアタックトラッカー</h1>
+    </header>
+    <main>
+        <div class="container">
+            <div class="control-panel">
+                <div class="tab">
+                    <button class="tablinks active" onclick="openTab(event, 'add-record')">記録追加</button>
+                    <button class="tablinks" onclick="openTab(event, 'import-export')">インポート/エクスポート</button>
+                </div>
+                
+                <div id="add-record" class="tabcontent show">
+                    <h2>新規記録</h2>
+                    <form id="record-form">
+                        <div>
+                            <label for="monster-select">モンスター選択:</label>
+                            <select id="monster-select" required>
+                                <option value="">モンスターを選択</option>
+                                <!-- モンスターリストはJavaScriptで動的に生成 -->
+                            </select>
+                        </div>
+                        <div>
+                            <label for="weapon-select">武器種:</label>
+                            <select id="weapon-select" required>
+                                <option value="">武器を選択</option>
+                                <option value="大剣">大剣</option>
+                                <option value="太刀">太刀</option>
+                                <option value="片手剣">片手剣</option>
+                                <option value="双剣">双剣</option>
+                                <option value="ハンマー">ハンマー</option>
+                                <option value="狩猟笛">狩猟笛</option>
+                                <option value="ランス">ランス</option>
+                                <option value="ガンランス">ガンランス</option>
+                                <option value="スラッシュアックス">スラッシュアックス</option>
+                                <option value="チャージアックス">チャージアックス</option>
+                                <option value="操虫棍">操虫棍</option>
+                                <option value="ライトボウガン">ライトボウガン</option>
+                                <option value="ヘビィボウガン">ヘビィボウガン</option>
+                                <option value="弓">弓</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="quest-type">クエストタイプ:</label>
+                            <select id="quest-type" required>
+                                <option value="通常">通常</option>
+                                <option value="歴戦">歴戦</option>
+                                <option value="狂竜化">狂竜化</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="stage-select">ステージ:</label>
+                            <select id="stage-select" required>
+                                <option value="">ステージを選択</option>
+                                <option value="隔ての砂原">隔ての砂原</option>
+                                <option value="緋の森">緋の森</option>
+                                <option value="油涌き谷">油涌き谷</option>
+                                <option value="氷霧の断崖">氷霧の断崖</option>
+                                <option value="竜都の跡形">竜都の跡形</option>
+                                <option value="竜谷の跡地(闘技場)">竜谷の跡地(闘技場)</option>
+                                <option value="その他">その他</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="strength">強さ:</label>
+                            <select id="strength" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>タイム:</label>
+                            <div class="time-input">
+                                <input type="number" id="time-minutes" min="0" placeholder="分" required>
+                                <span>:</span>
+                                <input type="number" id="time-seconds" min="0" max="59" placeholder="秒" required>
+                                <span>.</span>
+                                <input type="number" id="time-milliseconds" min="0" max="99" placeholder="ミリ秒" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="notes">メモ:</label>
+                            <input type="text" id="notes" placeholder="装備や戦略など">
+                        </div>
+                        <button type="submit">記録を保存</button>
+                    </form>
+                </div>
+                
+                <div id="import-export" class="tabcontent">
+                    <h2>データ管理</h2>
+                    <button id="export-json">JSONでエクスポート</button>
+                    <div>
+                        <label for="import-file">JSONファイルをインポート:</label>
+                        <input type="file" id="import-file" accept=".json">
+                    </div>
+                    <button id="import-button">インポート</button>
+                    <hr>
+                    <button id="clear-data" class="danger">全データ削除</button>
+                </div>
+            </div>
+            
+            <div class="records-panel">
+                <h2>記録一覧</h2>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="モンスター名で検索...">
+                </div>
+                <table id="records-table">
+                    <thead>
+                        <tr>
+                            <th>モンスター</th>
+                            <th>武器種</th>
+                            <th>クエスト</th>
+                            <th>ステージ</th>
+                            <th>強さ</th>
+                            <th>タイム</th>
+                            <th>メモ</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- テーブルの内容はJavaScriptで動的に生成 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // モンスターリスト
+        const monsters = [
+            "チャタカブラ", "ケマトリス", "ラバラバリナ", "ババコンガ", "バーラハーラ", 
+            "ドシャグマ", "ウズトゥナ", "ププロポル", "レダウ", "ネルスキュラ", 
+            "ヒラバミ", "アジャラカン", "ヌエグドラ", "護竜ドシャグマ", "護竜リオレウス", 
+            "護竜アルシュベルド", "ジンダハド", "護竜オドガロン亜種", "シーウー", "ゾシア", 
+            "護竜アンジャナフ亜種", "ドドブランゴ", "タマミツネ", "グラビモス", "リオレイア", 
+            "リオレウス", "ゴアマガラ", "アルシュベルド", "ゲリョス", "イャンクック", 
+            "歴戦チャタカブラ", "歴戦ケマトリス", "歴戦ラバラバリナ", "歴戦ババコンガ", "歴戦バーラハーラ", 
+            "歴戦ドシャグマ", "歴戦ウズトゥナ", "歴戦ププロポル", "歴戦レダウ", "歴戦ネルスキュラ", 
+            "歴戦ヒラバミ", "歴戦アジャラカン", "歴戦ヌエグドラ", "歴戦護竜ドシャグマ", "歴戦護竜リオレウス", 
+            "歴戦ジンダハド", "歴戦護竜オドガロン亜種", "歴戦シーウー", "歴戦護竜アンジャナフ亜種", "歴戦ドドブランゴ", 
+            "歴戦タマミツネ", "歴戦グラビモス", "歴戦リオレイア", "歴戦リオレウス", "歴戦ゴアマガラ", 
+            "歴戦アルシュベルド", "歴戦ゲリョス", "歴戦イャンクック", "狂竜化ドドブランゴ", "狂竜化ヒラバミ", 
+            "狂竜化ネルスキュラ", "狂竜化ゲリョス", "狂竜化イャンクック", "歴戦王レダウ", "ラギアクルス"
+        ];
+
+        // ローカルストレージのキー
+        const STORAGE_KEY = 'mh-timeattack-records';
+        
+        // 記録データを初期化
+        let recordsData = [];
+        
+        // DOMが読み込まれたら実行
+        document.addEventListener('DOMContentLoaded', function() {
+            // モンスターリストを生成
+            populateMonsterSelect();
+            
+            // 保存されたデータを読み込む
+            loadRecords();
+            
+            // フォーム送信イベントを設定
+            document.getElementById('record-form').addEventListener('submit', saveRecord);
+            
+            // 検索イベントを設定
+            document.getElementById('search-input').addEventListener('input', filterRecords);
+            
+            // エクスポートボタンイベントを設定
+            document.getElementById('export-json').addEventListener('click', exportToJson);
+            
+            // インポートボタンイベントを設定
+            document.getElementById('import-button').addEventListener('click', importFromJson);
+            
+            // クリアボタンイベントを設定
+            document.getElementById('clear-data').addEventListener('click', clearAllData);
+        });
+        
+        // モンスターセレクトボックスにオプションを追加
+        function populateMonsterSelect() {
+            const select = document.getElementById('monster-select');
+            
+            // 既存のオプションをクリア（最初の「選択してください」以外）
+            while (select.options.length > 1) {
+                select.remove(1);
+            }
+            
+            // 並び替えてからオプションを追加
+            monsters.sort().forEach(monster => {
+                const option = document.createElement('option');
+                option.value = monster;
+                option.textContent = monster;
+                select.appendChild(option);
+            });
+        }
+        
+        // 記録をローカルストレージから読み込む
+        function loadRecords() {
+            // ローカルストレージからデータを取得
+            const storedData = localStorage.getItem(STORAGE_KEY);
+            
+            if (storedData) {
+                try {
+                    recordsData = JSON.parse(storedData);
+                    renderRecordsTable();
+                } catch (e) {
+                    console.error('保存されたデータの読み込みに失敗しました:', e);
+                    recordsData = [];
+                }
+            } else {
+                // Cookieからも確認
+                const cookieData = getCookie(STORAGE_KEY);
+                if (cookieData) {
+                    try {
+                        recordsData = JSON.parse(cookieData);
+                        renderRecordsTable();
+                    } catch (e) {
+                        console.error('Cookieからのデータ読み込みに失敗しました:', e);
+                        recordsData = [];
+                    }
+                }
+            }
+        }
+        
+        // 記録をローカルストレージとCookieに保存
+        function saveRecordsToStorage() {
+            try {
+                // LocalStorageに保存
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(recordsData));
+                
+                // Cookieにも保存（1年間有効）
+                setCookie(STORAGE_KEY, JSON.stringify(recordsData), 365);
+            } catch (e) {
+                console.error('データの保存に失敗しました:', e);
+                alert('データの保存に失敗しました。ブラウザのストレージ容量を確認してください。');
+            }
+        }
+        
+        // 新しい記録を保存
+        function saveRecord(e) {
+            e.preventDefault();
+            
+            const monster = document.getElementById('monster-select').value;
+            const weapon = document.getElementById('weapon-select').value;
+            const questType = document.getElementById('quest-type').value;
+            const stage = document.getElementById('stage-select').value;
+            const strength = document.getElementById('strength').value;
+            const minutes = parseInt(document.getElementById('time-minutes').value) || 0;
+            const seconds = parseInt(document.getElementById('time-seconds').value) || 0;
+            const milliseconds = parseInt(document.getElementById('time-milliseconds').value) || 0;
+            const notes = document.getElementById('notes').value;
+            
+            // バリデーション
+            if (!monster || !weapon || !stage) {
+                alert('モンスター、武器種、ステージを選択してください');
+                return;
+            }
+            
+            // 時間を文字列に変換
+            const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+            
+            // 時間を比較用に数値に変換（ミリ秒単位）
+            const timeValue = (minutes * 60 * 1000) + (seconds * 1000) + milliseconds;
+            
+            // 新しい記録オブジェクト
+            const newRecord = {
+                id: Date.now().toString(), // ユニークなID
+                monster,
+                weapon,
+                questType,
+                stage,
+                strength,
+                timeString,
+                timeValue,
+                notes,
+                date: new Date().toISOString()
+            };
+            
+            // 記録を追加
+            recordsData.push(newRecord);
+            
+            // データをソート（時間の早い順）
+            recordsData.sort((a, b) => a.timeValue - b.timeValue);
+            
+            // データを保存
+            saveRecordsToStorage();
+            
+            // テーブルを更新
+            renderRecordsTable();
+            
+            // フォームをリセット
+            document.getElementById('record-form').reset();
+            
+            alert('記録が保存されました！');
+        }
+        
+        // 記録テーブルを更新
+        function renderRecordsTable(filteredData) {
+            const tableBody = document.querySelector('#records-table tbody');
+            tableBody.innerHTML = '';
+            
+            const dataToRender = filteredData || recordsData;
+            
+            if (dataToRender.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="8" style="text-align: center;">記録がありません</td>';
+                tableBody.appendChild(row);
+                return;
+            }
+            
+            dataToRender.forEach(record => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${record.monster}</td>
+                    <td>${record.weapon}</td>
+                    <td>${record.questType || '通常'}</td>
+                    <td>${record.stage || '-'}</td>
+                    <td>${record.strength || '-'}</td>
+                    <td>${record.timeString}</td>
+                    <td>${record.notes || ''}</td>
+                    <td>
+                        <button onclick="deleteRecord('${record.id}')">削除</button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // 記録を検索
+        function filterRecords() {
+            const searchQuery = document.getElementById('search-input').value.toLowerCase();
+            
+            if (!searchQuery) {
+                renderRecordsTable();
+                return;
+            }
+            
+            const filteredData = recordsData.filter(record => {
+                return record.monster.toLowerCase().includes(searchQuery) ||
+                       record.weapon.toLowerCase().includes(searchQuery) ||
+                       (record.stage && record.stage.toLowerCase().includes(searchQuery)) ||
+                       (record.notes && record.notes.toLowerCase().includes(searchQuery));
+            });
+            
+            renderRecordsTable(filteredData);
+        }
+        
+        // 記録を削除
+        function deleteRecord(id) {
+            if (confirm('この記録を削除してもよろしいですか？')) {
+                recordsData = recordsData.filter(record => record.id !== id);
+                saveRecordsToStorage();
+                renderRecordsTable();
+            }
+        }
+        
+        // JSONにエクスポート
+        function exportToJson() {
+            if (recordsData.length === 0) {
+                alert('エクスポートするデータがありません');
+                return;
+            }
+            
+            const jsonData = JSON.stringify(recordsData, null, 2);
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mh-timeattack-export-${new Date().toISOString().slice(0, 10)}.json`;
+            a.click();
+            
+            URL.revokeObjectURL(url);
+        }
+        
+        // JSONからインポート
+        function importFromJson() {
+            const fileInput = document.getElementById('import-file');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('インポートするファイルを選択してください');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (!Array.isArray(importedData)) {
+                        throw new Error('無効なデータ形式です');
+                    }
+                    
+                    if (confirm('既存のデータにインポートしたデータを追加しますか？キャンセルを選択すると既存のデータは上書きされます。')) {
+                        // 既存のデータに追加
+                        recordsData = [...recordsData, ...importedData];
+                    } else {
+                        // 既存のデータを上書き
+                        recordsData = importedData;
+                    }
+                    
+                    // 重複を削除
+                    const uniqueIds = new Set();
+                    recordsData = recordsData.filter(record => {
+                        if (!record.id) record.id = Date.now().toString() + Math.random().toString(36).substr(2, 5);
+                        if (uniqueIds.has(record.id)) return false;
+                        uniqueIds.add(record.id);
+                        return true;
+                    });
+                    
+                    // 時間でソート
+                    recordsData.sort((a, b) => a.timeValue - b.timeValue);
+                    
+                    // データを保存
+                    saveRecordsToStorage();
+                    
+                    // テーブルを更新
+                    renderRecordsTable();
+                    
+                    alert('データのインポートが完了しました');
+                    fileInput.value = '';
+                } catch (e) {
+                    console.error('インポートエラー:', e);
+                    alert('データのインポートに失敗しました。ファイル形式を確認してください。');
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        // 全データを削除
+        function clearAllData() {
+            if (confirm('すべての記録データを削除します。この操作は元に戻せません。続行しますか？')) {
+                recordsData = [];
+                saveRecordsToStorage();
+                renderRecordsTable();
+                alert('すべてのデータが削除されました');
+            }
+        }
+        
+        // Cookieを設定
+        function setCookie(name, value, days) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires.toUTCString()};path=/`;
+        }
+        
+        // Cookieを取得
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return decodeURIComponent(cookie.substring(name.length + 1));
+                }
+            }
+            return null;
+        }
+        
+        // タブを切り替え
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("show");
+            }
+            
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("show");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
