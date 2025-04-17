@@ -3151,7 +3151,7 @@
                         data: record
                     };
 
-                    // Base64エンコード
+                    // Base64エンコード（非ASCII文字対応）
                     const shareString = utf8_to_b64(JSON.stringify(shareData));
                     const shareUrl = `${window.location.href.split('?')[0]}?share=${shareString}`;
 
@@ -3190,8 +3190,8 @@
                             data: record
                         };
 
-                        // Base64エンコード
-                        const shareString = btoa(JSON.stringify(shareData));
+                        // Base64エンコード（非ASCII文字対応）
+                        const shareString = utf8_to_b64(JSON.stringify(shareData));
                         const shareUrl = `${window.location.href.split('?')[0]}?share=${shareString}`;
 
                         // QRコード生成
@@ -3233,6 +3233,7 @@
 
             if (shareParam) {
                 try {
+                    // Base64デコード（非ASCII文字対応）
                     const shareData = JSON.parse(b64_to_utf8(shareParam));
 
                     if (shareData.type === 'record') {
