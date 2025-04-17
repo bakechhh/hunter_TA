@@ -151,6 +151,18 @@
         .tab-content {
             display: none;
         }
+        .ranking-tabs {
+            margin-bottom: 1rem;
+        }
+
+        .ranking-content {
+            display: none;
+        }
+
+        .ranking-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
 
         .tab-content.active {
             display: block;
@@ -509,6 +521,35 @@
                 max-height: 70px;
             }
         }
+        /* ダークモードのスタイル */
+        body.dark-mode {
+          --primary: #6a3d0f;
+          --primary-dark: #4a2d0f;
+          --secondary: #8a5319;
+          --accent: #b3834b;
+          --background: #292520;
+          --background-dark: #1e1c19;
+          --card-bg: #332e29;
+          --text: #e0d0c0;
+          --text-light: #c0b0a0;
+        }
+
+        .theme-toggle {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          font-size: 1.5rem;
+          color: white;
+          background: none;
+          border: none;
+          cursor: pointer;
+          transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+          color: var(--accent);
+          transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -517,6 +558,9 @@
             <img id="headerLogo" class="logo" src="./images/logo.png" alt="モンハン タイムアタックトラッカー">
         </div>
         <h1>モンハン タイムアタックトラッカー</h1>
+        <button id="themeToggle" class="theme-toggle">
+          <i class="fas fa-moon"></i>
+        </button>
     </header>
 
     <main>
@@ -531,6 +575,7 @@
                             <div class="tab-buttons">
                                 <button class="tab-button active" onclick="openTab('add-record')">記録追加</button>
                                 <button class="tab-button" onclick="openTab('import-export')">インポート/エクスポート</button>
+                                <button class="tab-button" onclick="openTab('rankings')">ランキング</button>
                             </div>
 
                             <div id="add-record" class="tab-content active">
@@ -636,6 +681,50 @@
                             </div>
 
                             <div id="import-export" class="tab-content">
+                              <div id="rankings" class="tab-content">
+                                <div class="tab-container">
+                                  <div class="tab-buttons ranking-tabs">
+                                    <button class="tab-button active" onclick="openRankingTab('monster-ranking')">モンスター別</button>
+                                    <button class="tab-button" onclick="openRankingTab('weapon-ranking')">武器種別</button>
+                                  </div>
+
+                                  <div id="monster-ranking" class="ranking-content active">
+                                    <div class="table-responsive">
+                                      <table id="monster-ranking-table">
+                                        <thead>
+                                          <tr>
+                                            <th>モンスター</th>
+                                            <th>ベストタイム</th>
+                                            <th>武器種</th>
+                                            <th>日付</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <!-- ランキングデータはJSで動的に生成 -->
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+
+                                  <div id="weapon-ranking" class="ranking-content">
+                                    <div class="table-responsive">
+                                      <table id="weapon-ranking-table">
+                                        <thead>
+                                          <tr>
+                                            <th>武器種</th>
+                                            <th>モンスター</th>
+                                            <th>ベストタイム</th>
+                                            <th>日付</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <!-- ランキングデータはJSで動的に生成 -->
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                                 <div class="form-group">
                                     <button id="export-json" class="btn btn-secondary btn-block">JSONでエクスポート</button>
                                 </div>
@@ -965,6 +1054,9 @@
             // 保存されたデータを読み込む
             loadRecords();
 
+            // ランキングを初期化
+            updateRankings();
+
             // フォーム送信イベントを設定
             document.getElementById('record-form').addEventListener('submit', saveRecord);
 
@@ -991,6 +1083,12 @@
 
             // 画像モーダルイベントを設定
             setupImageModal();
+
+            // ダークモード設定を読み込む
+            loadThemePreference();
+
+            // テーマ切り替えボタンのイベントリスナー
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
         });
 
         // フィルターパネルの表示/非表示切り替え
@@ -1151,6 +1249,85 @@
             });
         }
 
+        // ランキングタブの切り替え
+        function openRankingTab(tabId) {
+            // アクティブなタブを解除
+            document.querySelectorAll('.ranking-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            document.querySelectorAll('.ranking-tabs .tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // 指定されたタブをアクティブに
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.ranking-tabs .tab-button[onclick="openRankingTab('${tabId}')"]`).classList.add('active');
+
+            // ランキングデータを更新
+            updateRankings();
+        }
+
+        // ランキングデータの生成と表示
+        function updateRankings() {
+            // モンスター別ランキング
+            const monsterRankings = {};
+
+            // 各モンスターについて最速記録を探す
+            recordsData.forEach(record => {
+                const key = record.monster;
+                if (!monsterRankings[key] || record.timeValue < monsterRankings[key].timeValue) {
+                    monsterRankings[key] = record;
+                }
+            });
+
+            // モンスター別ランキングテーブルを更新
+            const monsterTable = document.getElementById('monster-ranking-table').querySelector('tbody');
+            monsterTable.innerHTML = '';
+
+            // モンスター配列を作成し、タイムでソート
+            const sortedMonsters = Object.values(monsterRankings).sort((a, b) => a.timeValue - b.timeValue);
+
+            sortedMonsters.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.monster}</td>
+                    <td>${record.timeString}</td>
+                    <td>${record.weapon}</td>
+                    <td>${record.date ? formatDate(record.date) : '-'}</td>
+                `;
+                monsterTable.appendChild(row);
+            });
+
+            // 武器種別ランキング
+            const weaponRankings = {};
+
+            // 各武器種について最速記録を探す
+            recordsData.forEach(record => {
+                const key = record.weapon;
+                if (!weaponRankings[key] || record.timeValue < weaponRankings[key].timeValue) {
+                    weaponRankings[key] = record;
+                }
+            });
+
+            // 武器種別ランキングテーブルを更新
+            const weaponTable = document.getElementById('weapon-ranking-table').querySelector('tbody');
+            weaponTable.innerHTML = '';
+
+            // 武器種配列を作成し、タイムでソート
+            const sortedWeapons = Object.values(weaponRankings).sort((a, b) => a.timeValue - b.timeValue);
+
+            sortedWeapons.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.weapon}</td>
+                    <td>${record.monster}</td>
+                    <td>${record.timeString}</td>
+                    <td>${record.date ? formatDate(record.date) : '-'}</td>
+                `;
+                weaponTable.appendChild(row);
+            });
+        }
         // 記録をローカルストレージから読み込む
         function loadRecords() {
             // ローカルストレージからデータを取得
@@ -1179,6 +1356,31 @@
                     }
                 }
             }
+        }
+
+        // テーマ設定を読み込む
+        function loadThemePreference() {
+          const isDarkMode = localStorage.getItem('mh-dark-mode') === 'true';
+          if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+          }
+        }
+
+        // テーマを切り替える
+        function toggleTheme() {
+          const body = document.body;
+          const themeToggle = document.getElementById('themeToggle');
+
+          body.classList.toggle('dark-mode');
+
+          if (body.classList.contains('dark-mode')) {
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            localStorage.setItem('mh-dark-mode', 'true');
+          } else {
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            localStorage.setItem('mh-dark-mode', 'false');
+          }
         }
 
         // 記録をローカルストレージとCookieに保存
