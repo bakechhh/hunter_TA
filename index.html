@@ -1678,8 +1678,13 @@
             setupBackupTimer();
 
             // 通知許可を確認（バックアップ通知用）
-            if ('Notification' in window && Notification.permission === 'default') {
-                Notification.requestPermission();
+            if ('Notification' in window) {
+                if (Notification.permission === 'default') {
+                    Notification.requestPermission();
+                } else if (Notification.permission === 'denied') {
+                    console.log('通知が許可されていないため、バックアップ通知は表示されません');
+                    // 任意: UIにメッセージを表示
+                }
             }
         });
 
@@ -2384,6 +2389,11 @@
                     <td>${record.timeString}</td>
                     <td>${record.weapon}</td>
                     <td>${record.date ? formatDate(record.date) : '-'}</td>
+                    <td>
+                        <span class="action-btn share" onclick="shareRecord('${record.id}')">
+                            <i class="fas fa-share-alt"></i>
+                        </span>
+                    </td>
                 `;
                 monsterTable.appendChild(row);
             });
@@ -2702,7 +2712,12 @@
                     await saveImage(newRecord.id, imageData);
                 } catch (error) {
                     console.error('画像の保存に失敗しました:', error);
-                    alert('画像の保存に失敗しました。もう一度お試しください。');
+                    // エラーメッセージをUIに表示
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'error-message';
+                    errorMsg.textContent = '画像の保存に失敗しました。もう一度お試しください。';
+                    document.getElementById('imagePreviewContainer').appendChild(errorMsg);
+                    setTimeout(() => errorMsg.remove(), 3000);
                     return;
                 }
             }
