@@ -302,6 +302,60 @@
             color: var(--text-light);
             margin-top: 0.25rem;
         }
+        .tag-badge {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--text);
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            margin-right: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .tags-cell {
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .tags-cell:hover {
+            white-space: normal;
+            overflow: visible;
+        }
+        .trends-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .trends-filters .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .trend-chart-container {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .trend-empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+        }
+
+        .trend-empty-state .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
         .tab-content.active {
             display: block;
             animation: fadeIn 0.3s ease;
@@ -716,6 +770,7 @@
                                 <button class="tab-button" onclick="openTab('rankings')">ランキング</button>
                                 <button class="tab-button" onclick="openTab('statistics')">統計</button>
                                 <button class="tab-button" onclick="openTab('checklist')">チェックリスト</button>
+                                <button class="tab-button" onclick="openTab('trends')">トレンド</button>
                             </div>
 
                             <!-- 記録追加タブ -->
@@ -950,6 +1005,47 @@
                                     <!-- チェックリストはJSで動的に生成 -->
                                 </div>
                             </div>
+                            <div id="trends" class="tab-content">
+                                <div class="trends-filters">
+                                    <div class="form-group">
+                                        <label for="trend-monster" class="form-label">モンスター:</label>
+                                        <select id="trend-monster" class="form-control">
+                                            <option value="">モンスターを選択</option>
+                                            <!-- 動的に生成 -->
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="trend-weapon" class="form-label">武器種（オプション）:</label>
+                                        <select id="trend-weapon" class="form-control">
+                                            <option value="">すべての武器種</option>
+                                            <option value="大剣">大剣</option>
+                                            <option value="太刀">太刀</option>
+                                            <option value="片手剣">片手剣</option>
+                                            <option value="双剣">双剣</option>
+                                            <option value="ハンマー">ハンマー</option>
+                                            <option value="狩猟笛">狩猟笛</option>
+                                            <option value="ランス">ランス</option>
+                                            <option value="ガンランス">ガンランス</option>
+                                            <option value="スラッシュアックス">スラッシュアックス</option>
+                                            <option value="チャージアックス">チャージアックス</option>
+                                            <option value="操虫棍">操虫棍</option>
+                                            <option value="ライトボウガン">ライトボウガン</option>
+                                            <option value="ヘビィボウガン">ヘビィボウガン</option>
+                                            <option value="弓">弓</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="trend-chart-container">
+                                    <canvas id="trend-chart"></canvas>
+                                </div>
+                                
+                                <div class="trend-empty-state" id="trend-empty-state">
+                                    <i class="fas fa-chart-line empty-icon"></i>
+                                    <p>モンスターを選択すると、タイムの推移を表示します</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1001,6 +1097,10 @@
                                     <option value="">ステージ（全て）</option>
                                     <!-- 動的に生成 -->
                                 </select>
+                                <select id="filter-tag" class="form-control">
+                                    <option value="">タグ（全て）</option>
+                                    <!-- 動的に生成 -->
+                                </select>
                             </div>
 
                             <div class="search-text">
@@ -1020,6 +1120,7 @@
                                         <th>強さ</th>
                                         <th>タイム</th>
                                         <th>登録日</th>
+                                        <th>タグ</th>
                                         <th>画像</th>
                                         <th>操作</th>
                                     </tr>
@@ -1079,7 +1180,8 @@
         // フィルター用ユニーク値の保存
         let uniqueMonsters = new Set();
         let uniqueStages = new Set();
-
+        let uniqueTags = new Set();
+        
         // IndexedDB初期化
         function initDB() {
             return new Promise((resolve, reject) => {
@@ -1263,6 +1365,15 @@
             // ランキングを初期化
             updateRankings();
 
+            // 統計を初期化
+            updateStatistics();
+
+            // チェックリストを初期化
+            updateChecklist();
+
+            // トレンドを初期化
+            initTrends();
+
             // フォーム送信イベントを設定
             document.getElementById('record-form').addEventListener('submit', saveRecord);
 
@@ -1274,6 +1385,7 @@
             document.getElementById('filter-weapon').addEventListener('change', filterRecords);
             document.getElementById('filter-quest').addEventListener('change', filterRecords);
             document.getElementById('filter-stage').addEventListener('change', filterRecords);
+            document.getElementById('filter-tag').addEventListener('change', filterRecords);
 
             // エクスポートボタンイベントを設定
             document.getElementById('export-json').addEventListener('click', exportToJson);
@@ -1644,6 +1756,10 @@
           else if (tabId === 'checklist') {
               updateChecklist();
           }
+          // トレンドタブが開かれたらトレンドを更新
+          else if (tabId === 'trends') {
+              initTrends();
+          }
         }
 
         // 画像アップロード設定
@@ -1730,13 +1846,174 @@
                 select.appendChild(option);
             });
         }
+        // トレンドチャートの初期化
+        function initTrends() {
+            // モンスター選択肢を更新
+            const monsterSelect = document.getElementById('trend-monster');
+            monsterSelect.innerHTML = '<option value="">モンスターを選択</option>';
+            
+            Array.from(uniqueMonsters).sort().forEach(monster => {
+                const option = document.createElement('option');
+                option.value = monster;
+                option.textContent = monster;
+                monsterSelect.appendChild(option);
+            });
+            
+            // イベントリスナーを設定
+            monsterSelect.addEventListener('change', updateTrendChart);
+            document.getElementById('trend-weapon').addEventListener('change', updateTrendChart);
+        }
 
+        // トレンドチャートの更新
+        function updateTrendChart() {
+            const monsterSelect = document.getElementById('trend-monster');
+            const weaponSelect = document.getElementById('trend-weapon');
+            
+            const selectedMonster = monsterSelect.value;
+            const selectedWeapon = weaponSelect.value;
+            
+            const chartContainer = document.querySelector('.trend-chart-container');
+            const emptyState = document.getElementById('trend-empty-state');
+            
+            // モンスターが選択されていない場合
+            if (!selectedMonster) {
+                chartContainer.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            // フィルタリング
+            let filteredRecords = recordsData.filter(record => record.monster === selectedMonster);
+            
+            // 武器種のフィルタリング（指定されている場合）
+            if (selectedWeapon) {
+                filteredRecords = filteredRecords.filter(record => record.weapon === selectedWeapon);
+            }
+            
+            // 記録がない場合
+            if (filteredRecords.length === 0) {
+                chartContainer.style.display = 'none';
+                emptyState.style.display = 'block';
+                emptyState.innerHTML = `
+                    <i class="fas fa-chart-line empty-icon"></i>
+                    <p>選択された条件に一致する記録がありません</p>
+                `;
+                return;
+            }
+            
+            // 日付でソート
+            filteredRecords.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            // データの準備
+            const labels = filteredRecords.map(record => {
+                const date = new Date(record.date);
+                return date.toLocaleDateString('ja-JP', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            });
+            
+            const timeData = filteredRecords.map(record => {
+                // 分:秒.ミリ秒 から秒数に変換
+                const parts = record.timeString.split(':');
+                const minutesPart = parseInt(parts[0]);
+                const secondsParts = parts[1].split('.');
+                const secondsPart = parseInt(secondsParts[0]);
+                const millisecondsPart = parseInt(secondsParts[1] || 0);
+                
+                // 合計秒数を計算（グラフ表示用）
+                return minutesPart * 60 + secondsPart + (millisecondsPart / 100);
+            });
+            
+            // 既存のチャートを破棄
+            if (window.trendChart) {
+                window.trendChart.destroy();
+            }
+            
+            // チャートを表示
+            chartContainer.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            const ctx = document.getElementById('trend-chart').getContext('2d');
+            
+            // 新しいチャートを作成
+            window.trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: selectedWeapon ? `${selectedMonster} (${selectedWeapon})` : selectedMonster,
+                        data: timeData,
+                        backgroundColor: 'rgba(195, 155, 96, 0.2)',
+                        borderColor: '#8a5319',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#c39b60',
+                        pointRadius: 5,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'タイムの推移',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const minutes = Math.floor(value / 60);
+                                    const seconds = Math.floor(value % 60);
+                                    const milliseconds = Math.round((value % 1) * 100);
+                                    return `タイム: ${minutes}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            reverse: true, // 時間が短いほど上に表示
+                            title: {
+                                display: true,
+                                text: 'クリアタイム（秒）'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    const minutes = Math.floor(value / 60);
+                                    const seconds = Math.floor(value % 60);
+                                    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '日付'
+                            }
+                        }
+                    }
+                }
+            });
+        }
         // フィルター用のセレクトボックスを更新
         function updateFilterSelects() {
             // ユニーク値のセットを初期化
             uniqueMonsters = new Set();
             uniqueStages = new Set();
-
+            uniqueTags = new Set();
+            recordsData.forEach(record => {
+                if (record.tags && Array.isArray(record.tags)) {
+                    record.tags.forEach(tag => {
+                        if (tag) uniqueTags.add(tag);
+                    });
+                }
+            });
             // 現在のデータからユニーク値を収集
             recordsData.forEach(record => {
                 uniqueMonsters.add(record.monster);
@@ -1763,6 +2040,17 @@
                 option.value = stage;
                 option.textContent = stage;
                 stageFilter.appendChild(option);
+            });
+
+            // タグフィルターを更新
+            const tagFilter = document.getElementById('filter-tag');
+            tagFilter.innerHTML = '<option value="">タグ（全て）</option>';
+
+            Array.from(uniqueTags).sort().forEach(tag => {
+                const option = document.createElement('option');
+                option.value = tag;
+                option.textContent = tag;
+                tagFilter.appendChild(option);
             });
         }
 
@@ -1964,6 +2252,7 @@
                 timeValue,
                 notes,
                 hasImage: !!imageFile,
+                tags: document.getElementById('tags').value.split(',').map(tag => tag.trim()).filter(tag => tag !== ''), // ここを追加
                 date: new Date().toISOString()
             };
 
@@ -2066,6 +2355,13 @@
 
                 // 日付のフォーマット
                 const formattedDate = record.date ? formatDate(record.date) : '-';
+                // タグの表示を準備
+                let tagsDisplay = '-';
+                if (record.tags && record.tags.length > 0) {
+                    tagsDisplay = record.tags.map(tag => 
+                        `<span class="tag-badge">${tag}</span>`
+                    ).join(' ');
+                }
 
                 row.innerHTML = `
                     <td>${record.monster}</td>
@@ -2075,6 +2371,7 @@
                     <td>${record.strength || '-'}</td>
                     <td>${record.timeString}</td>
                     <td>${formattedDate}</td>
+                    <td class="tags-cell">${tagsDisplay}</td>
                     ${imageCell}
                     <td class="actions-cell">
                         <span class="action-btn delete" onclick="deleteRecord('${record.id}')">
@@ -2094,6 +2391,7 @@
             const weaponFilter = document.getElementById('filter-weapon').value;
             const questFilter = document.getElementById('filter-quest').value;
             const stageFilter = document.getElementById('filter-stage').value;
+            const tagFilter = document.getElementById('filter-tag').value;
 
             const filteredData = recordsData.filter(record => {
                 // テキスト検索
@@ -2113,6 +2411,8 @@
 
                 // ステージフィルター
                 const matchesStage = !stageFilter || record.stage === stageFilter;
+                // タグフィルター
+                const matchesTag = !tagFilter || (record.tags && record.tags.includes(tagFilter));  // ここを追加
 
                 return matchesText && matchesMonster && matchesWeapon && matchesQuest && matchesStage;
             });
