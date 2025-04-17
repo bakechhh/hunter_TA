@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>モンハン タイムアタックトラッカー</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <style>
         :root {
             --primary: #8a5319;
@@ -576,6 +577,7 @@
                                 <button class="tab-button active" onclick="openTab('add-record')">記録追加</button>
                                 <button class="tab-button" onclick="openTab('import-export')">インポート/エクスポート</button>
                                 <button class="tab-button" onclick="openTab('rankings')">ランキング</button>
+                                <button class="tab-button" onclick="openTab('statistics')">統計</button>
                             </div>
 
                             <div id="add-record" class="tab-content active">
@@ -681,49 +683,6 @@
                             </div>
 
                             <div id="import-export" class="tab-content">
-                              <div id="rankings" class="tab-content">
-                                <div class="tab-container">
-                                  <div class="tab-buttons ranking-tabs">
-                                    <button class="tab-button active" onclick="openRankingTab('monster-ranking')">モンスター別</button>
-                                    <button class="tab-button" onclick="openRankingTab('weapon-ranking')">武器種別</button>
-                                  </div>
-
-                                  <div id="monster-ranking" class="ranking-content active">
-                                    <div class="table-responsive">
-                                      <table id="monster-ranking-table">
-                                        <thead>
-                                          <tr>
-                                            <th>モンスター</th>
-                                            <th>ベストタイム</th>
-                                            <th>武器種</th>
-                                            <th>日付</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <!-- ランキングデータはJSで動的に生成 -->
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-
-                                  <div id="weapon-ranking" class="ranking-content">
-                                    <div class="table-responsive">
-                                      <table id="weapon-ranking-table">
-                                        <thead>
-                                          <tr>
-                                            <th>武器種</th>
-                                            <th>モンスター</th>
-                                            <th>ベストタイム</th>
-                                            <th>日付</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <!-- ランキングデータはJSで動的に生成 -->
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </div>
-                                </div>
                               </div>
                                 <div class="form-group">
                                     <button id="export-json" class="btn btn-secondary btn-block">JSONでエクスポート</button>
@@ -744,6 +703,49 @@
                                     <button id="clear-data" class="btn btn-danger btn-block">全データ削除</button>
                                 </div>
                             </div>
+                            <div id="rankings" class="tab-content">
+                              <div class="tab-container">
+                                <div class="tab-buttons ranking-tabs">
+                                  <button class="tab-button active" onclick="openRankingTab('monster-ranking')">モンスター別</button>
+                                  <button class="tab-button" onclick="openRankingTab('weapon-ranking')">武器種別</button>
+                                </div>
+
+                                <div id="monster-ranking" class="ranking-content active">
+                                  <div class="table-responsive">
+                                    <table id="monster-ranking-table">
+                                      <thead>
+                                        <tr>
+                                          <th>モンスター</th>
+                                          <th>ベストタイム</th>
+                                          <th>武器種</th>
+                                          <th>日付</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <!-- ランキングデータはJSで動的に生成 -->
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+
+                                <div id="weapon-ranking" class="ranking-content">
+                                  <div class="table-responsive">
+                                    <table id="weapon-ranking-table">
+                                      <thead>
+                                        <tr>
+                                          <th>武器種</th>
+                                          <th>モンスター</th>
+                                          <th>ベストタイム</th>
+                                          <th>日付</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <!-- ランキングデータはJSで動的に生成 -->
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
                         </div>
                     </div>
                 </div>
