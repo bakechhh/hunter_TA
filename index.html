@@ -751,13 +751,13 @@
             white-space: nowrap;
             padding-bottom: 5px;
         }
-        
+
         .tab-button {
             display: inline-block;
             white-space: nowrap;
             flex-shrink: 0;
         }
-        
+
         /* 共有機能のスタイル */
         .share-modal {
             display: flex;
@@ -773,11 +773,11 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        
+
         .share-modal.active {
             opacity: 1;
         }
-        
+
         .share-modal-content {
             background-color: var(--card-bg);
             padding: 2rem;
@@ -789,7 +789,7 @@
             position: relative;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
-        
+
         .share-modal-close {
             position: absolute;
             top: 15px;
@@ -798,77 +798,77 @@
             cursor: pointer;
             color: var(--text-light);
         }
-        
+
         .share-details {
             margin: 1.5rem 0;
         }
-        
+
         .share-options {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-bottom: 1.5rem;
         }
-        
+
         .share-btn {
             flex: 1;
             min-width: 120px;
         }
-        
+
         .qr-code-container {
             display: flex;
             justify-content: center;
             margin: 1rem 0;
         }
-        
+
         .share-status {
             text-align: center;
             color: var(--primary);
             font-weight: 600;
             min-height: 1.5rem;
         }
-        
+
         /* バックアップ設定スタイル */
         .backup-settings {
             margin-bottom: 1.5rem;
         }
-        
+
         .backup-status {
             margin-top: 0.5rem;
             font-size: 0.9rem;
             color: var(--text-light);
         }
-        
+
         /* 詳細ランキングスタイル */
         .ranking-filter {
             margin-bottom: 1rem;
         }
-        
+
         .action-btn.share {
             background-color: rgba(74, 144, 226, 0.1);
             color: #4a90e2;
         }
-        
+
         .action-btn.share:hover {
             background-color: #4a90e2;
             color: white;
         }
-        
+
         /* スマホ最適化のためのタッチ操作改善 */
         @media (max-width: 768px) {
             .action-btn {
                 width: 40px;
                 height: 40px;
             }
-            
+
             .form-control, .btn {
                 padding: 0.8rem;
             }
-            
+
             .share-options {
                 flex-direction: column;
             }
-            
+
             .tab-button {
                 padding: 0.8rem 1.2rem;
             }
@@ -1108,7 +1108,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    
+
                                     <div id="stage-ranking" class="ranking-content">
                                         <div class="table-responsive">
                                             <table id="stage-ranking-table">
@@ -1128,7 +1128,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    
+
                                     <div id="quest-ranking" class="ranking-content">
                                         <div class="table-responsive">
                                             <table id="quest-ranking-table">
@@ -1252,14 +1252,14 @@
                             <div id="backup-settings" class="tab-content">
                                 <div class="backup-settings">
                                     <h3>自動バックアップ設定</h3>
-                                    
+
                                     <div class="form-group">
                                         <label class="checkbox-label">
                                             <input type="checkbox" id="backup-enabled">
                                             自動バックアップを有効にする
                                         </label>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label for="backup-interval" class="form-label">バックアップ頻度:</label>
                                         <select id="backup-interval" class="form-control">
@@ -1268,15 +1268,15 @@
                                             <option value="monthly">毎月</option>
                                         </select>
                                     </div>
-                                    
+
                                     <div class="backup-status">
                                         最終バックアップ: <span id="last-backup-date">なし</span>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <button id="save-backup-settings" class="btn btn-primary btn-block">設定を保存</button>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <button id="manual-backup" class="btn btn-secondary btn-block">今すぐバックアップを実行</button>
                                     </div>
@@ -2387,20 +2387,20 @@
             });
             // モンスター×武器種ランキング
             updateCombinedRanking();
-            
+
             // ステージ別ランキング
             updateStageRanking();
-            
+
             // クエスト別ランキング
             updateQuestRanking();
-            
+
             // フィルターの更新
             updateRankingFilters();
         }
         // モンスター×武器種の組み合わせランキング
         function updateCombinedRanking() {
             const combinedRankings = {};
-            
+
             // 各モンスター×武器種の組み合わせについて最速記録を探す
             recordsData.forEach(record => {
                 const key = `${record.monster}_${record.weapon}`;
@@ -2408,25 +2408,25 @@
                     combinedRankings[key] = record;
                 }
             });
-            
+
             // ランキングテーブルを更新
             const combinedTable = document.getElementById('combined-ranking-table').querySelector('tbody');
             combinedTable.innerHTML = '';
-            
+
             // フィルター
             const monsterFilter = document.getElementById('combined-monster-filter').value;
-            
+
             // 記録をソート
             let sortedRecords = Object.values(combinedRankings);
-            
+
             // モンスターでフィルタリング（指定されている場合）
             if (monsterFilter) {
                 sortedRecords = sortedRecords.filter(record => record.monster === monsterFilter);
             }
-            
+
             // タイムでソート
             sortedRecords.sort((a, b) => a.timeValue - b.timeValue);
-            
+
             // テーブルに表示
             sortedRecords.forEach(record => {
                 const row = document.createElement('tr');
@@ -2448,24 +2448,24 @@
         // ステージ別ランキング
         function updateStageRanking() {
             const stageRankings = {};
-            
+
             // 各ステージについて最速記録を探す
             recordsData.forEach(record => {
                 if (!record.stage) return;
-                
+
                 const key = record.stage;
                 if (!stageRankings[key] || record.timeValue < stageRankings[key].timeValue) {
                     stageRankings[key] = record;
                 }
             });
-            
+
             // ランキングテーブルを更新
             const stageTable = document.getElementById('stage-ranking-table').querySelector('tbody');
             stageTable.innerHTML = '';
-            
+
             // 記録をソート
             const sortedRecords = Object.values(stageRankings).sort((a, b) => a.timeValue - b.timeValue);
-            
+
             // テーブルに表示
             sortedRecords.forEach(record => {
                 const row = document.createElement('tr');
@@ -2488,24 +2488,24 @@
         // クエストタイプ別ランキング
         function updateQuestRanking() {
             const questRankings = {};
-            
+
             // 各クエストタイプについて最速記録を探す
             recordsData.forEach(record => {
                 const questType = record.questType || '通常';
-                
+
                 const key = questType;
                 if (!questRankings[key] || record.timeValue < questRankings[key].timeValue) {
                     questRankings[key] = record;
                 }
             });
-            
+
             // ランキングテーブルを更新
             const questTable = document.getElementById('quest-ranking-table').querySelector('tbody');
             questTable.innerHTML = '';
-            
+
             // 記録をソート
             const sortedRecords = Object.values(questRankings).sort((a, b) => a.timeValue - b.timeValue);
-            
+
             // テーブルに表示
             sortedRecords.forEach(record => {
                 const row = document.createElement('tr');
@@ -2530,14 +2530,14 @@
             // モンスター×武器フィルターを更新
             const monsterFilter = document.getElementById('combined-monster-filter');
             monsterFilter.innerHTML = '<option value="">モンスターでフィルター</option>';
-            
+
             Array.from(uniqueMonsters).sort().forEach(monster => {
                 const option = document.createElement('option');
                 option.value = monster;
                 option.textContent = monster;
                 monsterFilter.appendChild(option);
             });
-            
+
             // イベントリスナーを設定
             monsterFilter.onchange = updateCombinedRanking;
         }
@@ -2776,7 +2776,7 @@
 
                 // 日付のフォーマット
                 const formattedDate = record.date ? formatDate(record.date) : '-';
-                
+
                 // タグの表示を準備
                 let tagsDisplay = '-';
                 if (record.tags && record.tags.length > 0) {
@@ -2828,7 +2828,7 @@
                 return '無効な日付';
             }
         }
-        
+
         // 記録を検索
         function filterRecords() {
             const searchQuery = document.getElementById('search-input').value.toLowerCase();
@@ -3034,7 +3034,7 @@
         function shareRecord(recordId) {
             const record = recordsData.find(r => r.id === recordId);
             if (!record) return;
-            
+
             // モーダルを作成
             const modal = document.createElement('div');
             modal.className = 'share-modal';
@@ -3063,19 +3063,19 @@
                     <div id="shareStatus" class="share-status"></div>
                 </div>
             `;
-            
+
             document.body.appendChild(modal);
-            
+
             // モーダルを表示
             setTimeout(() => modal.classList.add('active'), 10);
-            
+
             // 閉じるボタンの処理
             const closeBtn = modal.querySelector('.share-modal-close');
             closeBtn.onclick = () => {
                 modal.classList.remove('active');
                 setTimeout(() => modal.remove(), 300);
             };
-            
+
             // リンクコピーボタンの処理
             const copyBtn = document.getElementById('copyShareLink');
             copyBtn.onclick = () => {
@@ -3084,11 +3084,11 @@
                     type: 'record',
                     data: record
                 };
-                
+
                 // Base64エンコード
                 const shareString = btoa(JSON.stringify(shareData));
                 const shareUrl = `${window.location.href.split('?')[0]}?share=${shareString}`;
-                
+
                 // クリップボードにコピー
                 navigator.clipboard.writeText(shareUrl).then(() => {
                     document.getElementById('shareStatus').textContent = 'リンクをコピーしました！';
@@ -3110,23 +3110,23 @@
                     }, 2000);
                 });
             };
-            
+
             // QRコード生成ボタンの処理
             const qrBtn = document.getElementById('generateQR');
             qrBtn.onclick = () => {
                 const qrContainer = document.getElementById('qrCodeContainer');
                 qrContainer.innerHTML = '';
-                
+
                 // 共有用の記録データを作成
                 const shareData = {
                     type: 'record',
                     data: record
                 };
-                
+
                 // Base64エンコード
                 const shareString = btoa(JSON.stringify(shareData));
                 const shareUrl = `${window.location.href.split('?')[0]}?share=${shareString}`;
-                
+
                 // QRコード生成
                 new QRCode(qrContainer, {
                     text: shareUrl,
@@ -3137,11 +3137,11 @@
                     correctLevel: QRCode.CorrectLevel.H
                 });
             };
-            
+
             // Twitterで共有ボタンの処理
             const twitterBtn = document.getElementById('shareTwitter');
             twitterBtn.onclick = () => {
-                const text = `Monster Hunter Time Attack: ${record.monster} / ${record.weapon} / ${record.timeString}`;
+                const text = `Monster Hunter Wilds Time Attack: ${record.monster} / ${record.weapon} / ${record.timeString}`;
                 const url = window.location.href.split('?')[0];
                 const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
                 window.open(twitterUrl, '_blank');
@@ -3152,14 +3152,14 @@
         function processShareLink() {
             const urlParams = new URLSearchParams(window.location.search);
             const shareParam = urlParams.get('share');
-            
+
             if (shareParam) {
                 try {
                     const shareData = JSON.parse(atob(shareParam));
-                    
+
                     if (shareData.type === 'record') {
                         const record = shareData.data;
-                        
+
                         // 共有された記録の詳細を表示するモーダルを作成
                         const modal = document.createElement('div');
                         modal.className = 'share-modal';
@@ -3175,8 +3175,8 @@
                                     <p><strong>タイム:</strong> ${record.timeString}</p>
                                     <p><strong>日付:</strong> ${formatDate(record.date)}</p>
                                     ${record.notes ? `<p><strong>メモ:</strong> ${record.notes}</p>` : ''}
-                                    ${record.tags && record.tags.length > 0 ? 
-                                        `<p><strong>タグ:</strong> ${record.tags.map(tag => 
+                                    ${record.tags && record.tags.length > 0 ?
+                                        `<p><strong>タグ:</strong> ${record.tags.map(tag =>
                                             `<span class="tag-badge">${tag}</span>`
                                         ).join(' ')}</p>` : ''}
                                 </div>
@@ -3187,76 +3187,76 @@
                                 </div>
                             </div>
                         `;
-                        
+
                         document.body.appendChild(modal);
-                        
+
                         // モーダルを表示
                         setTimeout(() => modal.classList.add('active'), 10);
-                        
+
                         // 閉じるボタンの処理
                         const closeBtn = modal.querySelector('.share-modal-close');
                         closeBtn.onclick = () => {
                             modal.classList.remove('active');
                             setTimeout(() => modal.remove(), 300);
-                            
+
                             // URLからパラメータを削除
                             window.history.replaceState({}, document.title, window.location.pathname);
                         };
-                        
+
                         // インポートボタンの処理
                         const importBtn = document.getElementById('importSharedRecord');
                         importBtn.onclick = () => {
                             // 既存の記録に重複がないか確認
-                            const isDuplicate = recordsData.some(r => 
-                                r.monster === record.monster && 
-                                r.weapon === record.weapon && 
+                            const isDuplicate = recordsData.some(r =>
+                                r.monster === record.monster &&
+                                r.weapon === record.weapon &&
                                 r.timeString === record.timeString &&
                                 r.date === record.date
                             );
-                            
+
                             if (isDuplicate) {
                                 if (!confirm('同じ記録が既に存在します。それでもインポートしますか？')) {
                                     return;
                                 }
                             }
-                            
+
                             // 記録を追加
                             const newRecord = {
                                 ...record,
                                 id: Date.now().toString(), // 新しいIDを割り当て
                                 hasImage: false // 共有された記録には画像がない
                             };
-                            
+
                             recordsData.push(newRecord);
-                            
+
                             // データをソート（時間の早い順）
                             recordsData.sort((a, b) => a.timeValue - b.timeValue);
-                            
+
                             // データを保存
                             saveRecordsToStorage();
-                            
+
                             // フィルターセレクト更新
                             updateFilterSelects();
-                            
+
                             // テーブルを更新
                             renderRecordsTable();
-                            
+
                             // 統計を更新
                             updateStatistics();
-                            
+
                             // チェックリストを更新
                             updateChecklist();
-                            
+
                             // ランキングを更新
                             updateRankings();
-                            
+
                             // モーダルを閉じる
                             modal.classList.remove('active');
                             setTimeout(() => modal.remove(), 300);
-                            
+
                             // URLからパラメータを削除
                             window.history.replaceState({}, document.title, window.location.pathname);
-                            
+
                             alert('記録がインポートされました！');
                         };
                     }
@@ -3285,7 +3285,7 @@
                     console.error('バックアップ設定の読み込みに失敗しました:', e);
                 }
             }
-            
+
             // バックアップ設定画面を更新
             updateBackupSettingsUI();
         }
@@ -3293,7 +3293,7 @@
         // バックアップ設定を保存
         function saveBackupSettings() {
             localStorage.setItem(BACKUP_SETTINGS_KEY, JSON.stringify(backupSettings));
-            
+
             // バックアップタイマーを設定
             setupBackupTimer();
         }
@@ -3302,7 +3302,7 @@
         function updateBackupSettingsUI() {
             document.getElementById('backup-enabled').checked = backupSettings.enabled;
             document.getElementById('backup-interval').value = backupSettings.interval;
-            
+
             const lastBackupElement = document.getElementById('last-backup-date');
             if (backupSettings.lastBackup) {
                 lastBackupElement.textContent = formatDate(backupSettings.lastBackup);
@@ -3317,16 +3317,16 @@
             if (window.backupTimer) {
                 clearTimeout(window.backupTimer);
             }
-            
+
             if (!backupSettings.enabled) return;
-            
+
             // 次回のバックアップ時刻を計算
             let nextBackupTime;
             const now = new Date();
-            
+
             if (backupSettings.lastBackup) {
                 const lastBackup = new Date(backupSettings.lastBackup);
-                
+
                 if (backupSettings.interval === 'daily') {
                     // 毎日同じ時刻
                     nextBackupTime = new Date(lastBackup);
@@ -3340,7 +3340,7 @@
                     nextBackupTime = new Date(lastBackup);
                     nextBackupTime.setMonth(nextBackupTime.getMonth() + 1);
                 }
-                
+
                 // 既に過ぎている場合は今すぐ実行
                 if (nextBackupTime < now) {
                     nextBackupTime = now;
@@ -3349,18 +3349,18 @@
                 // 初回は1分後に実行
                 nextBackupTime = new Date(now.getTime() + 60000);
             }
-            
+
             // タイマーを設定
             const timeUntilBackup = nextBackupTime.getTime() - now.getTime();
             window.backupTimer = setTimeout(performBackup, timeUntilBackup);
-            
+
             console.log(`次回のバックアップ: ${nextBackupTime.toLocaleString()}`);
         }
 
         // バックアップを実行
         async function performBackup() {
             if (!backupSettings.enabled || recordsData.length === 0) return;
-            
+
             try {
                 // 画像データをエクスポート
                 const imageData = await exportAllImages();
@@ -3373,12 +3373,12 @@
 
                 const jsonData = JSON.stringify(exportData);
                 const blob = new Blob([jsonData], { type: 'application/json' });
-                
+
                 // ファイル名を生成
                 const date = new Date();
                 const dateString = date.toISOString().slice(0, 10);
                 const fileName = `mh-timeattack-backup-${dateString}.json`;
-                
+
                 // ダウンロードを自動実行
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -3389,14 +3389,14 @@
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                
+
                 // 最終バックアップ日時を更新
                 backupSettings.lastBackup = date.toISOString();
                 saveBackupSettings();
-                
+
                 // バックアップ設定画面の表示を更新
                 updateBackupSettingsUI();
-                
+
                 // 通知
                 if ('Notification' in window && Notification.permission === 'granted') {
                     new Notification('自動バックアップ', {
@@ -3404,12 +3404,12 @@
                         icon: './images/logo.png'
                     });
                 }
-                
+
                 console.log('バックアップが完了しました:', dateString);
             } catch (error) {
                 console.error('バックアップ中にエラーが発生しました:', error);
             }
-            
+
             // 次回のバックアップタイマーを設定
             setupBackupTimer();
         }
