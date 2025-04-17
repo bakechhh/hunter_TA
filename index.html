@@ -1049,10 +1049,13 @@
         function showImageModal(imageUrl) {
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
-
-            modalImage.src = imageUrl;
-            modal.style.display = 'block';
+            // XSS対策：Base64データの場合のみ表示
+            if (imageUrl.startsWith('data:image/')) {
+              modalImage.src = imageUrl;
+              modal.style.display = 'block';
+            }
         }
+
 
         // モンスターセレクトボックスにオプションを追加
         function populateMonsterSelect() {
@@ -1227,17 +1230,19 @@
                 let imageCell = '<td>-</td>';
 
                 if (record.hasImage) {
-                    try {
-                        const imageData = await getImage(record.id);
-                        if (imageData) {
-                            imageCell = `
-                                <td>
-                                    <img src="${imageData}" class="image-preview" alt="スクリーンショット" onclick="showImageModal('${imageData}')">
-                                </td>
-                            `;
-                        }
-                    } catch (error) {
-                        console.error('画像の取得に失敗しました:', error);
+                  try {
+                    const imageData = await getImage(record.id);
+                    if (imageData && typeof imageData === 'string' && imageData.startsWith('data:image/')) {
+                      // エスケープ処理をして安全に表示
+                      const escapedImageData = imageData.replace(/"/g, '&quot;');
+                      imageCell = `
+                          <td>
+                            <img src="${escapedImageData}" class="image-preview" alt="スクリーンショット" onclick="showImageModal('${escapedImageData}')">
+                          </td>
+                      `;
+            }
+        } catch (error) {
+            console.error('画像の取得に失敗しました:', error);
                     }
                 }
 
