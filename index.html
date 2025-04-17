@@ -512,16 +512,10 @@
 </head>
 <body>
     <header>
-        <div class="logo-upload">
-            <label for="logoUpload">
-                <i class="fas fa-camera"></i>
-                <input type="file" id="logoUpload" accept="image/*">
-            </label>
-        </div>
         <div class="logo-container">
-            <img id="headerLogo" class="logo" src="/api/placeholder/300/100" alt="モンハン タイムアタックトラッカー">
+            <img id="headerLogo" class="logo" src="./images/logo.png" alt="モンハン タイムアタックトラッカー">
         </div>
-        <h1>モンハン タイムアタックトラッカー</h1>
+        <h1>モンハン ワイルズ タイムアタックトラッカー</h1>
     </header>
 
     <main>
@@ -918,8 +912,6 @@
             // 保存されたデータを読み込む
             loadRecords();
 
-            // 保存されたロゴを読み込む
-            loadLogo();
 
             // フォーム送信イベントを設定
             document.getElementById('record-form').addEventListener('submit', saveRecord);
@@ -938,9 +930,6 @@
 
             // 画像アップロードイベントを設定
             setupImageUpload();
-
-            // ロゴアップロードイベントを設定
-            setupLogoUpload();
 
             // 画像モーダルイベントを設定
             setupImageModal();
@@ -998,33 +987,6 @@
             });
         }
 
-        // ロゴアップロード設定
-        function setupLogoUpload() {
-            const logoUpload = document.getElementById('logoUpload');
-            const headerLogo = document.getElementById('headerLogo');
-
-            logoUpload.addEventListener('change', function(e) {
-                if (e.target.files && e.target.files[0]) {
-                    const file = e.target.files[0];
-
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        headerLogo.src = e.target.result;
-                        // ロゴをローカルストレージに保存
-                        localStorage.setItem(LOGO_KEY, e.target.result);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
-
-        // 保存されたロゴを読み込む
-        function loadLogo() {
-            const logoData = localStorage.getItem(LOGO_KEY);
-            if (logoData) {
-                document.getElementById('headerLogo').src = logoData;
-            }
-        }
 
         // 画像モーダル設定
         function setupImageModal() {
