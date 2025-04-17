@@ -4,711 +4,275 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>モンハン タイムアタックトラッカー</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #8a5319;
-            --primary-dark: #6a3d0f;
-            --secondary: #c39b60;
+            --primary: #6a3d0f;
+            --secondary: #b9935a;
             --accent: #e7c78e;
-            --background: #f9f3e6;
-            --background-dark: #e8e0d0;
-            --card-bg: #ffffff;
+            --background: #f5f0e6;
             --text: #2e1a05;
-            --text-light: #5a4530;
-            --border-radius: 12px;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
         }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background);
             color: var(--text);
+            margin: 0;
+            padding: 0;
             line-height: 1.6;
-            padding-bottom: 2rem;
         }
-        
         header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background-color: var(--primary);
             color: white;
-            padding: 1.5rem;
+            padding: 1rem;
             text-align: center;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .logo {
-            max-height: 100px;
-            max-width: 100%;
-        }
-        
-        .logo-upload {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .logo-upload:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-        
-        .logo-upload input {
-            display: none;
-        }
-        
         main {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 1rem;
         }
-        
         .container {
             display: flex;
             flex-wrap: wrap;
-            gap: 2rem;
+            gap: 1rem;
         }
-        
         .control-panel {
             flex: 1;
-            min-width: 320px;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            min-width: 300px;
         }
-        
         .records-panel {
             flex: 2;
-            min-width: 320px;
-        }
-        
-        .card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            transition: var(--transition);
-            margin-bottom: 2rem;
-        }
-        
-        .card:hover {
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        .card-header {
-            background-color: var(--primary);
+            background-color: white;
             padding: 1rem;
-            color: white;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            min-width: 300px;
         }
-        
-        .card-body {
-            padding: 1.5rem;
-        }
-        
-        .tab-container {
-            position: relative;
-            margin-bottom: 1rem;
-        }
-        
-        .tab-buttons {
-            display: flex;
-            border-bottom: 2px solid var(--background-dark);
-            margin-bottom: 1.5rem;
-        }
-        
-        .tab-button {
-            padding: 0.75rem 1.5rem;
-            background: none;
-            border: none;
-            font-weight: 600;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-        }
-        
-        .tab-button:hover {
-            color: var(--primary);
-        }
-        
-        .tab-button.active {
-            color: var(--primary);
-        }
-        
-        .tab-button.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--primary);
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(195, 155, 96, 0.2);
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            text-align: center;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-        }
-        
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #b38c50;
-        }
-        
-        .btn-danger {
-            background-color: #d9534f;
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            background-color: #c9302c;
-        }
-        
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-        
-        .time-input {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .time-input .form-control {
-            width: 70px;
-            text-align: center;
-        }
-        
-        .time-input span {
-            font-weight: 600;
-            color: var(--text);
-        }
-        
-        .search-box {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-        
-        .search-box .form-control {
-            padding-left: 40px;
-        }
-        
-        .search-icon {
-            position: absolute;
-            top: 50%;
-            left: 15px;
-            transform: translateY(-50%);
-            color: var(--text-light);
-        }
-        
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 1rem;
         }
-        
-        table th, table td {
-            padding: 0.75rem;
+        th, td {
+            padding: 0.5rem;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #ddd;
         }
-        
-        table th {
-            background-color: var(--background-dark);
-            font-weight: 600;
-            color: var(--text);
+        th {
+            background-color: var(--secondary);
+            color: white;
         }
-        
-        table tr:hover {
-            background-color: rgba(231, 199, 142, 0.2);
+        tr:hover {
+            background-color: var(--accent);
         }
-        
-        .actions-cell {
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem 0;
+        }
+        button:hover {
+            background-color: var(--primary);
+        }
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .time-input {
             display: flex;
             gap: 0.5rem;
         }
-        
-        .action-btn {
-            width: 30px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 4px;
+        .time-input input {
+            width: 50px;
+            text-align: center;
+        }
+        .search-box {
+            margin-bottom: 1rem;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            border-radius: 4px 4px 0 0;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
             cursor: pointer;
-            transition: var(--transition);
-            background-color: var(--background);
+            padding: 10px 16px;
+            transition: 0.3s;
+            font-size: 16px;
             color: var(--text);
         }
-        
-        .action-btn:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .action-btn.delete {
-            background-color: rgba(217, 83, 79, 0.1);
-            color: #d9534f;
-        }
-        
-        .action-btn.delete:hover {
-            background-color: #d9534f;
-            color: white;
-        }
-        
-        .image-preview {
-            width: 50px;
-            height: 50px;
-            border-radius: 4px;
-            object-fit: cover;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .image-preview:hover {
-            transform: scale(1.1);
-        }
-        
-        #imageModal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            transition: var(--transition);
-        }
-        
-        .modal-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            padding: 2rem;
-        }
-        
-        .modal-image {
-            max-width: 90%;
-            max-height: 80vh;
-            border-radius: 6px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .modal-close:hover {
-            color: var(--accent);
-        }
-        
-        .image-upload {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1.5rem;
-            border: 2px dashed #ddd;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            background-color: #f9f9f9;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        
-        .image-upload:hover {
-            border-color: var(--secondary);
-            background-color: rgba(231, 199, 142, 0.1);
-        }
-        
-        .image-upload-icon {
-            font-size: 2rem;
-            color: var(--text-light);
-            margin-bottom: 0.75rem;
-        }
-        
-        .image-upload input {
-            display: none;
-        }
-        
-        .image-preview-container {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .form-preview-image {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-        }
-        
-        .image-remove {
-            margin-top: 0.5rem;
-            color: #d9534f;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        
-        .image-remove:hover {
-            text-decoration: underline;
-        }
-        
-        .hr {
-            margin: 2rem 0;
-            border: none;
-            height: 1px;
+        .tab button:hover {
             background-color: #ddd;
         }
-        
-        .text-center {
-            text-align: center;
+        .tab button.active {
+            background-color: var(--secondary);
+            color: white;
         }
-        
-        .text-muted {
-            color: var(--text-light);
-            font-size: 0.9rem;
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            background-color: white;
         }
-        
-        .empty-state {
-            padding: 3rem;
-            text-align: center;
-            color: var(--text-light);
+        .show {
+            display: block;
         }
-        
-        .empty-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
+        .danger {
+            background-color: #d9534f;
         }
-        
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .control-panel, .records-panel {
-                width: 100%;
-            }
-            
-            .tab-button {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-            }
-            
-            .card-body {
-                padding: 1rem;
-            }
-            
-            .time-input .form-control {
-                width: 60px;
-            }
-            
-            table th, table td {
-                padding: 0.5rem;
-                font-size: 0.9rem;
-            }
-            
-            .table-responsive {
-                overflow-x: auto;
-            }
+        .danger:hover {
+            background-color: #c9302c;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo-upload">
-            <label for="logoUpload">
-                <i class="fas fa-camera"></i>
-                <input type="file" id="logoUpload" accept="image/*">
-            </label>
-        </div>
-        <div class="logo-container">
-            <img id="headerLogo" class="logo" src="/api/placeholder/300/100" alt="モンハン タイムアタックトラッカー">
-        </div>
         <h1>モンハン タイムアタックトラッカー</h1>
     </header>
-    
     <main>
         <div class="container">
             <div class="control-panel">
-                <div class="card">
-                    <div class="card-header">
-                        コントロールパネル
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-container">
-                            <div class="tab-buttons">
-                                <button class="tab-button active" data-tab="add-record">記録追加</button>
-                                <button class="tab-button" data-tab="import-export">インポート/エクスポート</button>
-                            </div>
-                            
-                            <div id="add-record" class="tab-content active">
-                                <form id="record-form">
-                                    <div class="form-group">
-                                        <label for="monster-select" class="form-label">モンスター選択:</label>
-                                        <select id="monster-select" class="form-control" required>
-                                            <option value="">モンスターを選択</option>
-                                            <!-- モンスターリストはJavaScriptで動的に生成 -->
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="weapon-select" class="form-label">武器種:</label>
-                                        <select id="weapon-select" class="form-control" required>
-                                            <option value="">武器を選択</option>
-                                            <option value="大剣">大剣</option>
-                                            <option value="太刀">太刀</option>
-                                            <option value="片手剣">片手剣</option>
-                                            <option value="双剣">双剣</option>
-                                            <option value="ハンマー">ハンマー</option>
-                                            <option value="狩猟笛">狩猟笛</option>
-                                            <option value="ランス">ランス</option>
-                                            <option value="ガンランス">ガンランス</option>
-                                            <option value="スラッシュアックス">スラッシュアックス</option>
-                                            <option value="チャージアックス">チャージアックス</option>
-                                            <option value="操虫棍">操虫棍</option>
-                                            <option value="ライトボウガン">ライトボウガン</option>
-                                            <option value="ヘビィボウガン">ヘビィボウガン</option>
-                                            <option value="弓">弓</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="quest-type" class="form-label">クエストタイプ:</label>
-                                        <select id="quest-type" class="form-control" required>
-                                            <option value="通常">通常</option>
-                                            <option value="歴戦">歴戦</option>
-                                            <option value="狂竜化">狂竜化</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="stage-select" class="form-label">ステージ:</label>
-                                        <select id="stage-select" class="form-control" required>
-                                            <option value="">ステージを選択</option>
-                                            <option value="隔ての砂原">隔ての砂原</option>
-                                            <option value="緋の森">緋の森</option>
-                                            <option value="油涌き谷">油涌き谷</option>
-                                            <option value="氷霧の断崖">氷霧の断崖</option>
-                                            <option value="竜都の跡形">竜都の跡形</option>
-                                            <option value="竜谷の跡地(闘技場)">竜谷の跡地(闘技場)</option>
-                                            <option value="その他">その他</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="strength" class="form-label">強さ:</label>
-                                        <select id="strength" class="form-control" required>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label">タイム:</label>
-                                        <div class="time-input">
-                                            <input type="number" id="time-minutes" class="form-control" min="0" placeholder="分" required>
-                                            <span>:</span>
-                                            <input type="number" id="time-seconds" class="form-control" min="0" max="59" placeholder="秒" required>
-                                            <span>.</span>
-                                            <input type="number" id="time-milliseconds" class="form-control" min="0" max="99" placeholder="ミリ秒" required>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="notes" class="form-label">メモ:</label>
-                                        <input type="text" id="notes" class="form-control" placeholder="装備や戦略など">
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label">スクリーンショット:</label>
-                                        <div class="image-upload" id="imageUploadContainer">
-                                            <i class="fas fa-cloud-upload-alt image-upload-icon"></i>
-                                            <span>クリックして画像をアップロード</span>
-                                            <input type="file" id="imageUpload" accept="image/*">
-                                        </div>
-                                        <div class="image-preview-container" id="imagePreviewContainer" style="display: none;">
-                                            <div>
-                                                <img id="formPreviewImage" class="form-preview-image" src="" alt="プレビュー">
-                                                <div class="text-center">
-                                                    <span class="image-remove" id="removeImage">画像を削除</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <button type="submit" class="btn btn-primary btn-block">記録を保存</button>
-                                </form>
-                            </div>
-                            
-                            <div id="import-export" class="tab-content">
-                                <div class="form-group">
-                                    <button id="export-json" class="btn btn-secondary btn-block">JSONでエクスポート</button>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="import-file" class="form-label">JSONファイルをインポート:</label>
-                                    <input type="file" id="import-file" class="form-control" accept=".json">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <button id="import-button" class="btn btn-secondary btn-block">インポート</button>
-                                </div>
-                                
-                                <div class="hr"></div>
-                                
-                                <div class="form-group">
-                                    <button id="clear-data" class="btn btn-danger btn-block">全データ削除</button>
-                                </div>
+                <div class="tab">
+                    <button class="tablinks active" onclick="openTab(event, 'add-record')">記録追加</button>
+                    <button class="tablinks" onclick="openTab(event, 'import-export')">インポート/エクスポート</button>
+                </div>
+                
+                <div id="add-record" class="tabcontent show">
+                    <h2>新規記録</h2>
+                    <form id="record-form">
+                        <div>
+                            <label for="monster-select">モンスター選択:</label>
+                            <select id="monster-select" required>
+                                <option value="">モンスターを選択</option>
+                                <!-- モンスターリストはJavaScriptで動的に生成 -->
+                            </select>
+                        </div>
+                        <div>
+                            <label for="weapon-select">武器種:</label>
+                            <select id="weapon-select" required>
+                                <option value="">武器を選択</option>
+                                <option value="大剣">大剣</option>
+                                <option value="太刀">太刀</option>
+                                <option value="片手剣">片手剣</option>
+                                <option value="双剣">双剣</option>
+                                <option value="ハンマー">ハンマー</option>
+                                <option value="狩猟笛">狩猟笛</option>
+                                <option value="ランス">ランス</option>
+                                <option value="ガンランス">ガンランス</option>
+                                <option value="スラッシュアックス">スラッシュアックス</option>
+                                <option value="チャージアックス">チャージアックス</option>
+                                <option value="操虫棍">操虫棍</option>
+                                <option value="ライトボウガン">ライトボウガン</option>
+                                <option value="ヘビィボウガン">ヘビィボウガン</option>
+                                <option value="弓">弓</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="quest-type">クエストタイプ:</label>
+                            <select id="quest-type" required>
+                                <option value="通常">通常</option>
+                                <option value="歴戦">歴戦</option>
+                                <option value="狂竜化">狂竜化</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="stage-select">ステージ:</label>
+                            <select id="stage-select" required>
+                                <option value="">ステージを選択</option>
+                                <option value="隔ての砂原">隔ての砂原</option>
+                                <option value="緋の森">緋の森</option>
+                                <option value="油涌き谷">油涌き谷</option>
+                                <option value="氷霧の断崖">氷霧の断崖</option>
+                                <option value="竜都の跡形">竜都の跡形</option>
+                                <option value="竜谷の跡地(闘技場)">竜谷の跡地(闘技場)</option>
+                                <option value="その他">その他</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="strength">強さ:</label>
+                            <select id="strength" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>タイム:</label>
+                            <div class="time-input">
+                                <input type="number" id="time-minutes" min="0" placeholder="分" required>
+                                <span>:</span>
+                                <input type="number" id="time-seconds" min="0" max="59" placeholder="秒" required>
+                                <span>.</span>
+                                <input type="number" id="time-milliseconds" min="0" max="99" placeholder="ミリ秒" required>
                             </div>
                         </div>
+                        <div>
+                            <label for="notes">メモ:</label>
+                            <input type="text" id="notes" placeholder="装備や戦略など">
+                        </div>
+                        <button type="submit">記録を保存</button>
+                    </form>
+                </div>
+                
+                <div id="import-export" class="tabcontent">
+                    <h2>データ管理</h2>
+                    <button id="export-json">JSONでエクスポート</button>
+                    <div>
+                        <label for="import-file">JSONファイルをインポート:</label>
+                        <input type="file" id="import-file" accept=".json">
                     </div>
+                    <button id="import-button">インポート</button>
+                    <hr>
+                    <button id="clear-data" class="danger">全データ削除</button>
                 </div>
             </div>
             
             <div class="records-panel">
-                <div class="card">
-                    <div class="card-header">
-                        記録一覧
-                    </div>
-                    <div class="card-body">
-                        <div class="search-box">
-                            <i class="fas fa-search search-icon"></i>
-                            <input type="text" id="search-input" class="form-control" placeholder="モンスター名や武器種で検索...">
-                        </div>
-                        
-                        <div class="table-responsive">
-                            <table id="records-table">
-                                <thead>
-                                    <tr>
-                                        <th>モンスター</th>
-                                        <th>武器種</th>
-                                        <th>クエスト</th>
-                                        <th>ステージ</th>
-                                        <th>強さ</th>
-                                        <th>タイム</th>
-                                        <th>画像</th>
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- テーブルの内容はJavaScriptで動的に生成 -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <h2>記録一覧</h2>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="モンスター名で検索...">
                 </div>
+                <table id="records-table">
+                    <thead>
+                        <tr>
+                            <th>モンスター</th>
+                            <th>武器種</th>
+                            <th>クエスト</th>
+                            <th>ステージ</th>
+                            <th>強さ</th>
+                            <th>タイム</th>
+                            <th>メモ</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- テーブルの内容はJavaScriptで動的に生成 -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
-    
-    <!-- 画像モーダル -->
-    <div id="imageModal">
-        <span class="modal-close">&times;</span>
-        <div class="modal-content">
-            <img id="modalImage" class="modal-image" src="" alt="スクリーンショット">
-        </div>
-    </div>
-    
+
     <script>
         // モンスターリスト
         const monsters = [
@@ -727,189 +291,11 @@
             "狂竜化ネルスキュラ", "狂竜化ゲリョス", "狂竜化イャンクック", "歴戦王レダウ", "ラギアクルス"
         ];
 
-        // ローカルストレージとIndexedDBのキー
+        // ローカルストレージのキー
         const STORAGE_KEY = 'mh-timeattack-records';
-        const LOGO_KEY = 'mh-timeattack-logo';
-        const DB_NAME = 'MonsterHunterTimeAttack';
-        const DB_VERSION = 1;
-        const IMAGES_STORE = 'images';
         
         // 記録データを初期化
         let recordsData = [];
-        let imageFile = null;
-        
-        // IndexedDB初期化
-        function initDB() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open(DB_NAME, DB_VERSION);
-                
-                request.onupgradeneeded = function(event) {
-                    const db = event.target.result;
-                    // 画像を保存するオブジェクトストア
-                    if (!db.objectStoreNames.contains(IMAGES_STORE)) {
-                        db.createObjectStore(IMAGES_STORE, { keyPath: 'id' });
-                    }
-                };
-                
-                request.onsuccess = function(event) {
-                    resolve(event.target.result);
-                };
-                
-                request.onerror = function(event) {
-                    console.error('データベースの初期化に失敗しました:', event.target.error);
-                    reject('データベースの初期化に失敗しました');
-                };
-            });
-        }
-
-        // 画像を保存
-        function saveImage(id, imageData) {
-            return new Promise((resolve, reject) => {
-                initDB().then(db => {
-                    const transaction = db.transaction([IMAGES_STORE], 'readwrite');
-                    const store = transaction.objectStore(IMAGES_STORE);
-                    
-                    store.put({
-                        id: id,
-                        data: imageData
-                    });
-                    
-                    transaction.oncomplete = function() {
-                        resolve(id);
-                    };
-                    
-                    transaction.onerror = function(event) {
-                        console.error('画像の保存に失敗しました:', event.target.error);
-                        reject('画像の保存に失敗しました');
-                    };
-                }).catch(reject);
-            });
-        }
-
-        // 画像を取得
-        function getImage(id) {
-            return new Promise((resolve, reject) => {
-                initDB().then(db => {
-                    const transaction = db.transaction([IMAGES_STORE], 'readonly');
-                    const store = transaction.objectStore(IMAGES_STORE);
-                    const request = store.get(id);
-                    
-                    request.onsuccess = function(event) {
-                        resolve(event.target.result ? event.target.result.data : null);
-                    };
-                    
-                    request.onerror = function(event) {
-                        console.error('画像の取得に失敗しました:', event.target.error);
-                        reject('画像の取得に失敗しました');
-                    };
-                }).catch(reject);
-            });
-        }
-
-        // 画像を削除
-        function deleteImage(id) {
-            return new Promise((resolve, reject) => {
-                initDB().then(db => {
-                    const transaction = db.transaction([IMAGES_STORE], 'readwrite');
-                    const store = transaction.objectStore(IMAGES_STORE);
-                    
-                    const request = store.delete(id);
-                    
-                    request.onsuccess = function() {
-                        resolve();
-                    };
-                    
-                    request.onerror = function(event) {
-                        console.error('画像の削除に失敗しました:', event.target.error);
-                        reject('画像の削除に失敗しました');
-                    };
-                }).catch(reject);
-            });
-        }
-
-        // 全ての画像を削除
-        function deleteAllImages() {
-            return new Promise((resolve, reject) => {
-                initDB().then(db => {
-                    const transaction = db.transaction([IMAGES_STORE], 'readwrite');
-                    const store = transaction.objectStore(IMAGES_STORE);
-                    const request = store.clear();
-                    
-                    request.onsuccess = function() {
-                        resolve();
-                    };
-                    
-                    request.onerror = function(event) {
-                        console.error('すべての画像の削除に失敗しました:', event.target.error);
-                        reject('すべての画像の削除に失敗しました');
-                    };
-                }).catch(reject);
-            });
-        }
-
-        // すべての画像をエクスポート
-        async function exportAllImages() {
-            const imageData = {};
-            
-            try {
-                const db = await initDB();
-                const transaction = db.transaction([IMAGES_STORE], 'readonly');
-                const store = transaction.objectStore(IMAGES_STORE);
-                const request = store.getAll();
-                
-                return new Promise((resolve, reject) => {
-                    request.onsuccess = function(event) {
-                        const images = event.target.result;
-                        
-                        images.forEach(image => {
-                            imageData[image.id] = image.data;
-                        });
-                        
-                        resolve(imageData);
-                    };
-                    
-                    request.onerror = function(event) {
-                        console.error('画像のエクスポートに失敗しました:', event.target.error);
-                        reject('画像のエクスポートに失敗しました');
-                    };
-                });
-            } catch (error) {
-                console.error('画像のエクスポート中にエラーが発生しました:', error);
-                return {};
-            }
-        }
-
-        // すべての画像をインポート
-        async function importAllImages(imageData) {
-            try {
-                const db = await initDB();
-                const transaction = db.transaction([IMAGES_STORE], 'readwrite');
-                const store = transaction.objectStore(IMAGES_STORE);
-                
-                // 一度に全ての処理を待つために配列に入れる
-                const promises = [];
-                
-                for (const [id, data] of Object.entries(imageData)) {
-                    promises.push(
-                        new Promise((resolve, reject) => {
-                            const request = store.put({
-                                id: id,
-                                data: data
-                            });
-                            
-                            request.onsuccess = resolve;
-                            request.onerror = reject;
-                        })
-                    );
-                }
-                
-                await Promise.all(promises);
-                return true;
-            } catch (error) {
-                console.error('画像のインポート中にエラーが発生しました:', error);
-                return false;
-            }
-        }
         
         // DOMが読み込まれたら実行
         document.addEventListener('DOMContentLoaded', function() {
@@ -918,9 +304,6 @@
             
             // 保存されたデータを読み込む
             loadRecords();
-            
-            // 保存されたロゴを読み込む
-            loadLogo();
             
             // フォーム送信イベントを設定
             document.getElementById('record-form').addEventListener('submit', saveRecord);
@@ -936,134 +319,7 @@
             
             // クリアボタンイベントを設定
             document.getElementById('clear-data').addEventListener('click', clearAllData);
-            
-            // タブ切り替えイベントを設定
-            setupTabs();
-            
-            // 画像アップロードイベントを設定
-            setupImageUpload();
-            
-            // ロゴアップロードイベントを設定
-            setupLogoUpload();
-            
-            // 画像モーダルイベントを設定
-            setupImageModal();
         });
-        
-        // タブの切り替え設定
-        function setupTabs() {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // アクティブなタブを解除
-                    document.querySelectorAll('.tab-button').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    
-                    document.querySelectorAll('.tab-content').forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    
-                    // クリックされたタブをアクティブに
-                    this.classList.add('active');
-                    const tabId = this.getAttribute('data-tab');
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
-        }
-        
-        // 画像アップロード設定
-        function setupImageUpload() {
-            const imageUpload = document.getElementById('imageUpload');
-            const imageUploadContainer = document.getElementById('imageUploadContainer');
-            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-            const formPreviewImage = document.getElementById('formPreviewImage');
-            const removeImage = document.getElementById('removeImage');
-            
-            imageUploadContainer.addEventListener('click', function() {
-                imageUpload.click();
-            });
-            
-            imageUpload.addEventListener('change', function(e) {
-                if (e.target.files && e.target.files[0]) {
-                    const file = e.target.files[0];
-                    imageFile = file;
-                    
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        formPreviewImage.src = e.target.result;
-                        imageUploadContainer.style.display = 'none';
-                        imagePreviewContainer.style.display = 'block';
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-            
-            removeImage.addEventListener('click', function() {
-                imageFile = null;
-                formPreviewImage.src = '';
-                imageUploadContainer.style.display = 'block';
-                imagePreviewContainer.style.display = 'none';
-                imageUpload.value = '';
-            });
-        }
-        
-        // ロゴアップロード設定
-        function setupLogoUpload() {
-            const logoUpload = document.getElementById('logoUpload');
-            const headerLogo = document.getElementById('headerLogo');
-            
-            logoUpload.addEventListener('change', function(e) {
-                if (e.target.files && e.target.files[0]) {
-                    const file = e.target.files[0];
-                    
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        headerLogo.src = e.target.result;
-                        // ロゴをローカルストレージに保存
-                        localStorage.setItem(LOGO_KEY, e.target.result);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
-        
-        // 保存されたロゴを読み込む
-        function loadLogo() {
-            const logoData = localStorage.getItem(LOGO_KEY);
-            if (logoData) {
-                document.getElementById('headerLogo').src = logoData;
-            }
-        }
-        
-        // 画像モーダル設定
-        function setupImageModal() {
-            const modal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            const closeButton = document.querySelector('.modal-close');
-            
-            // モーダルを閉じる
-            closeButton.addEventListener('click', function() {
-                modal.style.display = 'none';
-            });
-            
-            // モーダル外をクリックしても閉じる
-            window.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-        }
-        
-        // 画像クリックでモーダルを表示
-        function showImageModal(imageUrl) {
-            const modal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            
-            modalImage.src = imageUrl;
-            modal.style.display = 'block';
-        }
         
         // モンスターセレクトボックスにオプションを追加
         function populateMonsterSelect() {
@@ -1126,7 +382,7 @@
         }
         
         // 新しい記録を保存
-        async function saveRecord(e) {
+        function saveRecord(e) {
             e.preventDefault();
             
             const monster = document.getElementById('monster-select').value;
@@ -1162,28 +418,8 @@
                 timeString,
                 timeValue,
                 notes,
-                hasImage: !!imageFile,
                 date: new Date().toISOString()
             };
-            
-            // 画像がある場合は保存
-            if (imageFile) {
-                try {
-                    // FileReaderを使って画像をBase64エンコード
-                    const reader = new FileReader();
-                    const imageDataPromise = new Promise((resolve) => {
-                        reader.onload = (e) => resolve(e.target.result);
-                        reader.readAsDataURL(imageFile);
-                    });
-                    
-                    const imageData = await imageDataPromise;
-                    await saveImage(newRecord.id, imageData);
-                } catch (error) {
-                    console.error('画像の保存に失敗しました:', error);
-                    alert('画像の保存に失敗しました。もう一度お試しください。');
-                    return;
-                }
-            }
             
             // 記録を追加
             recordsData.push(newRecord);
@@ -1200,18 +436,11 @@
             // フォームをリセット
             document.getElementById('record-form').reset();
             
-            // 画像プレビューをリセット
-            imageFile = null;
-            document.getElementById('imageUploadContainer').style.display = 'block';
-            document.getElementById('imagePreviewContainer').style.display = 'none';
-            document.getElementById('formPreviewImage').src = '';
-            document.getElementById('imageUpload').value = '';
-            
             alert('記録が保存されました！');
         }
         
         // 記録テーブルを更新
-        async function renderRecordsTable(filteredData) {
+        function renderRecordsTable(filteredData) {
             const tableBody = document.querySelector('#records-table tbody');
             tableBody.innerHTML = '';
             
@@ -1219,38 +448,13 @@
             
             if (dataToRender.length === 0) {
                 const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td colspan="8" class="empty-state">
-                        <div>
-                            <i class="fas fa-scroll empty-icon"></i>
-                            <p>記録がありません</p>
-                            <p class="text-muted">新しい記録を追加してください</p>
-                        </div>
-                    </td>
-                `;
+                row.innerHTML = '<td colspan="8" style="text-align: center;">記録がありません</td>';
                 tableBody.appendChild(row);
                 return;
             }
             
-            for (const record of dataToRender) {
+            dataToRender.forEach(record => {
                 const row = document.createElement('tr');
-                
-                let imageCell = '<td>-</td>';
-                
-                if (record.hasImage) {
-                    try {
-                        const imageData = await getImage(record.id);
-                        if (imageData) {
-                            imageCell = `
-                                <td>
-                                    <img src="${imageData}" class="image-preview" alt="スクリーンショット" onclick="showImageModal('${imageData}')">
-                                </td>
-                            `;
-                        }
-                    } catch (error) {
-                        console.error('画像の取得に失敗しました:', error);
-                    }
-                }
                 
                 row.innerHTML = `
                     <td>${record.monster}</td>
@@ -1259,16 +463,14 @@
                     <td>${record.stage || '-'}</td>
                     <td>${record.strength || '-'}</td>
                     <td>${record.timeString}</td>
-                    ${imageCell}
-                    <td class="actions-cell">
-                        <span class="action-btn delete" onclick="deleteRecord('${record.id}')">
-                            <i class="fas fa-trash-alt"></i>
-                        </span>
+                    <td>${record.notes || ''}</td>
+                    <td>
+                        <button onclick="deleteRecord('${record.id}')">削除</button>
                     </td>
                 `;
                 
                 tableBody.appendChild(row);
-            }
+            });
         }
         
         // 記録を検索
@@ -1291,38 +493,132 @@
         }
         
         // 記録を削除
-        async function deleteRecord(id) {
+        function deleteRecord(id) {
             if (confirm('この記録を削除してもよろしいですか？')) {
-                const record = recordsData.find(r => r.id === id);
-                
-                // 画像がある場合は削除
-                if (record && record.hasImage) {
-                    try {
-                        await deleteImage(id);
-                    } catch (error) {
-                        console.error('画像の削除に失敗しました:', error);
-                    }
-                }
-                
                 recordsData = recordsData.filter(record => record.id !== id);
                 saveRecordsToStorage();
                 renderRecordsTable();
             }
         }
         
-        // JSONにエクスポート（画像含む）
-        async function exportToJson() {
+        // JSONにエクスポート
+        function exportToJson() {
             if (recordsData.length === 0) {
                 alert('エクスポートするデータがありません');
                 return;
             }
             
-            try {
-                // 画像データをエクスポート
-                const imageData = await exportAllImages();
-                
-                // JSONデータを作成
-                const exportData = {
-                    records: recordsData,
-                    images: imageData,
-                    logo: localStorage.getIt
+            const jsonData = JSON.stringify(recordsData, null, 2);
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mh-timeattack-export-${new Date().toISOString().slice(0, 10)}.json`;
+            a.click();
+            
+            URL.revokeObjectURL(url);
+        }
+        
+        // JSONからインポート
+        function importFromJson() {
+            const fileInput = document.getElementById('import-file');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('インポートするファイルを選択してください');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (!Array.isArray(importedData)) {
+                        throw new Error('無効なデータ形式です');
+                    }
+                    
+                    if (confirm('既存のデータにインポートしたデータを追加しますか？キャンセルを選択すると既存のデータは上書きされます。')) {
+                        // 既存のデータに追加
+                        recordsData = [...recordsData, ...importedData];
+                    } else {
+                        // 既存のデータを上書き
+                        recordsData = importedData;
+                    }
+                    
+                    // 重複を削除
+                    const uniqueIds = new Set();
+                    recordsData = recordsData.filter(record => {
+                        if (!record.id) record.id = Date.now().toString() + Math.random().toString(36).substr(2, 5);
+                        if (uniqueIds.has(record.id)) return false;
+                        uniqueIds.add(record.id);
+                        return true;
+                    });
+                    
+                    // 時間でソート
+                    recordsData.sort((a, b) => a.timeValue - b.timeValue);
+                    
+                    // データを保存
+                    saveRecordsToStorage();
+                    
+                    // テーブルを更新
+                    renderRecordsTable();
+                    
+                    alert('データのインポートが完了しました');
+                    fileInput.value = '';
+                } catch (e) {
+                    console.error('インポートエラー:', e);
+                    alert('データのインポートに失敗しました。ファイル形式を確認してください。');
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        // 全データを削除
+        function clearAllData() {
+            if (confirm('すべての記録データを削除します。この操作は元に戻せません。続行しますか？')) {
+                recordsData = [];
+                saveRecordsToStorage();
+                renderRecordsTable();
+                alert('すべてのデータが削除されました');
+            }
+        }
+        
+        // Cookieを設定
+        function setCookie(name, value, days) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires.toUTCString()};path=/`;
+        }
+        
+        // Cookieを取得
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return decodeURIComponent(cookie.substring(name.length + 1));
+                }
+            }
+            return null;
+        }
+        
+        // タブを切り替え
+        function openTab(evt, tabName) {
+            const tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("show");
+            }
+            
+            const tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("show");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
