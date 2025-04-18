@@ -4566,6 +4566,22 @@
               return false;
           }
         }
+        function getSkillNameById(id) {
+            const skills = window.equipmentDB.skills;
+
+            // 配列形式  [{id:1,name:'攻撃'}, …]
+            if (Array.isArray(skills)) {
+                const hit = skills.find(s => s.id == id);
+                return hit ? hit.name : `ID${id}`;
+            }
+
+            // 辞書形式  { "1": {name:"攻撃",…}, "2":{…} }
+            if (skills && typeof skills === 'object') {
+                return skills[id] ? skills[id].name : `ID${id}`;
+            }
+            return `ID${id}`;        // 万一どちらでもない場合
+        }
+
         // 装備選択ダイアログでJSONデータを利用
         function _show_equipment_selector(data_list, equip_type) {
             // 既存の実装に加えて、window.equipmentDBからデータを取得する場合の処理を追加
@@ -5328,11 +5344,9 @@
           const ul = document.getElementById('sim-skill-list');
           ul.innerHTML = '';
           Object.entries(skillTotal)
-            .sort((a,b)=>window.equipmentDB.skills.find(s=>s.id==a[0]).name.localeCompare(
-                           window.equipmentDB.skills.find(s=>s.id==b[0]).name))
+            .sort((a, b) => getSkillNameById(a[0]).localeCompare(getSkillNameById(b[0])))
             .forEach(([id,lv])=>{
-              const skill = window.equipmentDB.skills.find(s=>s.id==+id) || {};
-              const name = skill.name || `ID${id}`;
+                const name = getSkillNameById(id);
               ul.innerHTML += `<li>${name} Lv${lv}</li>`;
             });
         });
