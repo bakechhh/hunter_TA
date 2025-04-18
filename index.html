@@ -4246,7 +4246,6 @@
                     <h3>プロフィール設定</h3>
                     <div class="profile-avatar-container">
                         <div class="profile-avatar-wrapper" id="avatar-upload">
-                            <img id="profile-avatar" src="${profileData.avatarData || './images/hunter-avatar.png'}" alt="ハンターアバター">
                             <div class="avatar-overlay">
                                 <i class="fas fa-camera"></i>
                                 <span>変更</span>
@@ -5721,7 +5720,6 @@
           profileTab.className = 'tab-content';
           profileTab.innerHTML = `<div class="profile-header">
               <div class="profile-avatar-large">
-                  <img id="profile-page-avatar" src="${profileData.avatarData || './images/hunter-avatar.png'}" alt="ハンターアバター">
               </div>
               <div class="profile-info">
                   <h2 id="profile-hunter-name">${profileData.hunterName || 'ハンター名未設定'}</h2>
@@ -5904,7 +5902,6 @@
               profileElement.id = 'header-profile';
               profileElement.innerHTML = `
                   <div class="header-profile-avatar">
-                      <img src="${profileData.avatarData || './images/hunter-avatar.png'}" alt="ハンターアバター">
                   </div>
                   <span class="header-profile-name">${profileData.hunterName || 'ハンター名未設定'}</span>
               `;
