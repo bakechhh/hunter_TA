@@ -5725,6 +5725,10 @@
             const li = document.createElement('li');
             li.textContent = `${skill.name} Lv${skill.level}`;
             ul.appendChild(li);
+            // 追加スキルが表示されているか確認
+            if (extraSkills.includes(parseInt(skill.id)) || extraSkills.includes(skill.id)) {
+                console.log(`追加スキルを表示: ${skill.name} (ID: ${skill.id})`);
+            }
           });
         });
 
