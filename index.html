@@ -5244,16 +5244,23 @@
                   .join('');
             // 装備が変わったらスロット数に応じた装飾品セレクトを生成
             sel.addEventListener('change', () => {
-              const equip = partMap[part].find(e=>e.id==sel.value);
-              const decoContainer = document.getElementById(`deco-slots-${part}`);
-              decoContainer.innerHTML = '';
+              // 護石には装飾品スロットが無いので早期リターン
+            if (part === 'charm') return;
+
+            const equip = partMap[part].find(e => e.id == sel.value);
+            const decoContainer = document.getElementById(`deco-slots-${part}`);
+            if (!decoContainer) return;    // 念のため
+            decoContainer.innerHTML = '';
               if (!equip || !equip.slots) return;
               // 各スロット分、セレクトを追加
               equip.slots.forEach((size, idx) => {
                 const decSel = document.createElement('select');
                 decSel.className = 'form-control';
-                decSel.innerHTML = `<option value="">装飾品なし</option>`
-                  + window.equipmentDB.decorations.weapon
+                const decoList = part === 'weapon'
+                    ? window.equipmentDB.decorations.weapon   // 武器用のみ
+                    : window.equipmentDB.decorations.armor;   // 防具用のみ
+                decSel.innerHTML = `<option value="">装飾品なし</option>` +
+                    decoList
                       .filter(d=>d.slot<=size)
                       .map(d=>`<option value="${d.id}">${d.name} (Lv${d.slot})</option>`)
                       .join('');
@@ -5269,16 +5276,18 @@
         // 実行ボタン
         document.getElementById('run-simulation').addEventListener('click', () => {
           const selected = {};
+          const buiMap = { head:'頭', body:'胴', arms:'腕', waist:'腰', legs:'脚' };
           ['weapon','head','body','arms','waist','legs','charm'].forEach(part => {
             const id = document.getElementById(`sim-${part}`).value;
-            selected[part] = id
-              ? [...(part==='weapon'
-                    ? [...window.equipmentDB.weapons.normal, ...window.equipmentDB.weapons.bowgun]
-                    : part==='charm'
-                      ? window.equipmentDB.charms
-                      : window.equipmentDB.armors.filter(a=>a.bui==={'head':'頭','body':'胴','arms':'腕','waist':'腰','legs':'脚'}[part])[0]
-                   )].find(e=>e.id==id)
-              : null;
+            if (!id) { selected[part] = null; return; }
+
+            const pool =
+              part === 'weapon'
+                ? [...window.equipmentDB.weapons.normal, ...window.equipmentDB.weapons.bowgun]
+                : part === 'charm'
+                    ? window.equipmentDB.charms
+                    : window.equipmentDB.armors.filter(a => a.bui === buiMap[part]);
+            selected[part] = pool.find(e => e.id == id) || null;
           });
           // 装飾品は deco-slots-<part> 内の select から取得
           const decorations = {};
