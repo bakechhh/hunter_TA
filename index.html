@@ -4567,11 +4567,11 @@
           }
         }
         function getSkillNameById(id) {
-            const skills = window.equipmentDB.skills;
+            const skills = window.equipmentDB && window.equipmentDB.skills;
 
             // 配列形式  [{id:1,name:'攻撃'}, …]
             if (Array.isArray(skills)) {
-                const hit = skills.find(s => s.id == id);
+                const hit = skills.find(s => s.id == id);      // == で数値/文字列の差を吸収
                 return hit ? hit.name : `ID${id}`;
             }
 
