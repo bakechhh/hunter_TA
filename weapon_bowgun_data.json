@@ -1,0 +1,5381 @@
+[
+  {
+    "id": 1,
+    "name": "ホープバレットⅠ",
+    "rare": 1,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 117,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": []
+  },
+  {
+    "id": 2,
+    "name": "ホープバレットⅡ",
+    "rare": 1,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 130,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "ホープバレットⅢ",
+    "rare": 3,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 169,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 1
+      },
+      {
+        "id": 18,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "ホープバレットⅣ",
+    "rare": 5,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 208,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 2
+      },
+      {
+        "id": 18,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "ホープバレットⅤ",
+    "rare": 7,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 3
+      },
+      {
+        "id": 18,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "エスペラバレット",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 3
+      },
+      {
+        "id": 18,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "護火竜砲Ⅰ",
+    "rare": 4,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 208,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 1
+      },
+      {
+        "id": 2,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "護火竜砲Ⅱ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 234,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 2
+      },
+      {
+        "id": 2,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "白鳳護火竜砲",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 2
+      },
+      {
+        "id": 2,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "闢裂弩Ⅰ",
+    "rare": 2,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 182,
+    "crit": -5,
+    "defBonus": 20,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "闢裂弩Ⅱ",
+    "rare": 4,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 234,
+    "crit": -5,
+    "defBonus": 20,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "闢裂弩Ⅲ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": -5,
+    "defBonus": 20,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "闢裂弩レイブオクレ",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 312,
+    "crit": -5,
+    "defBonus": 20,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "name": "ガルシュインペトムⅠ",
+    "rare": 4,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 208,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "name": "ガルシュインペトムⅡ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 260,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      2
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "name": "護鎖刃軽弩ガルイウス",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 299,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "name": "アルシュインペトムⅠ",
+    "rare": 7,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 234,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "鎖刃軽弩カイウス",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 260,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "name": "護闢裂弩Ⅰ",
+    "rare": 4,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1,
+      1
+    ],
+    "skills": [
+      {
+        "id": 27,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "name": "護闢裂弩Ⅱ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 286,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      2,
+      2
+    ],
+    "skills": [
+      {
+        "id": 27,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "name": "護闢裂弩ガルグマクレ",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 325,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      1
+    ],
+    "skills": [
+      {
+        "id": 27,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "name": "チェーンブリッツⅠ",
+    "rare": 2,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 156,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "name": "チェーンブリッツⅡ",
+    "rare": 4,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 208,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "name": "チェーンブリッツⅢ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "name": "ハイチェーンブリッツ",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 286,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "name": "レ・メドルギシュⅠ",
+    "rare": 3,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 182,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 1
+      },
+      {
+        "id": 27,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "name": "レ・メドルギシュⅡ",
+    "rare": 5,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 221,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 1
+      },
+      {
+        "id": 27,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "name": "レ・メドルギシュⅢ",
+    "rare": 7,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 260,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 2
+      },
+      {
+        "id": 27,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "name": "煌雷銃メドルギシュ",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 286,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 2
+      },
+      {
+        "id": 27,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "name": "ハンターライフルⅠ",
+    "rare": 1,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 143,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "name": "ハンターライフルⅡ",
+    "rare": 2,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 169,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 32,
+        "lv": 1
+      },
+      {
+        "id": 34,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "name": "ハンターライフルⅢ",
+    "rare": 4,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 221,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 2
+      },
+      {
+        "id": 32,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "name": "ハンターライフルⅣ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 260,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      },
+      {
+        "id": 32,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "name": "パワーライフル",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 299,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      },
+      {
+        "id": 32,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "name": "赫炎の甲軽弩Ⅰ",
+    "rare": 3,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 169,
+    "crit": 10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 50,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "name": "赫炎の甲軽弩Ⅱ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 234,
+    "crit": 10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 50,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "name": "赫炎甲弩インガダ",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": 10,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 50,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "name": "ヌ・ホボトニチェⅠ",
+    "rare": 4,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 221,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "name": "ヌ・ホボトニチェⅡ",
+    "rare": 7,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "name": "獄焔銃ホボトニチェ",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 299,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "name": "アサルトコンガⅠ",
+    "rare": 2,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 156,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "name": "アサルトコンガⅡ",
+    "rare": 5,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 221,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      2,
+      1,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 1
+      },
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "name": "コンバットコンガ",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 286,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      1
+    ],
+    "skills": [
+      {
+        "id": 51,
+        "lv": 2
+      },
+      {
+        "id": 34,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "name": "風剪軽弩Ⅰ",
+    "rare": 3,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 182,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      },
+      {
+        "id": 44,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "name": "風剪軽弩Ⅱ",
+    "rare": 5,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 221,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      },
+      {
+        "id": 44,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "name": "風剪軽弩Ⅲ",
+    "rare": 7,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 260,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      },
+      {
+        "id": 44,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "name": "風剪軽弩ウチバミ",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 286,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      },
+      {
+        "id": 44,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "name": "異界の銃火Ⅰ",
+    "rare": 4,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 182,
+    "crit": 10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "name": "異界の銃火Ⅱ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 221,
+    "crit": 10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "name": "遺霊【スピリット】",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": 10,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "name": "クックアンガーⅠ",
+    "rare": 5,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 234,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "name": "クックアンガーⅡ",
+    "rare": 7,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "name": "クックカウンター",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 286,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "name": "バル＝アルジャナルⅠ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 234,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "name": "護雷弩バルガルデ",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "name": "ヴァルキリーファイアⅠ",
+    "rare": 5,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 208,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      },
+      {
+        "id": 96,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "name": "ヴァルキリーファイアⅡ",
+    "rare": 7,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      },
+      {
+        "id": 96,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "name": "ヴァルキリーフレイム",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      },
+      {
+        "id": 96,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "name": "火竜砲Ⅰ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 234,
+    "crit": 10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 61,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "name": "鳳仙火竜砲",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 260,
+    "crit": 10,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 61,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "name": "レイofヴァイスⅠ",
+    "rare": 7,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 234,
+    "crit": 20,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "name": "レイofインサニティ",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 260,
+    "crit": 20,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "name": "テイルストリングⅠ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 260,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "name": "テイルカタパルト",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 299,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "name": "タイタングレネードⅠ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": -15,
+    "defBonus": 30,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      2
+    ],
+    "skills": [
+      {
+        "id": 51,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "name": "タイタンパンツァー",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 312,
+    "crit": -15,
+    "defBonus": 30,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      1
+    ],
+    "skills": [
+      {
+        "id": 51,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "name": "アムニレーター",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 72,
+    "name": "ホープキャノンⅠ",
+    "rare": 1,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 135,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": []
+  },
+  {
+    "id": 73,
+    "name": "ホープキャノンⅡ",
+    "rare": 1,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 150,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "name": "ホープキャノンⅢ",
+    "rare": 3,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 195,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 18,
+        "lv": 1
+      },
+      {
+        "id": 2,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "name": "ホープキャノンⅣ",
+    "rare": 5,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 240,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 2
+      },
+      {
+        "id": 18,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "name": "ホープキャノンⅤ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 3
+      },
+      {
+        "id": 18,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "name": "エスペラキャノン",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 315,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 3
+      },
+      {
+        "id": 18,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "name": "ダハ・ライファルⅠ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 28,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "name": "断崖のマルミリア",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 315,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 28,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "name": "アイアンアサルトⅠ",
+    "rare": 2,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 180,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "name": "アイアンアサルトⅡ",
+    "rare": 4,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 240,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "name": "アイアンアサルトⅢ",
+    "rare": 6,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "name": "スティールアサルト",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 330,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "name": "ププロスナイパーⅠ",
+    "rare": 3,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 210,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 47,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "name": "ププロスナイパーⅡ",
+    "rare": 5,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 255,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 47,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "name": "ププロスナイパーⅢ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 300,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 47,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "name": "ププロ銃ラトロトカ",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 330,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 47,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "name": "チャタバスターⅠ",
+    "rare": 1,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 165,
+    "crit": 0,
+    "defBonus": 15,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "name": "チャタバスターⅡ",
+    "rare": 3,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 225,
+    "crit": 0,
+    "defBonus": 15,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "name": "チャタバスターⅢ",
+    "rare": 5,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 270,
+    "crit": 0,
+    "defBonus": 15,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "name": "チャタバスターⅣ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 315,
+    "crit": 0,
+    "defBonus": 15,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "name": "纏砲モッティカマン",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 345,
+    "crit": 0,
+    "defBonus": 15,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "name": "ガルシュトルメントムⅠ",
+    "rare": 4,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 255,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "name": "ガルシュトルメントムⅡ",
+    "rare": 6,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 315,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      2
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "name": "護鎖刃砲ガルシュデス",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 360,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "name": "アルシュトルメントムⅠ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 300,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "name": "鎖刃砲パラメデス",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 330,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "name": "ボーンシューターⅠ",
+    "rare": 1,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 165,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 28,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "name": "ボーンシューターⅡ",
+    "rare": 2,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 195,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 28,
+        "lv": 1
+      },
+      {
+        "id": 32,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "name": "ボーンシューターⅢ",
+    "rare": 4,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 255,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 28,
+        "lv": 2
+      },
+      {
+        "id": 32,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 101,
+    "name": "ボーンシューターⅣ",
+    "rare": 6,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 300,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 28,
+        "lv": 3
+      },
+      {
+        "id": 32,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "name": "ヘビィシューター",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 345,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 28,
+        "lv": 3
+      },
+      {
+        "id": 32,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "name": "ネルバスターガンⅠ",
+    "rare": 3,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 180,
+    "crit": 10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 33,
+        "lv": 1
+      },
+      {
+        "id": 28,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "name": "ネルバスターガンⅡ",
+    "rare": 5,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 225,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 33,
+        "lv": 1
+      },
+      {
+        "id": 28,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 105,
+    "name": "ネルバスターガンⅢ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 270,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 33,
+        "lv": 2
+      },
+      {
+        "id": 28,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 106,
+    "name": "バスターブラスター",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 300,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 33,
+        "lv": 2
+      },
+      {
+        "id": 28,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 107,
+    "name": "ウズ・ダルガプⅠ",
+    "rare": 3,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 240,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 108,
+    "name": "ウズ・ダルガプⅡ",
+    "rare": 5,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 109,
+    "name": "ウズ・ダルガプⅢ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 330,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 110,
+    "name": "波濤砲ダルガプ",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 360,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 111,
+    "name": "パワースティンカーⅠ",
+    "rare": 2,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 180,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 112,
+    "name": "パワースティンカーⅡ",
+    "rare": 5,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 255,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 1
+      },
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 113,
+    "name": "ワイルドスティンカー",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 330,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      1
+    ],
+    "skills": [
+      {
+        "id": 51,
+        "lv": 2
+      },
+      {
+        "id": 34,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 114,
+    "name": "ヌ・ムンオⅠ",
+    "rare": 4,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 255,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 115,
+    "name": "ヌ・ムンオⅡ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 315,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 116,
+    "name": "獄焔砲ムンオ",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 345,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 34,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 117,
+    "name": "イャンクック砲Ⅰ",
+    "rare": 5,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 270,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 27,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 118,
+    "name": "イャンクック砲Ⅱ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 315,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 27,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 119,
+    "name": "イャンクック大砲",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 330,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 27,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 120,
+    "name": "テルマ＝アルジャナルⅠ",
+    "rare": 6,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 270,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 121,
+    "name": "護雷重弩テルマガルデ",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 315,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 122,
+    "name": "タンクメイジⅠ",
+    "rare": 5,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 270,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 28,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 123,
+    "name": "タンクメイジⅡ",
+    "rare": 6,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 300,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 28,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 124,
+    "name": "タンクソーサラー",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 345,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 28,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 125,
+    "name": "妃竜砲【遠撃】Ⅰ",
+    "rare": 5,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 240,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      },
+      {
+        "id": 96,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 126,
+    "name": "妃竜砲【遠撃】Ⅱ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      },
+      {
+        "id": 96,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 127,
+    "name": "妃竜砲【飛撃】",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 315,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      },
+      {
+        "id": 96,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 128,
+    "name": "グラビモスハウルⅠ",
+    "rare": 6,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 315,
+    "crit": -15,
+    "defBonus": 30,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 47,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 129,
+    "name": "グラビドギガハウル",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 360,
+    "crit": -15,
+    "defBonus": 30,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 47,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 130,
+    "name": "トリガーofハザードⅠ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 270,
+    "crit": 20,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 131,
+    "name": "トリガーofデマイズ",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 300,
+    "crit": 20,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 134,
+    "name": "グライフェン",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 135,
+    "name": "ホープボウⅠ",
+    "rare": 1,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 108,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": []
+  },
+  {
+    "id": 136,
+    "name": "ホープボウⅡ",
+    "rare": 1,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 120,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 137,
+    "name": "ホープボウⅢ",
+    "rare": 3,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 156,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 18,
+        "lv": 1
+      },
+      {
+        "id": 2,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 138,
+    "name": "ホープボウⅣ",
+    "rare": 5,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 192,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 2
+      },
+      {
+        "id": 18,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 139,
+    "name": "ホープボウⅤ",
+    "rare": 7,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 228,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 3
+      },
+      {
+        "id": 18,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 140,
+    "name": "エスペラボウ",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 264,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 3
+      },
+      {
+        "id": 18,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 141,
+    "name": "アルラスボウⅠ",
+    "rare": 4,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 192,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 110
+      }
+    ],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 1
+      },
+      {
+        "id": 2,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 142,
+    "name": "アルラスボウⅡ",
+    "rare": 6,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 216,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 130
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 2
+      },
+      {
+        "id": 2,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 143,
+    "name": "エスピキュラ",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 252,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 2
+      },
+      {
+        "id": 2,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 144,
+    "name": "竜穿弓Ⅰ",
+    "rare": 2,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 144,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 145,
+    "name": "竜穿弓Ⅱ",
+    "rare": 4,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 192,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 146,
+    "name": "竜穿弓Ⅲ",
+    "rare": 6,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 228,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 147,
+    "name": "真・竜穿弓",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 264,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 148,
+    "name": "レペルコンスⅠ",
+    "rare": 3,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 168,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 90
+      }
+    ],
+    "slots": [],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 1
+      },
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 149,
+    "name": "レペルコンスⅡ",
+    "rare": 5,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 204,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 110
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 1
+      },
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 150,
+    "name": "レペルコンスⅢ",
+    "rare": 7,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 240,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 130
+      }
+    ],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 2
+      },
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 151,
+    "name": "煌雷弓ペルコンス",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 264,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 2
+      },
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 152,
+    "name": "ケマスアルコⅠ",
+    "rare": 1,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 120,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 70
+      }
+    ],
+    "slots": [],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 153,
+    "name": "ケマスアルコⅡ",
+    "rare": 3,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 168,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 90
+      }
+    ],
+    "slots": [],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 154,
+    "name": "ケマスアルコⅢ",
+    "rare": 5,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 204,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 110
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 155,
+    "name": "ケマスアルコⅣ",
+    "rare": 7,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 252,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 130
+      }
+    ],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 156,
+    "name": "炎尾弓リビオラ",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 264,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 157,
+    "name": "虚無の弓Ⅰ",
+    "rare": 4,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 192,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 110
+      }
+    ],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 158,
+    "name": "虚無の弓Ⅱ",
+    "rare": 6,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 228,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 130
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 159,
+    "name": "暗弓ブースウィル",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 276,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 160,
+    "name": "風甲弓Ⅰ",
+    "rare": 3,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 168,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 90
+      }
+    ],
+    "slots": [],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 2
+      },
+      {
+        "id": 44,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 161,
+    "name": "風甲弓Ⅱ",
+    "rare": 5,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 204,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 110
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 2
+      },
+      {
+        "id": 44,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 162,
+    "name": "風甲弓Ⅲ",
+    "rare": 7,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 240,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 130
+      }
+    ],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 3
+      },
+      {
+        "id": 44,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 163,
+    "name": "風甲弓イバミ",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 264,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 3
+      },
+      {
+        "id": 44,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 164,
+    "name": "ハンターボウⅠ",
+    "rare": 1,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 132,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 165,
+    "name": "ハンターボウⅡ",
+    "rare": 2,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 156,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 32,
+        "lv": 1
+      },
+      {
+        "id": 26,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 166,
+    "name": "ハンターボウⅢ",
+    "rare": 4,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 204,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 2
+      },
+      {
+        "id": 32,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 167,
+    "name": "ハンターボウⅣ",
+    "rare": 6,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 240,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 3
+      },
+      {
+        "id": 32,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 168,
+    "name": "パワーハンターボウ",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 276,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 3
+      },
+      {
+        "id": 32,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 169,
+    "name": "ウズフイリャクⅠ",
+    "rare": 3,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 192,
+    "crit": -20,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 100
+      }
+    ],
+    "slots": [],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 170,
+    "name": "ウズフイリャクⅡ",
+    "rare": 5,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 228,
+    "crit": -20,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 140
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 171,
+    "name": "ウズフイリャクⅢ",
+    "rare": 7,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 264,
+    "crit": -20,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 170
+      }
+    ],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 172,
+    "name": "波濤弓フイリャク",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 288,
+    "crit": -20,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 200
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 173,
+    "name": "パワーワイルドボウⅠ",
+    "rare": 2,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 144,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 174,
+    "name": "パワーワイルドボウⅡ",
+    "rare": 5,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 204,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 51,
+        "lv": 1
+      },
+      {
+        "id": 46,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 175,
+    "name": "密林のカルファード",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 264,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      1
+    ],
+    "skills": [
+      {
+        "id": 51,
+        "lv": 2
+      },
+      {
+        "id": 46,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 176,
+    "name": "スキュラフィストⅠ",
+    "rare": 3,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 144,
+    "crit": 20,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 46,
+        "lv": 1
+      },
+      {
+        "id": 26,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 177,
+    "name": "スキュラフィストⅡ",
+    "rare": 5,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 180,
+    "crit": 20,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 46,
+        "lv": 1
+      },
+      {
+        "id": 26,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 178,
+    "name": "スキュラフィストⅢ",
+    "rare": 7,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 216,
+    "crit": 20,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 46,
+        "lv": 2
+      },
+      {
+        "id": 26,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 179,
+    "name": "ネルスルペレザ",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 252,
+    "crit": 20,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 46,
+        "lv": 2
+      },
+      {
+        "id": 26,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 180,
+    "name": "闢虐弓Ⅰ",
+    "rare": 2,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 168,
+    "crit": -5,
+    "defBonus": 20,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [],
+    "skills": [
+      {
+        "id": 37,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 181,
+    "name": "闢虐弓Ⅱ",
+    "rare": 4,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 216,
+    "crit": -5,
+    "defBonus": 20,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1,
+      1
+    ],
+    "skills": [
+      {
+        "id": 37,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 182,
+    "name": "闢虐弓Ⅲ",
+    "rare": 6,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 252,
+    "crit": -5,
+    "defBonus": 20,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      2
+    ],
+    "skills": [
+      {
+        "id": 37,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 183,
+    "name": "闢虐弓カリステクス",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 288,
+    "crit": -5,
+    "defBonus": 20,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      1
+    ],
+    "skills": [
+      {
+        "id": 37,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 184,
+    "name": "ガルシュアルクムⅠ",
+    "rare": 4,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 204,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 90
+      }
+    ],
+    "slots": [
+      1,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 185,
+    "name": "ガルシュアルクムⅡ",
+    "rare": 6,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 252,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 120
+      }
+    ],
+    "slots": [
+      2,
+      2
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 186,
+    "name": "護鎖刃弓ガルストラム",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 288,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 187,
+    "name": "アルシュアルクムⅠ",
+    "rare": 7,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 240,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 160
+      }
+    ],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 188,
+    "name": "鎖刃弓トリストラム",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 264,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 200
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 26,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 189,
+    "name": "護闢虐弓Ⅰ",
+    "rare": 4,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 216,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      1
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 1
+      },
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 190,
+    "name": "護闢虐弓Ⅱ",
+    "rare": 6,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 264,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      2
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 2
+      },
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 191,
+    "name": "護闢虐弓ガルグマクス",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 300,
+    "crit": -15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      1
+    ],
+    "skills": [
+      {
+        "id": 2,
+        "lv": 2
+      },
+      {
+        "id": 51,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 192,
+    "name": "鳥幣弓Ⅰ",
+    "rare": 5,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 204,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 230
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 46,
+        "lv": 2
+      }
+    ]
+  },
+  {
+    "id": 193,
+    "name": "鳥幣弓Ⅱ",
+    "rare": 7,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 228,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 270
+      }
+    ],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 46,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 194,
+    "name": "怪鳥幣弓",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 240,
+    "crit": 0,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 46,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 195,
+    "name": "レラ＝アルジャナルⅠ",
+    "rare": 6,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 216,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 160
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 196,
+    "name": "護雷弓レラガルデ",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 240,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 200
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 197,
+    "name": "クイーンブラスターⅠ",
+    "rare": 5,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 192,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 110
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 2
+      },
+      {
+        "id": 96,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 198,
+    "name": "クイーンブラスターⅡ",
+    "rare": 7,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 228,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 130
+      }
+    ],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      },
+      {
+        "id": 96,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 199,
+    "name": "クイーンエテノルク",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 252,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      },
+      {
+        "id": 96,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 200,
+    "name": "プロミネンスボウⅠ",
+    "rare": 6,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 216,
+    "crit": 10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 160
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 61,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 201,
+    "name": "ダークフィラメント",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 240,
+    "crit": 10,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 200
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 61,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 202,
+    "name": "ビジョンofロストⅠ",
+    "rare": 7,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 216,
+    "crit": 20,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 120
+      }
+    ],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 203,
+    "name": "ビジョンofディスペア",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 252,
+    "crit": 20,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 94,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 204,
+    "name": "ブランシャルガⅠ",
+    "rare": 6,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 240,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 110
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 205,
+    "name": "シンハ＝シャルガ",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 276,
+    "crit": -10,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 52,
+        "lv": 3
+      }
+    ]
+  },
+  {
+    "id": 208,
+    "name": "アンギルバイン",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 228,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 209,
+    "name": "狐水銃シズクトキユルⅠ",
+    "rare": 6,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 234,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 163,
+        "lv": 2
+      },
+      {
+        "id": 94,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 210,
+    "name": "あまとぶや軽弩の水珠",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 163,
+        "lv": 3
+      },
+      {
+        "id": 94,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 211,
+    "name": "狐重砲ハライニケリナⅠ",
+    "rare": 6,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 270,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 163,
+        "lv": 2
+      },
+      {
+        "id": 94,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 212,
+    "name": "あしひきの山砲の御車",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 315,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 163,
+        "lv": 3
+      },
+      {
+        "id": 94,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 213,
+    "name": "狐弓ツユノタマノヲⅠ",
+    "rare": 6,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 216,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 130
+      }
+    ],
+    "slots": [
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 163,
+        "lv": 2
+      },
+      {
+        "id": 94,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 214,
+    "name": "なぐるやの遠弓の真弦",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 252,
+    "crit": 15,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 190
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 163,
+        "lv": 3
+      },
+      {
+        "id": 94,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 215,
+    "name": "ゾ・カイヤーⅠ",
+    "rare": 7,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 273,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 168,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 216,
+    "name": "熾光たるカイヤー",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 286,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 168,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 217,
+    "name": "ゾ・ミトランⅠ",
+    "rare": 7,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 315,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 168,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 218,
+    "name": "熾光たるミトラン",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 330,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 168,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 219,
+    "name": "ゾ・サミーラⅠ",
+    "rare": 7,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 252,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 0,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 100
+      }
+    ],
+    "slots": [
+      3,
+      2
+    ],
+    "skills": [
+      {
+        "id": 168,
+        "lv": 1
+      }
+    ]
+  },
+  {
+    "id": 220,
+    "name": "熾光たるサミーラ",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": true,
+    "atk": 264,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 140
+      }
+    ],
+    "slots": [
+      3,
+      2,
+      1
+    ],
+    "skills": [
+      {
+        "id": 168,
+        "lv": 1
+      }
+    ]
+  }
+]

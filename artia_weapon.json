@@ -1,0 +1,2686 @@
+[
+  {
+    "id": 1,
+    "name": "ヴァリアンツァ無属性",
+    "rare": 8,
+    "typeId": 1,
+    "type": "大剣",
+    "bowgun": false,
+    "atk": 912,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 2,
+    "name": "ヴァリアンツァ火属性",
+    "rare": 8,
+    "typeId": 1,
+    "type": "大剣",
+    "bowgun": false,
+    "atk": 912,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 480
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 3,
+    "name": "ヴァリアンツァ水属性",
+    "rare": 8,
+    "typeId": 1,
+    "type": "大剣",
+    "bowgun": false,
+    "atk": 912,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 480
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 4,
+    "name": "ヴァリアンツァ雷属性",
+    "rare": 8,
+    "typeId": 1,
+    "type": "大剣",
+    "bowgun": false,
+    "atk": 912,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 480
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 5,
+    "name": "ヴァリアンツァ氷属性",
+    "rare": 8,
+    "typeId": 1,
+    "type": "大剣",
+    "bowgun": false,
+    "atk": 912,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 480
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 6,
+    "name": "ヴァリアンツァ龍属性",
+    "rare": 8,
+    "typeId": 1,
+    "type": "大剣",
+    "bowgun": false,
+    "atk": 912,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 480
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 7,
+    "name": "ヴァリアンツァ毒属性",
+    "rare": 8,
+    "typeId": 1,
+    "type": "大剣",
+    "bowgun": false,
+    "atk": 912,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 7,
+        "name": "毒",
+        "value": 330
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 8,
+    "name": "ヴァリアンツァ麻痺属性",
+    "rare": 8,
+    "typeId": 1,
+    "type": "大剣",
+    "bowgun": false,
+    "atk": 912,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 8,
+        "name": "麻痺",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 9,
+    "name": "ヴァリアンツァ睡眠属性",
+    "rare": 8,
+    "typeId": 1,
+    "type": "大剣",
+    "bowgun": false,
+    "atk": 912,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 9,
+        "name": "睡眠",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 10,
+    "name": "ヴァリアンツァ爆破属性",
+    "rare": 8,
+    "typeId": 1,
+    "type": "大剣",
+    "bowgun": false,
+    "atk": 912,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 330
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 11,
+    "name": "ディメンシオ無属性",
+    "rare": 8,
+    "typeId": 2,
+    "type": "太刀",
+    "bowgun": false,
+    "atk": 627,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 12,
+    "name": "ディメンシオ火属性",
+    "rare": 8,
+    "typeId": 2,
+    "type": "太刀",
+    "bowgun": false,
+    "atk": 627,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 13,
+    "name": "ディメンシオ水属性",
+    "rare": 8,
+    "typeId": 2,
+    "type": "太刀",
+    "bowgun": false,
+    "atk": 627,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 14,
+    "name": "ディメンシオ雷属性",
+    "rare": 8,
+    "typeId": 2,
+    "type": "太刀",
+    "bowgun": false,
+    "atk": 627,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 15,
+    "name": "ディメンシオ氷属性",
+    "rare": 8,
+    "typeId": 2,
+    "type": "太刀",
+    "bowgun": false,
+    "atk": 627,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 16,
+    "name": "ディメンシオ龍属性",
+    "rare": 8,
+    "typeId": 2,
+    "type": "太刀",
+    "bowgun": false,
+    "atk": 627,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 17,
+    "name": "ディメンシオ毒属性",
+    "rare": 8,
+    "typeId": 2,
+    "type": "太刀",
+    "bowgun": false,
+    "atk": 627,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 7,
+        "name": "毒",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 18,
+    "name": "ディメンシオ麻痺属性",
+    "rare": 8,
+    "typeId": 2,
+    "type": "太刀",
+    "bowgun": false,
+    "atk": 627,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 8,
+        "name": "麻痺",
+        "value": 100
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 19,
+    "name": "ディメンシオ睡眠属性",
+    "rare": 8,
+    "typeId": 2,
+    "type": "太刀",
+    "bowgun": false,
+    "atk": 627,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 9,
+        "name": "睡眠",
+        "value": 100
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 20,
+    "name": "ディメンシオ爆破属性",
+    "rare": 8,
+    "typeId": 2,
+    "type": "太刀",
+    "bowgun": false,
+    "atk": 627,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 21,
+    "name": "ヴェルドロート無属性",
+    "rare": 8,
+    "typeId": 3,
+    "type": "片手剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 22,
+    "name": "ヴェルドロート火属性",
+    "rare": 8,
+    "typeId": 3,
+    "type": "片手剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 23,
+    "name": "ヴェルドロート水属性",
+    "rare": 8,
+    "typeId": 3,
+    "type": "片手剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 24,
+    "name": "ヴェルドロート雷属性",
+    "rare": 8,
+    "typeId": 3,
+    "type": "片手剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 25,
+    "name": "ヴェルドロート氷属性",
+    "rare": 8,
+    "typeId": 3,
+    "type": "片手剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 26,
+    "name": "ヴェルドロート龍属性",
+    "rare": 8,
+    "typeId": 3,
+    "type": "片手剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 27,
+    "name": "ヴェルドロート毒属性",
+    "rare": 8,
+    "typeId": 3,
+    "type": "片手剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 7,
+        "name": "毒",
+        "value": 130
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 28,
+    "name": "ヴェルドロート麻痺属性",
+    "rare": 8,
+    "typeId": 3,
+    "type": "片手剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 8,
+        "name": "麻痺",
+        "value": 80
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 29,
+    "name": "ヴェルドロート睡眠属性",
+    "rare": 8,
+    "typeId": 3,
+    "type": "片手剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 9,
+        "name": "睡眠",
+        "value": 80
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 30,
+    "name": "ヴェルドロート爆破属性",
+    "rare": 8,
+    "typeId": 3,
+    "type": "片手剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 130
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 31,
+    "name": "ティルトクライス無属性",
+    "rare": 8,
+    "typeId": 4,
+    "type": "双剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 32,
+    "name": "ティルトクライス火属性",
+    "rare": 8,
+    "typeId": 4,
+    "type": "双剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 270
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 33,
+    "name": "ティルトクライス水属性",
+    "rare": 8,
+    "typeId": 4,
+    "type": "双剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 270
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 34,
+    "name": "ティルトクライス雷属性",
+    "rare": 8,
+    "typeId": 4,
+    "type": "双剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 270
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 35,
+    "name": "ティルトクライス氷属性",
+    "rare": 8,
+    "typeId": 4,
+    "type": "双剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 270
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 36,
+    "name": "ティルトクライス龍属性",
+    "rare": 8,
+    "typeId": 4,
+    "type": "双剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 270
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 37,
+    "name": "ティルトクライス毒属性",
+    "rare": 8,
+    "typeId": 4,
+    "type": "双剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 7,
+        "name": "毒",
+        "value": 120
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 38,
+    "name": "ティルトクライス麻痺属性",
+    "rare": 8,
+    "typeId": 4,
+    "type": "双剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 8,
+        "name": "麻痺",
+        "value": 70
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 39,
+    "name": "ティルトクライス睡眠属性",
+    "rare": 8,
+    "typeId": 4,
+    "type": "双剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 9,
+        "name": "睡眠",
+        "value": 70
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 40,
+    "name": "ティルトクライス爆破属性",
+    "rare": 8,
+    "typeId": 4,
+    "type": "双剣",
+    "bowgun": false,
+    "atk": 266,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 120
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 41,
+    "name": "モートヴァンケル無属性",
+    "rare": 8,
+    "typeId": 5,
+    "type": "ハンマー",
+    "bowgun": false,
+    "atk": 988,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 42,
+    "name": "モートヴァンケル火属性",
+    "rare": 8,
+    "typeId": 5,
+    "type": "ハンマー",
+    "bowgun": false,
+    "atk": 988,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 43,
+    "name": "モートヴァンケル水属性",
+    "rare": 8,
+    "typeId": 5,
+    "type": "ハンマー",
+    "bowgun": false,
+    "atk": 988,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 44,
+    "name": "モートヴァンケル雷属性",
+    "rare": 8,
+    "typeId": 5,
+    "type": "ハンマー",
+    "bowgun": false,
+    "atk": 988,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 45,
+    "name": "モートヴァンケル氷属性",
+    "rare": 8,
+    "typeId": 5,
+    "type": "ハンマー",
+    "bowgun": false,
+    "atk": 988,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 46,
+    "name": "モートヴァンケル龍属性",
+    "rare": 8,
+    "typeId": 5,
+    "type": "ハンマー",
+    "bowgun": false,
+    "atk": 988,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 47,
+    "name": "モートヴァンケル毒属性",
+    "rare": 8,
+    "typeId": 5,
+    "type": "ハンマー",
+    "bowgun": false,
+    "atk": 988,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 7,
+        "name": "毒",
+        "value": 200
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 48,
+    "name": "モートヴァンケル麻痺属性",
+    "rare": 8,
+    "typeId": 5,
+    "type": "ハンマー",
+    "bowgun": false,
+    "atk": 988,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 8,
+        "name": "麻痺",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 49,
+    "name": "モートヴァンケル睡眠属性",
+    "rare": 8,
+    "typeId": 5,
+    "type": "ハンマー",
+    "bowgun": false,
+    "atk": 988,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 9,
+        "name": "睡眠",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 50,
+    "name": "モートヴァンケル爆破属性",
+    "rare": 8,
+    "typeId": 5,
+    "type": "ハンマー",
+    "bowgun": false,
+    "atk": 988,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 200
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 51,
+    "name": "オミリティカ無属性",
+    "rare": 8,
+    "typeId": 6,
+    "type": "狩猟笛",
+    "bowgun": false,
+    "atk": 798,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 52,
+    "name": "オミリティカ火属性",
+    "rare": 8,
+    "typeId": 6,
+    "type": "狩猟笛",
+    "bowgun": false,
+    "atk": 798,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 53,
+    "name": "オミリティカ水属性",
+    "rare": 8,
+    "typeId": 6,
+    "type": "狩猟笛",
+    "bowgun": false,
+    "atk": 798,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 54,
+    "name": "オミリティカ雷属性",
+    "rare": 8,
+    "typeId": 6,
+    "type": "狩猟笛",
+    "bowgun": false,
+    "atk": 798,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 55,
+    "name": "オミリティカ氷属性",
+    "rare": 8,
+    "typeId": 6,
+    "type": "狩猟笛",
+    "bowgun": false,
+    "atk": 798,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 56,
+    "name": "オミリティカ龍属性",
+    "rare": 8,
+    "typeId": 6,
+    "type": "狩猟笛",
+    "bowgun": false,
+    "atk": 798,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 57,
+    "name": "オミリティカ毒属性",
+    "rare": 8,
+    "typeId": 6,
+    "type": "狩猟笛",
+    "bowgun": false,
+    "atk": 798,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 7,
+        "name": "毒",
+        "value": 200
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 58,
+    "name": "オミリティカ麻痺属性",
+    "rare": 8,
+    "typeId": 6,
+    "type": "狩猟笛",
+    "bowgun": false,
+    "atk": 798,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 8,
+        "name": "麻痺",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 59,
+    "name": "オミリティカ睡眠属性",
+    "rare": 8,
+    "typeId": 6,
+    "type": "狩猟笛",
+    "bowgun": false,
+    "atk": 798,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 9,
+        "name": "睡眠",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 60,
+    "name": "オミリティカ爆破属性",
+    "rare": 8,
+    "typeId": 6,
+    "type": "狩猟笛",
+    "bowgun": false,
+    "atk": 798,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 230
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 61,
+    "name": "マテンロウ無属性",
+    "rare": 8,
+    "typeId": 7,
+    "type": "ランス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 62,
+    "name": "マテンロウ火属性",
+    "rare": 8,
+    "typeId": 7,
+    "type": "ランス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 63,
+    "name": "マテンロウ水属性",
+    "rare": 8,
+    "typeId": 7,
+    "type": "ランス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 64,
+    "name": "マテンロウ雷属性",
+    "rare": 8,
+    "typeId": 7,
+    "type": "ランス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 65,
+    "name": "マテンロウ氷属性",
+    "rare": 8,
+    "typeId": 7,
+    "type": "ランス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 66,
+    "name": "マテンロウ龍属性",
+    "rare": 8,
+    "typeId": 7,
+    "type": "ランス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 67,
+    "name": "マテンロウ毒属性",
+    "rare": 8,
+    "typeId": 7,
+    "type": "ランス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 7,
+        "name": "毒",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 68,
+    "name": "マテンロウ麻痺属性",
+    "rare": 8,
+    "typeId": 7,
+    "type": "ランス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 8,
+        "name": "麻痺",
+        "value": 100
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 69,
+    "name": "マテンロウ睡眠属性",
+    "rare": 8,
+    "typeId": 7,
+    "type": "ランス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 9,
+        "name": "睡眠",
+        "value": 100
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 70,
+    "name": "マテンロウ爆破属性",
+    "rare": 8,
+    "typeId": 7,
+    "type": "ランス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 71,
+    "name": "アル＝ジェネシス無属性",
+    "rare": 8,
+    "typeId": 8,
+    "type": "ガンス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 72,
+    "name": "アル＝ジェネシス火属性",
+    "rare": 8,
+    "typeId": 8,
+    "type": "ガンス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 73,
+    "name": "アル＝ジェネシス水属性",
+    "rare": 8,
+    "typeId": 8,
+    "type": "ガンス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 74,
+    "name": "アル＝ジェネシス雷属性",
+    "rare": 8,
+    "typeId": 8,
+    "type": "ガンス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 75,
+    "name": "アル＝ジェネシス氷属性",
+    "rare": 8,
+    "typeId": 8,
+    "type": "ガンス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 76,
+    "name": "アル＝ジェネシス龍属性",
+    "rare": 8,
+    "typeId": 8,
+    "type": "ガンス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 350
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 77,
+    "name": "アル＝ジェネシス毒属性",
+    "rare": 8,
+    "typeId": 8,
+    "type": "ガンス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 7,
+        "name": "毒",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 78,
+    "name": "アル＝ジェネシス麻痺属性",
+    "rare": 8,
+    "typeId": 8,
+    "type": "ガンス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 8,
+        "name": "麻痺",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 79,
+    "name": "アル＝ジェネシス睡眠属性",
+    "rare": 8,
+    "typeId": 8,
+    "type": "ガンス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 9,
+        "name": "睡眠",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 80,
+    "name": "アル＝ジェネシス爆破属性",
+    "rare": 8,
+    "typeId": 8,
+    "type": "ガンス",
+    "bowgun": false,
+    "atk": 437,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 200
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 81,
+    "name": "アルトエレガン無属性",
+    "rare": 8,
+    "typeId": 9,
+    "type": "スラアク",
+    "bowgun": false,
+    "atk": 665,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 82,
+    "name": "アルトエレガン火属性",
+    "rare": 8,
+    "typeId": 9,
+    "type": "スラアク",
+    "bowgun": false,
+    "atk": 665,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 83,
+    "name": "アルトエレガン水属性",
+    "rare": 8,
+    "typeId": 9,
+    "type": "スラアク",
+    "bowgun": false,
+    "atk": 665,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 84,
+    "name": "アルトエレガン雷属性",
+    "rare": 8,
+    "typeId": 9,
+    "type": "スラアク",
+    "bowgun": false,
+    "atk": 665,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 85,
+    "name": "アルトエレガン氷属性",
+    "rare": 8,
+    "typeId": 9,
+    "type": "スラアク",
+    "bowgun": false,
+    "atk": 665,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 86,
+    "name": "アルトエレガン龍属性",
+    "rare": 8,
+    "typeId": 9,
+    "type": "スラアク",
+    "bowgun": false,
+    "atk": 665,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 87,
+    "name": "アルトエレガン毒属性",
+    "rare": 8,
+    "typeId": 9,
+    "type": "スラアク",
+    "bowgun": false,
+    "atk": 665,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 7,
+        "name": "毒",
+        "value": 130
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 88,
+    "name": "アルトエレガン麻痺属性",
+    "rare": 8,
+    "typeId": 9,
+    "type": "スラアク",
+    "bowgun": false,
+    "atk": 665,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 8,
+        "name": "麻痺",
+        "value": 80
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 89,
+    "name": "アルトエレガン睡眠属性",
+    "rare": 8,
+    "typeId": 9,
+    "type": "スラアク",
+    "bowgun": false,
+    "atk": 665,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 9,
+        "name": "睡眠",
+        "value": 80
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 90,
+    "name": "アルトエレガン爆破属性",
+    "rare": 8,
+    "typeId": 9,
+    "type": "スラアク",
+    "bowgun": false,
+    "atk": 665,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 130
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 91,
+    "name": "テンプスギア無属性",
+    "rare": 8,
+    "typeId": 10,
+    "type": "チャアク",
+    "bowgun": false,
+    "atk": 684,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 92,
+    "name": "テンプスギア火属性",
+    "rare": 8,
+    "typeId": 10,
+    "type": "チャアク",
+    "bowgun": false,
+    "atk": 684,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 93,
+    "name": "テンプスギア水属性",
+    "rare": 8,
+    "typeId": 10,
+    "type": "チャアク",
+    "bowgun": false,
+    "atk": 684,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 94,
+    "name": "テンプスギア雷属性",
+    "rare": 8,
+    "typeId": 10,
+    "type": "チャアク",
+    "bowgun": false,
+    "atk": 684,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 95,
+    "name": "テンプスギア氷属性",
+    "rare": 8,
+    "typeId": 10,
+    "type": "チャアク",
+    "bowgun": false,
+    "atk": 684,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 96,
+    "name": "テンプスギア龍属性",
+    "rare": 8,
+    "typeId": 10,
+    "type": "チャアク",
+    "bowgun": false,
+    "atk": 684,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 300
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 97,
+    "name": "テンプスギア毒属性",
+    "rare": 8,
+    "typeId": 10,
+    "type": "チャアク",
+    "bowgun": false,
+    "atk": 684,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 7,
+        "name": "毒",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 98,
+    "name": "テンプスギア麻痺属性",
+    "rare": 8,
+    "typeId": 10,
+    "type": "チャアク",
+    "bowgun": false,
+    "atk": 684,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 8,
+        "name": "麻痺",
+        "value": 100
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 99,
+    "name": "テンプスギア睡眠属性",
+    "rare": 8,
+    "typeId": 10,
+    "type": "チャアク",
+    "bowgun": false,
+    "atk": 684,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 9,
+        "name": "睡眠",
+        "value": 100
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 100,
+    "name": "テンプスギア爆破属性",
+    "rare": 8,
+    "typeId": 10,
+    "type": "チャアク",
+    "bowgun": false,
+    "atk": 684,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 150
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 101,
+    "name": "ディプリエリカ無属性",
+    "rare": 8,
+    "typeId": 11,
+    "type": "操虫棍",
+    "bowgun": false,
+    "atk": 589,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 102,
+    "name": "ディプリエリカ火属性",
+    "rare": 8,
+    "typeId": 11,
+    "type": "操虫棍",
+    "bowgun": false,
+    "atk": 589,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 103,
+    "name": "ディプリエリカ水属性",
+    "rare": 8,
+    "typeId": 11,
+    "type": "操虫棍",
+    "bowgun": false,
+    "atk": 589,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 104,
+    "name": "ディプリエリカ雷属性",
+    "rare": 8,
+    "typeId": 11,
+    "type": "操虫棍",
+    "bowgun": false,
+    "atk": 589,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 105,
+    "name": "ディプリエリカ氷属性",
+    "rare": 8,
+    "typeId": 11,
+    "type": "操虫棍",
+    "bowgun": false,
+    "atk": 589,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 106,
+    "name": "ディプリエリカ龍属性",
+    "rare": 8,
+    "typeId": 11,
+    "type": "操虫棍",
+    "bowgun": false,
+    "atk": 589,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 280
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 107,
+    "name": "ディプリエリカ毒属性",
+    "rare": 8,
+    "typeId": 11,
+    "type": "操虫棍",
+    "bowgun": false,
+    "atk": 589,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 7,
+        "name": "毒",
+        "value": 130
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 108,
+    "name": "ディプリエリカ麻痺属性",
+    "rare": 8,
+    "typeId": 11,
+    "type": "操虫棍",
+    "bowgun": false,
+    "atk": 589,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 8,
+        "name": "麻痺",
+        "value": 80
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 109,
+    "name": "ディプリエリカ睡眠属性",
+    "rare": 8,
+    "typeId": 11,
+    "type": "操虫棍",
+    "bowgun": false,
+    "atk": 589,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 9,
+        "name": "睡眠",
+        "value": 80
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 110,
+    "name": "ディプリエリカ爆破属性",
+    "rare": 8,
+    "typeId": 11,
+    "type": "操虫棍",
+    "bowgun": false,
+    "atk": 589,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 130
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  }
+]

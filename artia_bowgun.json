@@ -1,0 +1,608 @@
+[
+  {
+    "id": 1,
+    "name": "アムニレーター無属性",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 2,
+    "name": "アムニレーター火属性",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 3,
+    "name": "アムニレーター水属性",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 4,
+    "name": "アムニレーター雷属性",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 5,
+    "name": "アムニレーター氷属性",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 6,
+    "name": "アムニレーター龍属性",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 7,
+    "name": "アムニレーター毒属性",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 8,
+    "name": "アムニレーター麻痺属性",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 9,
+    "name": "アムニレーター睡眠属性",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 10,
+    "name": "アムニレーター爆破属性",
+    "rare": 8,
+    "typeId": 12,
+    "type": "ライトボウガン",
+    "bowgun": true,
+    "atk": 247,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 11,
+    "name": "グライフェン無属性",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 12,
+    "name": "グライフェン火属性",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 13,
+    "name": "グライフェン水属性",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 14,
+    "name": "グライフェン雷属性",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 15,
+    "name": "グライフェン氷属性",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 16,
+    "name": "グライフェン龍属性",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 17,
+    "name": "グライフェン毒属性",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 18,
+    "name": "グライフェン麻痺属性",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 19,
+    "name": "グライフェン睡眠属性",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 20,
+    "name": "グライフェン爆破属性",
+    "rare": 8,
+    "typeId": 13,
+    "type": "ヘヴィボウガン",
+    "bowgun": true,
+    "atk": 285,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 21,
+    "name": "アンギルバイン無属性",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": false,
+    "atk": 228,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 22,
+    "name": "アンギルバイン火属性",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": false,
+    "atk": 228,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 2,
+        "name": "火",
+        "value": 210
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 23,
+    "name": "アンギルバイン水属性",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": false,
+    "atk": 228,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 3,
+        "name": "水",
+        "value": 210
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 24,
+    "name": "アンギルバイン雷属性",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": false,
+    "atk": 228,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 4,
+        "name": "雷",
+        "value": 210
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 25,
+    "name": "アンギルバイン氷属性",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": false,
+    "atk": 228,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 5,
+        "name": "氷",
+        "value": 210
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 26,
+    "name": "アンギルバイン龍属性",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": false,
+    "atk": 228,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 6,
+        "name": "龍",
+        "value": 210
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 27,
+    "name": "アンギルバイン毒属性",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": false,
+    "atk": 228,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 28,
+    "name": "アンギルバイン麻痺属性",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": false,
+    "atk": 228,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 29,
+    "name": "アンギルバイン睡眠属性",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": false,
+    "atk": 228,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  },
+  {
+    "id": 30,
+    "name": "アンギルバイン爆破属性",
+    "rare": 8,
+    "typeId": 14,
+    "type": "弓",
+    "bowgun": false,
+    "atk": 228,
+    "crit": 5,
+    "defBonus": 0,
+    "rebuild": 1,
+    "attr": [
+      {
+        "id": 10,
+        "name": "爆破",
+        "value": 60
+      }
+    ],
+    "slots": [
+      3,
+      3,
+      3
+    ],
+    "skills": []
+  }
+]

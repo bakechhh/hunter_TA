@@ -1,0 +1,290 @@
+[
+  {
+    "id": 3,
+    "name": "闢獣の力",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          7
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          8
+        ]
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "火竜の力",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          84
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          85
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "兇爪竜の力",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          86
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          87
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "護鎖刃竜の命脈",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          92
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          93
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "波衣竜の守護",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          102
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          103
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "煌雷竜の力",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          107
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          108
+        ]
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "name": "雷顎竜の闘志",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          118
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          119
+        ]
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "name": "雪獅子の闘志",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          123
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          124
+        ]
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "鎧竜の守護",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          125
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          126
+        ]
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "name": "凍峰竜の反逆",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          139
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          140
+        ]
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "name": "暗器蛸の力",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          161
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          162
+        ]
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "name": "獄焔蛸の反逆",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          156
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          157
+        ]
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "name": "黒蝕竜の力",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          141
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          142
+        ]
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "name": "鎖刃竜の飢餓",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          158
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          159
+        ]
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "name": "泡狐竜の力",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          164
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          165
+        ]
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "name": "白熾龍の脈動",
+    "req": [
+      {
+        "parts": 2,
+        "skillIds": [
+          166
+        ]
+      },
+      {
+        "parts": 4,
+        "skillIds": [
+          167
+        ]
+      }
+    ]
+  }
+]
