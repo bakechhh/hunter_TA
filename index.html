@@ -5713,12 +5713,19 @@
           // 結果表示
           const ul = document.getElementById('sim-skill-list');
           ul.innerHTML = '';
-          Object.entries(skillTotal)
-            .sort((a, b) => getSkillNameById(a[0]).localeCompare(getSkillNameById(b[0])))
-            .forEach(([id,lv])=>{
-                const name = getSkillNameById(id);
-              ul.innerHTML += `<li>${name} Lv${lv}</li>`;
-            });
+          const sortedSkills = Object.entries(skillTotal)
+            .map(([id, lv]) => ({ 
+                id: id, 
+                name: getSkillNameById(id), 
+                level: lv 
+            }))
+            .sort((a, b) => a.name.localeCompare(b.name));
+          sortedSkills.forEach(skill => {
+            console.log(`Skill ID: ${skill.id}, Name: ${skill.name}, Level: ${skill.level}`);
+            const li = document.createElement('li');
+            li.textContent = `${skill.name} Lv${skill.level}`;
+            ul.appendChild(li);
+          });
         });
 
         // 初期化
