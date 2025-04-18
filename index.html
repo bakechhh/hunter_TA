@@ -1386,6 +1386,20 @@
         </div>
     </div>
 
+    <div id="share-modal-template" style="display:none;">
+        <div class="share-modal">
+          <div class="share-modal-content">
+            <span class="share-modal-close">&times;</span>
+            <h3>共有</h3>
+            <div class="share-details"></div>
+            <div class="share-options"></div>
+            <div id="qrCodeContainer" class="qr-code-container"></div>
+            <div id="shareStatus" class="share-status"></div>
+          </div>
+        </div>
+    </div>
+
+    
     <script>
         // モンスターリスト
         const monsters = [
@@ -5752,6 +5766,7 @@
           // 記録と装備の連携初期化
           initRecordEquipmentIntegration();
         });
+
         // スタイルを追加
         const profileStyle = document.createElement('style');
         profileStyle.textContent = `
@@ -6165,26 +6180,7 @@
         `;
 
         document.head.appendChild(profileStyle);
-
-    </script>
-    <!-- 既存のコンテンツ -->
-
-    <!-- ここに追加 -->
-    <div id="share-modal-template" style="display: none;">
-        <div class="share-modal">
-            <div class="share-modal-content">
-                <span class="share-modal-close">&times;</span>
-                <h3>共有</h3>
-                <div class="share-details">
-                    <!-- 共有内容がここに入ります -->
-                </div>
-                <div class="share-options">
-                    <!-- 共有オプションがここに入ります -->
-                </div>
-                <div id="qrCodeContainer" class="qr-code-container"></div>
-                <div id="shareStatus" class="share-status"></div>
-            </div>
-        </div>
-    </div>
+        
+        </script>
 </body>
 </html>
