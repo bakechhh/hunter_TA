@@ -4312,6 +4312,14 @@
 
             document.body.appendChild(modal);
 
+            // アバター変更のイベントリスナー
+            const avatarUpload = document.getElementById('avatar-upload');
+            const avatarFile = document.getElementById('avatar-file');
+
+            avatarUpload.addEventListener('click', () => {
+                avatarFile.click();
+            });
+
             avatarFile.addEventListener('change', (e) => {
                 if (e.target.files && e.target.files[0]) {
                     const file = e.target.files[0];
@@ -4343,6 +4351,12 @@
                 profileData.mainWeapon = document.getElementById('main-weapon').value;
                 profileData.playTime = parseInt(document.getElementById('play-time').value) || 0;
                 profileData.bio = document.getElementById('bio').value.trim();
+
+                // アバター画像を保存
+                const avatar = document.getElementById('profile-avatar');
+                if (avatar.src) {
+                    profileData.avatarData = avatar.src;
+                }
 
                 // プロフィールを保存
                 saveProfile();
