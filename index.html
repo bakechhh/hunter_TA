@@ -4492,85 +4492,165 @@
         // 装備データをロード
         async function loadEquipmentData() {
             try {
-              // 武器データの読み込み
-              const weaponResponse = await fetch('./weapon_data.json');
-              const weaponData = await weaponResponse.json();
+            console.log('装備データの読み込みを開始します...');
+            
+            // 武器データの読み込み
+            let weaponData = [], bowgunData = [];
+            try {
+                const weaponResponse = await fetch('./weapon_data.json');
+                weaponData = await weaponResponse.json();
+                console.log(`武器データを読み込みました: ${weaponData.length}件`);
+            } catch (e) {
+                console.warn('通常武器データの読み込みに失敗しました:', e);
+                weaponData = [];
+            }
 
-              // ボウガンデータの読み込み
-              const bowgunResponse = await fetch('./weapon_bowgun_data.json');
-              const bowgunData = await bowgunResponse.json();
+            try {
+                const bowgunResponse = await fetch('./weapon_bowgun_data.json');
+                bowgunData = await bowgunResponse.json();
+                console.log(`ボウガンデータを読み込みました: ${bowgunData.length}件`);
+            } catch (e) {
+                console.warn('ボウガンデータの読み込みに失敗しました:', e);
+                bowgunData = [];
+            }
 
-              // 防具データの読み込み
-              const armorResponse = await fetch('./armordata.json');
-              const armorData = await armorResponse.json();
+            // 防具データの読み込み
+            let armorData = [];
+            try {
+                const armorResponse = await fetch('./armordata.json');
+                armorData = await armorResponse.json();
+                console.log(`防具データを読み込みました: ${armorData.length}件`);
+            } catch (e) {
+                console.warn('防具データの読み込みに失敗しました:', e);
+                armorData = [];
+            }
 
-              // 護石データの読み込み
-              const charmResponse = await fetch('./charm.json');
-              const charmData = await charmResponse.json();
+            // 護石データの読み込み
+            let charmData = [];
+            try {
+                const charmResponse = await fetch('./charm.json');
+                charmData = await charmResponse.json();
+                console.log(`護石データを読み込みました: ${charmData.length}件`);
+            } catch (e) {
+                console.warn('護石データの読み込みに失敗しました:', e);
+                charmData = [];
+            }
 
-              // 装飾品データの読み込み
-              const decoWResponse = await fetch('./w_deco.json');
-              const decoWData = await decoWResponse.json();
+            // 装飾品データの読み込み
+            let decoWData = [], decoAData = [];
+            try {
+                const decoWResponse = await fetch('./w_deco.json');
+                decoWData = await decoWResponse.json();
+                console.log(`武器装飾品データを読み込みました: ${decoWData.length}件`);
+            } catch (e) {
+                console.warn('武器装飾品データの読み込みに失敗しました:', e);
+                decoWData = [];
+            }
 
-              const decoAResponse = await fetch('./a_deco.json');
-              const decoAData = await decoAResponse.json();
+            try {
+                const decoAResponse = await fetch('./a_deco.json');
+                decoAData = await decoAResponse.json();
+                console.log(`防具装飾品データを読み込みました: ${decoAData.length}件`);
+            } catch (e) {
+                console.warn('防具装飾品データの読み込みに失敗しました:', e);
+                decoAData = [];
+            }
 
-              // スキルデータの読み込み
-              const weaponSkillResponse = await fetch('./W_skill.json');
-              const weaponSkillData = await weaponSkillResponse.json();
+            // スキルデータの読み込み
+            let weaponSkillData = [], armorSkillData = [];
+            try {
+                const weaponSkillResponse = await fetch('./W_skill.json');
+                weaponSkillData = await weaponSkillResponse.json();
+                console.log(`武器スキルデータを読み込みました: ${weaponSkillData.length}件`);
+            } catch (e) {
+                console.warn('武器スキルデータの読み込みに失敗しました:', e);
+                weaponSkillData = [];
+            }
 
-              const armorSkillResponse = await fetch('./A_skill.json');
-              const armorSkillData = await armorSkillResponse.json();
+            try {
+                const armorSkillResponse = await fetch('./A_skill.json');
+                armorSkillData = await armorSkillResponse.json();
+                console.log(`防具スキルデータを読み込みました: ${armorSkillData.length}件`);
+            } catch (e) {
+                console.warn('防具スキルデータの読み込みに失敗しました:', e);
+                armorSkillData = [];
+            }
 
-              // グループスキルとシリーズスキルの読み込み
-              const groupSkillResponse = await fetch('./group_skill.json');
-              const groupSkillData = await groupSkillResponse.json();
+            // グループスキルとシリーズスキルの読み込み
+            let groupSkillData = [], groupReqData = [], seriesSkillData = [], seriesReqData = [];
+            try {
+                const groupSkillResponse = await fetch('./group_skill.json');
+                groupSkillData = await groupSkillResponse.json();
+                console.log(`グループスキルデータを読み込みました: ${groupSkillData.length}件`);
+            } catch (e) {
+                console.warn('グループスキルデータの読み込みに失敗しました:', e);
+                groupSkillData = [];
+            }
 
-              const groupReqResponse = await fetch('./group_req.json');
-              const groupReqData = await groupReqResponse.json();
+            try {
+                const groupReqResponse = await fetch('./group_req.json');
+                groupReqData = await groupReqResponse.json();
+                console.log(`グループ要件データを読み込みました: ${groupReqData.length}件`);
+            } catch (e) {
+                console.warn('グループ要件データの読み込みに失敗しました:', e);
+                groupReqData = [];
+            }
 
-              const seriesSkillResponse = await fetch('./series_skill.json');
-              const seriesSkillData = await seriesSkillResponse.json();
+            try {
+                const seriesSkillResponse = await fetch('./series_skill.json');
+                seriesSkillData = await seriesSkillResponse.json();
+                console.log(`シリーズスキルデータを読み込みました: ${seriesSkillData.length}件`);
+            } catch (e) {
+                console.warn('シリーズスキルデータの読み込みに失敗しました:', e);
+                seriesSkillData = [];
+            }
 
-              const seriesReqResponse = await fetch('./series_req.json');
-              const seriesReqData = await seriesReqResponse.json();
+            try {
+                const seriesReqResponse = await fetch('./series_req.json');
+                seriesReqData = await seriesReqResponse.json();
+                console.log(`シリーズ要件データを読み込みました: ${seriesReqData.length}件`);
+            } catch (e) {
+                console.warn('シリーズ要件データの読み込みに失敗しました:', e);
+                seriesReqData = [];
+            }
 
-              // データを保存
-              window.equipmentDB = {
-                  weapons: {
-                      normal: weaponData,
-                      bowgun: bowgunData
-                  },
-                  armors: armorData,
-                  charms: charmData,
-                  decorations: {
-                      weapon: decoWData,
-                      armor: decoAData
-                  },
-                  skills: {
-                      weapon: weaponSkillData,
-                      armor: armorSkillData,
-                      group: groupSkillData,
-                      series: seriesSkillData
-                  },
-                  requirements: {
-                      group: groupReqData,
-                      series: seriesReqData
-                  }
-              };
+            // データを保存
+            window.equipmentDB = {
+                weapons: {
+                normal: weaponData,
+                bowgun: bowgunData
+                },
+                armors: armorData,
+                charms: charmData,
+                decorations: {
+                weapon: decoWData,
+                armor: decoAData
+                },
+                skills: {
+                weapon: weaponSkillData,
+                armor: armorSkillData,
+                group: groupSkillData,
+                series: seriesSkillData
+                },
+                requirements: {
+                group: groupReqData,
+                series: seriesReqData
+                }
+            };
 
-              console.log('装備データを読み込みました');
-              return true;
-          } catch (error) {
-              console.error('装備データの読み込みに失敗しました:', error);
-              return false;
-          }
+            console.log('装備データの読み込みが完了しました');
+            return true;
+            } catch (error) {
+            console.error('装備データの読み込みに失敗しました:', error);
+            return false;
+            }
         }
+        // スキルIDからスキル名を取得する関数
         function getSkillNameById(id) {
             if (!window.equipmentDB || !window.equipmentDB.skills) {
-            return `ID${id}`;
+                return `ID${id}`;
             }
-    
+            
             // 全スキルリストから検索
             const allSkills = [
                 ...(window.equipmentDB.skills.weapon || []),
@@ -4578,17 +4658,58 @@
                 ...(window.equipmentDB.skills.group || []),
                 ...(window.equipmentDB.skills.series || [])
             ];
-    
+            
             // 配列から検索
             const skill = allSkills.find(s => s.id == id);
             if (skill) {
                 return skill.name;
             }
-    
+            
             // それでも見つからない場合はIDを返す
             return `ID${id}`;
         }
-
+        // シミュレーション結果をプリセットとして保存する関数
+        function saveSimulationAsPreset() {
+        // 装備データを取得
+        const equipmentData = getSimulationEquipmentData();
+        
+        if (!equipmentData || !equipmentData.equipment || !Object.values(equipmentData.equipment).some(item => item)) {
+            alert('保存できる装備データがありません。装備を選択してシミュレーションを実行してください。');
+            return;
+        }
+        
+        // プリセット名入力ダイアログを表示
+        const presetName = prompt('装備プリセット名を入力してください:', 
+            equipmentData.equipment.weapon ? equipmentData.equipment.weapon.name : '新しい装備セット');
+            
+        if (!presetName) return; // キャンセルされた場合
+        
+        // プリセットデータを作成
+        const newPreset = {
+            id: Date.now().toString(),
+            name: presetName,
+            created: new Date().toISOString(),
+            lastUsed: new Date().toISOString(),
+            equipment: equipmentData.equipment,
+            skills: equipmentData.skills,
+            notes: ""
+        };
+        
+        // プリセットを保存
+        equipmentPresets.push(newPreset);
+        savePresets();
+        
+        // プリセットリストを更新
+        if (document.getElementById('presets-container')) {
+            updatePresetList('presets-container');
+        }
+        
+        // プリセットセレクトボックスを更新
+        updatePresetSelect();
+        
+        // 成功メッセージを表示
+        alert(`装備プリセット「${presetName}」を保存しました！`);
+        }
         // 装備選択ダイアログでJSONデータを利用
         function _show_equipment_selector(data_list, equip_type) {
             // 既存の実装に加えて、window.equipmentDBからデータを取得する場合の処理を追加
@@ -4670,6 +4791,79 @@
                 };
             }
         }
+        // グループスキルとシリーズスキルの発動を計算する関数
+        function calculateExtraSkills(head, body, arms, waist, legs) {
+        if (!window.equipmentDB || !window.equipmentDB.requirements) {
+            console.error('装備DB中にrequirementsが見つかりません');
+            return [];
+        }
+        
+        const activatedSkillIds = [];
+        
+        try {
+            // グループIDとシリーズIDのカウント
+            const groupCounts = {};
+            const seriesCounts = {};
+            
+            // 各部位のデータ集計
+            const parts = { head, body, arms, waist, legs };
+            
+            for (const [partName, armor] of Object.entries(parts)) {
+            if (!armor) continue;
+            
+            // グループID
+            if (armor.groupId) {
+                groupCounts[armor.groupId] = (groupCounts[armor.groupId] || 0) + 1;
+            }
+            
+            // シリーズID
+            if (armor.seriesId) {
+                seriesCounts[armor.seriesId] = (seriesCounts[armor.seriesId] || 0) + 1;
+            }
+            }
+            
+            // グループスキルの計算
+            if (window.equipmentDB.requirements.group) {
+            for (const [groupId, count] of Object.entries(groupCounts)) {
+                const groupReqs = window.equipmentDB.requirements.group.find(g => g.id == groupId);
+                if (groupReqs && groupReqs.req) {
+                for (const req of groupReqs.req) {
+                    if (count >= req.parts) {
+                    // 必要部位数を満たしている場合、スキルを追加
+                    if (req.skillIds) {
+                        activatedSkillIds.push(...req.skillIds);
+                    }
+                    }
+                }
+                }
+            }
+            }
+            
+            // シリーズスキルの計算
+            if (window.equipmentDB.requirements.series) {
+            for (const [seriesId, count] of Object.entries(seriesCounts)) {
+                const seriesReqs = window.equipmentDB.requirements.series.find(s => s.id == seriesId);
+                if (seriesReqs && seriesReqs.req) {
+                for (const req of seriesReqs.req) {
+                    if (count >= req.parts) {
+                    // 必要部位数を満たしている場合、スキルを追加
+                    if (req.skillIds) {
+                        activatedSkillIds.push(...req.skillIds);
+                    }
+                    }
+                }
+                }
+            }
+            }
+            
+            console.log('発動した追加スキル:', activatedSkillIds);
+            return activatedSkillIds;
+            
+        } catch (error) {
+            console.error('追加スキル計算中にエラー:', error);
+            return [];
+        }
+        }
         // スキル名とレベル情報を取得する関数
         function getSkillInfo(skillId) {
             if (!window.equipmentDB || !window.equipmentDB.skills) {
@@ -4687,7 +4881,8 @@
                 ...safeArray(window.equipmentDB.skills.series)
             ];
 
-            const skill = allSkills.find(s => s.id === skillId);
+            // 数値と文字列の比較を許容するため == を使用
+            const skill = allSkills.find(s => s.id == skillId);
 
             if (skill) {
                 return {
@@ -4699,6 +4894,189 @@
             }
 
             return { name: `スキルID: ${skillId}`, maxLevel: 1 };
+        }
+
+        // 実行ボタン
+        document.getElementById('run-simulation').addEventListener('click', () => {
+        const selected = {};
+        const buiMap = { head:'頭', body:'胴', arms:'腕', waist:'腰', legs:'脚' };
+        ['weapon','head','body','arms','waist','legs','charm'].forEach(part => {
+            const id = document.getElementById(`sim-${part}`).value;
+            if (!id) { selected[part] = null; return; }
+
+            const pool =
+            part === 'weapon'
+                ? [...window.equipmentDB.weapons.normal, ...window.equipmentDB.weapons.bowgun]
+                : part === 'charm'
+                    ? window.equipmentDB.charms
+                    : window.equipmentDB.armors.filter(a => a.bui === buiMap[part]);
+            selected[part] = pool.find(e => e.id == id) || null;
+        });
+        // 装飾品は deco-slots-<part> 内の select から取得
+            const decorations = {};
+            ['weapon','head','body','arms','waist','legs']   // ← charm はスロットなし
+                .forEach(part => {
+                const container = document.getElementById(`deco-slots-${part}`);
+                if (!container) { decorations[part] = []; return; }  // 念のため
+
+                decorations[part] = Array.from(
+                container.querySelectorAll('select')
+                ).map(sel => {
+                    const decoId = sel.value;
+                    if (!decoId) return null;
+                    return window.equipmentDB.decorations.weapon
+                            .concat(window.equipmentDB.decorations.armor)
+                            .find(d => d.id == decoId) || null;
+                });
+            });
+
+        // 通常スキル集計
+        let skillTotal = {};
+        Object.values(selected).forEach(equip=>{
+            if (equip && equip.skills) {
+            equip.skills.forEach(s=>{
+                skillTotal[s.id] = (skillTotal[s.id]||0) + s.lv;
+            });
+            }
+        });
+        
+        // 装飾品スキル集計
+        Object.values(decorations).flat().forEach(deco=>{
+            if (deco && deco.skills) {
+            deco.skills.forEach(s=>{
+                skillTotal[s.id] = (skillTotal[s.id]||0) + s.lv;
+            });
+            }
+        });
+        
+        // グループスキルとシリーズスキルの計算
+        const extraSkills = calculateExtraSkills(
+            selected.head, 
+            selected.body, 
+            selected.arms, 
+            selected.waist, 
+            selected.legs
+        );
+        
+        // 追加スキルを合計に追加
+        extraSkills.forEach(skillId => {
+            skillTotal[skillId] = (skillTotal[skillId] || 0) + 1;
+        });
+
+        // 結果表示
+        const ul = document.getElementById('sim-skill-list');
+        ul.innerHTML = '';
+        Object.entries(skillTotal)
+            .sort((a, b) => getSkillNameById(a[0]).localeCompare(getSkillNameById(b[0])))
+            .forEach(([id,lv])=>{
+            const name = getSkillNameById(id);
+            // デバッグログ追加
+            console.log(`Skill ID: ${id}, Name: ${name}, Level: ${lv}`);
+            ul.innerHTML += `<li>${name} Lv${lv}</li>`;
+            });
+            
+        // 「プリセットとして保存」ボタンを表示
+        const resultDiv = document.getElementById('simulation-results');
+        if (resultDiv && !document.getElementById('save-as-preset-btn')) {
+            const saveBtn = document.createElement('button');
+            saveBtn.id = 'save-as-preset-btn';
+            saveBtn.className = 'btn btn-primary';
+            saveBtn.textContent = 'この装備をプリセットとして保存';
+            saveBtn.style.marginTop = '1rem';
+            saveBtn.onclick = () => saveSimulationAsPreset();
+            
+            resultDiv.appendChild(saveBtn);
+        }
+        });
+        // スキルデータをデバッグ表示する関数
+        function debugSkillData() {
+            if (!window.equipmentDB || !window.equipmentDB.skills) {
+                console.error('装備DBまたはスキルデータが読み込まれていません');
+                return;
+            }
+            
+            console.log('スキルデータ構造:', window.equipmentDB.skills);
+            
+            // サンプルスキルIDを表示してみる
+            const sampleIds = [18, 32, 94, 95];
+            console.log('スキル名サンプル:');
+            sampleIds.forEach(id => {
+                console.log(`ID: ${id}, Name: ${getSkillNameById(id)}`);
+            });
+            
+            // 各カテゴリのスキル数を表示
+            const weaponSkills = window.equipmentDB.skills.weapon || [];
+            const armorSkills = window.equipmentDB.skills.armor || [];
+            const groupSkills = window.equipmentDB.skills.group || [];
+            const seriesSkills = window.equipmentDB.skills.series || [];
+            
+            console.log(`武器スキル数: ${weaponSkills.length}`);
+            console.log(`防具スキル数: ${armorSkills.length}`);
+            console.log(`グループスキル数: ${groupSkills.length}`);
+            console.log(`シリーズスキル数: ${seriesSkills.length}`);
+            
+            // スキルIDからスキル名への変換テスト
+            console.log('スキル変換テスト:');
+            
+            // 全カテゴリのスキルを1つずつ表示
+            if (weaponSkills.length > 0) {
+                const ws = weaponSkills[0];
+                console.log(`武器スキルサンプル - ID: ${ws.id}, Raw Name: ${ws.name}, 変換結果: ${getSkillNameById(ws.id)}`);
+            }
+            
+            if (armorSkills.length > 0) {
+                const as = armorSkills[0];
+                console.log(`防具スキルサンプル - ID: ${as.id}, Raw Name: ${as.name}, 変換結果: ${getSkillNameById(as.id)}`);
+            }
+            
+            if (groupSkills.length > 0) {
+                const gs = groupSkills[0];
+                console.log(`グループスキルサンプル - ID: ${gs.id}, Raw Name: ${gs.name}, 変換結果: ${getSkillNameById(gs.id)}`);
+            }
+            
+            if (seriesSkills.length > 0) {
+                const ss = seriesSkills[0];
+                console.log(`シリーズスキルサンプル - ID: ${ss.id}, Raw Name: ${ss.name}, 変換結果: ${getSkillNameById(ss.id)}`);
+            }
+        }
+
+        // スキル変換テスト機能
+        function setupSkillConversionTest() {
+            const testButton = document.getElementById('test-skill-conversion');
+            if (!testButton) return;
+            
+            testButton.addEventListener('click', () => {
+                const skillIdInput = document.getElementById('test-skill-id');
+                const resultDiv = document.getElementById('skill-conversion-result');
+                
+                if (!skillIdInput || !resultDiv) return;
+                
+                const skillId = skillIdInput.value.trim();
+                if (!skillId) {
+                    resultDiv.textContent = 'スキルIDを入力してください';
+                    resultDiv.style.color = 'red';
+                    return;
+                }
+                
+                try {
+                    const skillName = getSkillNameById(skillId);
+                    resultDiv.textContent = `変換結果: "${skillName}"`;
+                    resultDiv.style.color = skillName.startsWith('ID') ? 'red' : 'green';
+                    
+                    // 詳細情報を取得
+                    const skillInfo = getSkillInfo(skillId);
+                    console.log('スキル詳細情報:', skillInfo);
+                    
+                    // スキルが見つかった場合は詳細を表示
+                    if (!skillName.startsWith('ID')) {
+                        resultDiv.textContent += ` (最大Lv: ${skillInfo.maxLevel})`;
+                    }
+                } catch (error) {
+                    console.error('スキル変換エラー:', error);
+                    resultDiv.textContent = `エラー: ${error.message}`;
+                    resultDiv.style.color = 'red';
+                }
+            });
         }
         // 共有URLの処理機能拡張
         function processShareLink() {
@@ -5102,139 +5480,109 @@
 
         // シミュレーションから装備データを取得
         function getSimulationEquipmentData() {
-            // シミュレーションタブを探す
-            let simTab = null;
-            for (const notebook of document.querySelectorAll('.TNotebook')) {
-                for (let i = 0; i < notebook.tabs.length; i++) {
-                    if (notebook.tab(notebook.tabs[i], 'text') === 'シミュレーション') {
-                        simTab = notebook.nametowidget(notebook.tabs[i]);
-                        break;
-                    }
+            try {
+                // シミュレーションタブのDOM要素
+                const simTab = document.getElementById('simulation');
+                
+                if (!simTab) {
+                    console.error('シミュレーションタブが見つかりません');
+                    return null;
                 }
-                if (simTab) break;
-            }
 
-            if (!simTab) {
-                // シミュレーションタブが見つからない場合、別の方法で探す
-                for (const label of document.querySelectorAll('.ttk-tab')) {
-                    if (label.textContent === 'シミュレーション') {
-                        // このタブを含む親要素を探す
-                        let parent = label.parentElement;
-                        while (parent && !parent.classList.contains('ttk-notebook')) {
-                            parent = parent.parentElement;
-                        }
+                // 装備データを構築
+                const equipmentData = {
+                    equipment: {
+                        weapon: null,
+                        head: null,
+                        body: null,
+                        arms: null,
+                        waist: null,
+                        legs: null,
+                        charm: null
+                    },
+                    skills: []
+                };
 
-                        if (parent) {
-                            // 対応するtab-content要素を探す
-                            const index = Array.from(parent.querySelectorAll('.ttk-tab')).indexOf(label);
-                            const contents = parent.querySelectorAll('.tab-content');
-                            if (index >= 0 && index < contents.length) {
-                                simTab = contents[index];
+                // 各部位のselectエレメントから選択された装備を取得
+                const parts = ['weapon', 'head', 'body', 'arms', 'waist', 'legs', 'charm'];
+                const buiMap = { head: '頭', body: '胴', arms: '腕', waist: '腰', legs: '脚' };
+                
+                parts.forEach(part => {
+                    const selectElem = document.getElementById(`sim-${part}`);
+                    if (!selectElem || !selectElem.value) return;
+                    
+                    const equipId = selectElem.value;
+                    let equipment;
+                    
+                    // 部位タイプに応じた装備プールから検索
+                    if (part === 'weapon') {
+                        equipment = [...window.equipmentDB.weapons.normal, ...window.equipmentDB.weapons.bowgun]
+                            .find(e => e.id == equipId);
+                    } else if (part === 'charm') {
+                        equipment = window.equipmentDB.charms.find(e => e.id == equipId);
+                    } else {
+                        equipment = window.equipmentDB.armors
+                            .filter(a => a.bui === buiMap[part])
+                            .find(e => e.id == equipId);
+                    }
+                    
+                    if (equipment) {
+                        equipmentData.equipment[part] = {
+                            id: equipment.id,
+                            name: equipment.name
+                        };
+                        
+                        // 武器の場合は武器種も保存
+                        if (part === 'weapon') {
+                            const weaponTypeElem = document.getElementById('weapon-select');
+                            if (weaponTypeElem && weaponTypeElem.value) {
+                                equipmentData.equipment.weapon.type = weaponTypeElem.value;
+                            } else {
+                                // 武器種が不明の場合は、装備名から推測
+                                const weaponName = equipment.name;
+                                if (weaponName.includes('大剣')) equipmentData.equipment.weapon.type = '大剣';
+                                else if (weaponName.includes('太刀')) equipmentData.equipment.weapon.type = '太刀';
+                                else if (weaponName.includes('片手剣')) equipmentData.equipment.weapon.type = '片手剣';
+                                else if (weaponName.includes('双剣')) equipmentData.equipment.weapon.type = '双剣';
+                                else if (weaponName.includes('ハンマー')) equipmentData.equipment.weapon.type = 'ハンマー';
+                                else if (weaponName.includes('狩猟笛')) equipmentData.equipment.weapon.type = '狩猟笛';
+                                else if (weaponName.includes('ランス')) equipmentData.equipment.weapon.type = 'ランス';
+                                else if (weaponName.includes('ガンランス')) equipmentData.equipment.weapon.type = 'ガンランス';
+                                else if (weaponName.includes('スラッシュアックス')) equipmentData.equipment.weapon.type = 'スラッシュアックス';
+                                else if (weaponName.includes('チャージアックス')) equipmentData.equipment.weapon.type = 'チャージアックス';
+                                else if (weaponName.includes('操虫棍')) equipmentData.equipment.weapon.type = '操虫棍';
+                                else if (weaponName.includes('ライトボウガン')) equipmentData.equipment.weapon.type = 'ライトボウガン';
+                                else if (weaponName.includes('ヘビィボウガン')) equipmentData.equipment.weapon.type = 'ヘビィボウガン';
+                                else if (weaponName.includes('弓')) equipmentData.equipment.weapon.type = '弓';
+                                else equipmentData.equipment.weapon.type = '不明';
                             }
                         }
-                        break;
                     }
-                }
-            }
-
-            if (!simTab) {
-                console.error('シミュレーションタブが見つかりません');
-                return null;
-            }
-
-            // 装備データを探す
-            const equipmentData = {
-                equipment: {
-                    weapon: null,
-                    head: null,
-                    body: null,
-                    arms: null,
-                    waist: null,
-                    legs: null,
-                    charm: null
-                },
-                skills: []
-            };
-
-            // 装備フレームを探す
-            let equipFrame = null;
-            for (const frame of simTab.querySelectorAll('.ttk-labelframe')) {
-                if (frame.getAttribute('text') === '装備選択') {
-                    equipFrame = frame;
-                    break;
-                }
-            }
-
-            if (!equipFrame) {
-                console.error('装備フレームが見つかりません');
-                return null;
-            }
-
-            // 各装備行を分析
-            const equipRows = equipFrame.querySelectorAll('.ttk-frame');
-            for (const row of equipRows) {
-                // 装備タイプを特定
-                let equipType = null;
-                for (const label of row.querySelectorAll('.ttk-label')) {
-                    const text = label.textContent.trim();
-                    if (text === '武器:') equipType = 'weapon';
-                    else if (text === '頭:') equipType = 'head';
-                    else if (text === '胴:') equipType = 'body';
-                    else if (text === '腕:') equipType = 'arms';
-                    else if (text === '腰:') equipType = 'waist';
-                    else if (text === '脚:') equipType = 'legs';
-                    else if (text === '護石:') equipType = 'charm';
-
-                    if (equipType) break;
-                }
-
-                if (!equipType) continue;
-
-                // 装備名を取得
-                const entry = row.querySelector('.ttk-entry');
-                if (entry && entry.value && entry.value !== '未選択') {
-                    equipmentData.equipment[equipType] = {
-                        id: Date.now().toString() + Math.random().toString(36).substr(2, 5), // 一時的なID
-                        name: entry.value
-                    };
-
-                    // 武器の場合は武器種も保存
-                    if (equipType === 'weapon') {
-                        const weaponTypeElem = document.getElementById('weapon-select');
-                        if (weaponTypeElem) {
-                            equipmentData.equipment.weapon.type = weaponTypeElem.value;
-                        }
-                    }
-                }
-            }
-
-            // スキルフレームを探す
-            let skillFrame = null;
-            for (const frame of simTab.querySelectorAll('.ttk-labelframe')) {
-                if (frame.getAttribute('text') === '装備スキル') {
-                    skillFrame = frame;
-                    break;
-                }
-            }
-
-            if (skillFrame) {
-                // スキル一覧を取得
-                const skillTree = skillFrame.querySelector('.ttk-treeview');
-                if (skillTree) {
-                    const skillItems = skillTree.querySelectorAll('item');
-                    for (const item of skillItems) {
-                        const values = skillTree.item(item, 'values');
-                        if (values && values.length >= 2) {
+                });
+                
+                // スキルリストを取得
+                const skillListElem = document.getElementById('sim-skill-list');
+                if (skillListElem) {
+                    const skillItems = skillListElem.querySelectorAll('li');
+                    skillItems.forEach(item => {
+                        const text = item.textContent.trim();
+                        const match = text.match(/(.+) Lv(\d+)/);
+                        if (match && match.length >= 3) {
                             equipmentData.skills.push({
-                                name: values[0],
-                                level: parseInt(values[1]) || 1
+                                name: match[1],
+                                level: parseInt(match[2]) || 1
                             });
                         }
-                    }
+                    });
                 }
+                
+                console.log('取得した装備データ:', equipmentData);
+                return equipmentData;
+                
+            } catch (error) {
+                console.error('装備データの取得中にエラーが発生しました:', error);
+                return null;
             }
-
-            return equipmentData;
         }
 
         // ================================
@@ -5368,10 +5716,17 @@
             const ok = await loadEquipmentData();
             if (!ok) {
                 alert('装備データの読み込みに失敗しました');
-            return;
+                return;
             }
+            
+            // データが正しく読み込まれたか確認
+            debugSkillData();
+            
             // UI を組み立て
             initSimulationUI();
+            
+            // スキル変換テスト機能をセットアップ
+            setupSkillConversionTest();
         });
 
         // 記録の共有拡張（装備データを含める）
