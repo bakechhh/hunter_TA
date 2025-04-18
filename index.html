@@ -4966,61 +4966,15 @@
         // 結果表示
         const ul = document.getElementById('sim-skill-list');
         ul.innerHTML = '';
-
-        // デバッグ出力用に全スキル集計をコンソールに表示
-        console.log('スキル集計結果:', skillTotal);
-
-        // 通常スキルと追加スキルを分離する
-        const normalSkillIds = Object.keys(skillTotal).filter(id => !extraSkills.includes(parseInt(id)) && !extraSkills.includes(id));
-        const bonusSkillIds = extraSkills;
-
-        // スキルを名前順にソートして表示
-        const sortedSkills = normalSkillIds
-        .map(id => ({  
-            id: id, 
-            name: getSkillNameById(id), 
-            level: skillTotal[id] 
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name));
-
-        // HTML要素に追加
-        sortedSkills.forEach(skill => {
-            console.log(`通常スキル ID: ${skill.id}, Name: ${skill.name}, Level: ${skill.level}`);
-            const li = document.createElement('li');
-            li.textContent = `${skill.name} Lv${skill.level}`;
-            ul.appendChild(li);
-        });
-        // セットボーナススキルを表示（存在する場合のみ）
-        if (bonusSkillIds.length > 0) {
-        const extraSkillHeader = document.createElement('h4');
-        extraSkillHeader.textContent = 'セットボーナススキル:';
-        extraSkillHeader.style.marginTop = '1rem';
-        extraSkillHeader.style.color = '#c39b60'; // 強調表示
-        ul.parentNode.insertBefore(extraSkillHeader, ul.nextSibling);
-        
-        const extraSkillUl = document.createElement('ul');
-        extraSkillUl.id = 'extra-skill-list';
-        extraSkillUl.style.marginBottom = '1rem';
-        ul.parentNode.insertBefore(extraSkillUl, extraSkillHeader.nextSibling);
-        
-        // 追加スキルを名前順にソート
-        const sortedExtraSkills = bonusSkillIds
-            .map(id => ({
-            id: id,
-            name: getSkillNameById(id)
-            }))
-            .sort((a, b) => a.name.localeCompare(b.name));
-        
-        // 追加スキルの追加
-        sortedExtraSkills.forEach(skill => {
-            console.log(`セットボーナス ID: ${skill.id}, Name: ${skill.name}`);
-            const li = document.createElement('li');
-            li.textContent = `${skill.name} Lv1`;
-            li.style.color = '#c39b60'; // 強調表示
-            li.style.fontWeight = 'bold'; // 太字表示
-            extraSkillUl.appendChild(li);
-        });
-        }
+        Object.entries(skillTotal)
+            .sort((a, b) => getSkillNameById(a[0]).localeCompare(getSkillNameById(b[0])))
+            .forEach(([id,lv])=>{
+            const name = getSkillNameById(id);
+            // デバッグログ追加
+            console.log(`Skill ID: ${id}, Name: ${name}, Level: ${lv}`);
+            ul.innerHTML += `<li>${name} Lv${lv}</li>`;
+            });
+            
         // 「プリセットとして保存」ボタンを表示
         const resultDiv = document.getElementById('simulation-results');
         if (resultDiv && !document.getElementById('save-as-preset-btn')) {
@@ -5747,61 +5701,12 @@
           // 結果表示
           const ul = document.getElementById('sim-skill-list');
           ul.innerHTML = '';
-          // デバッグ出力用に全スキル集計をコンソールに表示
-          console.log('スキル集計結果:', skillTotal);
-
-          // 通常スキルと追加スキルを分離する
-          const normalSkillIds = Object.keys(skillTotal).filter(id => !extraSkills.includes(parseInt(id)) && !extraSkills.includes(id));
-          const bonusSkillIds = extraSkills;
-
-          // スキルを名前順にソートして表示（通常スキル）
-          const sortedSkills = normalSkillIds
-          .map(id => ({ 
-              id: id, 
-              name: getSkillNameById(id), 
-              level: skillTotal[id] 
-          }))
-          .sort((a, b) => a.name.localeCompare(b.name));
-
-          // HTML要素に追加（通常スキル）
-          sortedSkills.forEach(skill => {
-          console.log(`通常スキル ID: ${skill.id}, Name: ${skill.name}, Level: ${skill.level}`);
-          const li = document.createElement('li');
-          li.textContent = `${skill.name} Lv${skill.level}`;
-          ul.appendChild(li);
-          });
-
-          // セットボーナススキルを表示（存在する場合のみ）
-          if (bonusSkillIds.length > 0) {
-          const extraSkillHeader = document.createElement('h4');
-          extraSkillHeader.textContent = 'セットボーナススキル:';
-          extraSkillHeader.style.marginTop = '1rem';
-          extraSkillHeader.style.color = '#c39b60'; // 強調表示
-          ul.parentNode.insertBefore(extraSkillHeader, ul.nextSibling);
-          
-          const extraSkillUl = document.createElement('ul');
-          extraSkillUl.id = 'extra-skill-list';
-          extraSkillUl.style.marginBottom = '1rem';
-          ul.parentNode.insertBefore(extraSkillUl, extraSkillHeader.nextSibling);
-          
-          // 追加スキルを名前順にソート
-          const sortedExtraSkills = bonusSkillIds
-              .map(id => ({
-              id: id,
-              name: getSkillNameById(id)
-              }))
-              .sort((a, b) => a.name.localeCompare(b.name));
-          
-          // 追加スキルの追加
-          sortedExtraSkills.forEach(skill => {
-              console.log(`セットボーナス ID: ${skill.id}, Name: ${skill.name}`);
-              const li = document.createElement('li');
-              li.textContent = `${skill.name} Lv1`;
-              li.style.color = '#c39b60'; // 強調表示
-              li.style.fontWeight = 'bold'; // 太字表示
-              extraSkillUl.appendChild(li);
-          });
-          }
+          Object.entries(skillTotal)
+            .sort((a, b) => getSkillNameById(a[0]).localeCompare(getSkillNameById(b[0])))
+            .forEach(([id,lv])=>{
+                const name = getSkillNameById(id);
+              ul.innerHTML += `<li>${name} Lv${lv}</li>`;
+            });
         });
 
         // 初期化
