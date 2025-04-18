@@ -4567,19 +4567,26 @@
           }
         }
         function getSkillNameById(id) {
-            const skills = window.equipmentDB && window.equipmentDB.skills;
-
-            // 配列形式  [{id:1,name:'攻撃'}, …]
-            if (Array.isArray(skills)) {
-                const hit = skills.find(s => s.id == id);      // == で数値/文字列の差を吸収
-                return hit ? hit.name : `ID${id}`;
+            if (!window.equipmentDB || !window.equipmentDB.skills) {
+            return `ID${id}`;
             }
-
-            // 辞書形式  { "1": {name:"攻撃",…}, "2":{…} }
-            if (skills && typeof skills === 'object') {
-                return skills[id] ? skills[id].name : `ID${id}`;
+    
+            // 全スキルリストから検索
+            const allSkills = [
+                ...(window.equipmentDB.skills.weapon || []),
+                ...(window.equipmentDB.skills.armor || []),
+                ...(window.equipmentDB.skills.group || []),
+                ...(window.equipmentDB.skills.series || [])
+            ];
+    
+            // 配列から検索
+            const skill = allSkills.find(s => s.id == id);
+            if (skill) {
+                return skill.name;
             }
-            return `ID${id}`;        // 万一どちらでもない場合
+    
+            // それでも見つからない場合はIDを返す
+            return `ID${id}`;
         }
 
         // 装備選択ダイアログでJSONデータを利用
@@ -4669,12 +4676,15 @@
                 return { name: `不明なスキル(${skillId})`, maxLevel: 1 };
             }
 
+            // 安全に配列連結するためのヘルパー関数
+            const safeArray = arr => Array.isArray(arr) ? arr : [];
+
             // 全スキルから検索
             const allSkills = [
-                ...window.equipmentDB.skills.weapon,
-                ...window.equipmentDB.skills.armor,
-                ...window.equipmentDB.skills.group,
-                ...window.equipmentDB.skills.series
+                ...safeArray(window.equipmentDB.skills.weapon),
+                ...safeArray(window.equipmentDB.skills.armor),
+                ...safeArray(window.equipmentDB.skills.group),
+                ...safeArray(window.equipmentDB.skills.series)
             ];
 
             const skill = allSkills.find(s => s.id === skillId);
