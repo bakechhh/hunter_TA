@@ -5290,16 +5290,22 @@
             selected[part] = pool.find(e => e.id == id) || null;
           });
           // 装飾品は deco-slots-<part> 内の select から取得
-          const decorations = {};
-          Object.keys(selected).forEach(part => {
-            const container = document.getElementById(`deco-slots-${part}`);
-            decorations[part] = Array.from(container.querySelectorAll('select')).map(s=>{
-              const decoId = s.value;
-              return decoId
-                ? window.equipmentDB.decorations.weapon.concat(window.equipmentDB.decorations.armor).find(d=>d.id==decoId)
-                : null;
+            const decorations = {};
+            ['weapon','head','body','arms','waist','legs']   // ← charm はスロットなし
+                .forEach(part => {
+                const container = document.getElementById(`deco-slots-${part}`);
+                if (!container) { decorations[part] = []; return; }  // 念のため
+
+                decorations[part] = Array.from(
+                container.querySelectorAll('select')
+                ).map(sel => {
+                    const decoId = sel.value;
+                    if (!decoId) return null;
+                    return window.equipmentDB.decorations.weapon
+                            .concat(window.equipmentDB.decorations.armor)
+                            .find(d => d.id == decoId) || null;
+                });
             });
-          });
 
           // スキル集計
           let skillTotal = {};
