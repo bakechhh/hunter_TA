@@ -4254,70 +4254,188 @@
         // 装備データをロード
         async function loadEquipmentData() {
             try {
-                // 武器データの読み込み
-                const weaponResponse = await fetch('./weapon_data.json');
-                const weaponData = await weaponResponse.json();
+              // 武器データの読み込み
+              const weaponResponse = await fetch('./weapon_data.json');
+              const weaponData = await weaponResponse.json();
 
-                // 防具データの読み込み
-                const armorResponse = await fetch('./armordata.json');
-                const armorData = await armorResponse.json();
+              // ボウガンデータの読み込み
+              const bowgunResponse = await fetch('./weapon_bowgun_data.json');
+              const bowgunData = await bowgunResponse.json();
 
-                // 護石データの読み込み
-                const charmResponse = await fetch('./charm.json');
-                const charmData = await charmResponse.json();
+              // 防具データの読み込み
+              const armorResponse = await fetch('./armordata.json');
+              const armorData = await armorResponse.json();
 
-                // 装飾品データの読み込み
-                const decoWResponse = await fetch('./w_deco.json');
-                const decoWData = await decoWResponse.json();
+              // 護石データの読み込み
+              const charmResponse = await fetch('./charm.json');
+              const charmData = await charmResponse.json();
 
-                const decoAResponse = await fetch('./a_deco.json');
-                const decoAData = await decoAResponse.json();
+              // 装飾品データの読み込み
+              const decoWResponse = await fetch('./w_deco.json');
+              const decoWData = await decoWResponse.json();
 
-                // スキルデータの読み込み
-                const weaponSkillResponse = await fetch('./W_skill.json');
-                const weaponSkillData = await weaponSkillResponse.json();
+              const decoAResponse = await fetch('./a_deco.json');
+              const decoAData = await decoAResponse.json();
 
-                const armorSkillResponse = await fetch('./A_skill.json');
-                const armorSkillData = await armorSkillResponse.json();
+              // スキルデータの読み込み
+              const weaponSkillResponse = await fetch('./W_skill.json');
+              const weaponSkillData = await weaponSkillResponse.json();
 
-                // データを保存
-                window.equipmentDB = {
-                    weapons: weaponData,
-                    armors: armorData,
-                    charms: charmData,
-                    decorations: {
-                        weapon: decoWData,
-                        armor: decoAData
-                    },
-                    skills: {
-                        weapon: weaponSkillData,
-                        armor: armorSkillData
-                    }
-                };
+              const armorSkillResponse = await fetch('./A_skill.json');
+              const armorSkillData = await armorSkillResponse.json();
 
-                console.log('装備データを読み込みました');
-                return true;
-            } catch (error) {
-                console.error('装備データの読み込みに失敗しました:', error);
-                return false;
-            }
+              // グループスキルとシリーズスキルの読み込み
+              const groupSkillResponse = await fetch('./group_skill.json');
+              const groupSkillData = await groupSkillResponse.json();
+
+              const groupReqResponse = await fetch('./group_req.json');
+              const groupReqData = await groupReqResponse.json();
+
+              const seriesSkillResponse = await fetch('./series_skill.json');
+              const seriesSkillData = await seriesSkillResponse.json();
+
+              const seriesReqResponse = await fetch('./series_req.json');
+              const seriesReqData = await seriesReqResponse.json();
+
+              // データを保存
+              window.equipmentDB = {
+                  weapons: {
+                      normal: weaponData,
+                      bowgun: bowgunData
+                  },
+                  armors: armorData,
+                  charms: charmData,
+                  decorations: {
+                      weapon: decoWData,
+                      armor: decoAData
+                  },
+                  skills: {
+                      weapon: weaponSkillData,
+                      armor: armorSkillData,
+                      group: groupSkillData,
+                      series: seriesSkillData
+                  },
+                  requirements: {
+                      group: groupReqData,
+                      series: seriesReqData
+                  }
+              };
+
+              console.log('装備データを読み込みました');
+              return true;
+          } catch (error) {
+              console.error('装備データの読み込みに失敗しました:', error);
+              return false;
+          }
         }
         // 装備選択ダイアログでJSONデータを利用
         function _show_equipment_selector(data_list, equip_type) {
-            // 既存の実装に加えて、window.equipmentDBからデータを取得する場合の処理を追加
-            if (!data_list || data_list.length === 0) {
-                if (window.equipmentDB) {
-                    if (equip_type === "weapon") {
-                        data_list = window.equipmentDB.weapons;
-                    } else if (equip_type === "charm") {
-                        data_list = window.equipmentDB.charms;
-                    } else {
-                        // 部位に応じた防具データのフィルタリング
-                        const part_map = {"head": "頭", "body": "胴", "arms": "腕", "waist": "腰", "legs": "脚"};
-                        data_list = window.equipmentDB.armors.filter(a => a["bui"] === part_map[equip_type]);
+        // 既存の実装に加えて、window.equipmentDBからデータを取得する場合の処理を追加
+        if (!data_list || data_list.length === 0) {
+            if (window.equipmentDB) {
+                if (equip_type === "weapon") {
+                    // 通常武器とボウガンの両方を結合
+                    data_list = [...window.equipmentDB.weapons.normal, ...window.equipmentDB.weapons.bowgun];
+                } else if (equip_type === "charm") {
+                    data_list = window.equipmentDB.charms;
+                } else {
+                    // 部位に応じた防具データのフィルタリング
+                    const part_map = {"head": "頭", "body": "胴", "arms": "腕", "waist": "腰", "legs": "脚"};
+                    data_list = window.equipmentDB.armors.filter(a => a["bui"] === part_map[equip_type]);
+                }
+            }
+        }
+        // グループスキルとシリーズスキルの要件を確認する関数
+        function checkSetRequirements(head, body, arm, waist, leg) {
+            if (!window.equipmentDB || !window.equipmentDB.requirements) {
+                return { success: false, groupSkills: [], seriesSkills: [] };
+            }
+
+            // グループIDとシリーズIDを抽出
+            const parts = { "頭": head, "胴": body, "腕": arm, "腰": waist, "脚": leg };
+
+            // 各部位のグループIDとシリーズIDを集計
+            const groupCounts = {};
+            const seriesCounts = {};
+
+            for (const [partName, armor] of Object.entries(parts)) {
+                if (armor && armor.groupId) {
+                    const gid = armor.groupId;
+                    if (!groupCounts[gid]) {
+                        groupCounts[gid] = new Set();
+                    }
+                    groupCounts[gid].add(partName);
+                }
+
+                if (armor && armor.seriesId) {
+                    const sid = armor.seriesId;
+                    if (!seriesCounts[sid]) {
+                        seriesCounts[sid] = new Set();
+                    }
+                    seriesCounts[sid].add(partName);
+                }
+            }
+
+            // グループスキルの発動スキルを確認
+            const activatedGroupSkills = new Set();
+            for (const [gid, partsSet] of Object.entries(groupCounts)) {
+                const groupReqs = window.equipmentDB.requirements.group.find(g => g.id === parseInt(gid));
+                if (groupReqs) {
+                    for (const req of groupReqs.req) {
+                        if (partsSet.size >= req.parts) { // 必要部位数を満たす
+                            req.skillIds.forEach(id => activatedGroupSkills.add(id));
+                        }
                     }
                 }
             }
+
+            // シリーズスキルの発動スキルを確認
+            const activatedSeriesSkills = new Set();
+            for (const [sid, partsSet] of Object.entries(seriesCounts)) {
+                const seriesReqs = window.equipmentDB.requirements.series.find(s => s.id === parseInt(sid));
+                if (seriesReqs) {
+                    for (const req of seriesReqs.req) {
+                        if (partsSet.size >= req.parts) { // 必要部位数を満たす
+                            req.skillIds.forEach(id => activatedSeriesSkills.add(id));
+                        }
+                    }
+                }
+            }
+
+            return {
+                success: true,
+                groupSkills: Array.from(activatedGroupSkills),
+                seriesSkills: Array.from(activatedSeriesSkills)
+            };
+        }
+
+        // スキル名とレベル情報を取得する関数
+        function getSkillInfo(skillId) {
+            if (!window.equipmentDB || !window.equipmentDB.skills) {
+                return { name: `不明なスキル(${skillId})`, maxLevel: 1 };
+            }
+
+            // 全スキルから検索
+            const allSkills = [
+                ...window.equipmentDB.skills.weapon,
+                ...window.equipmentDB.skills.armor,
+                ...window.equipmentDB.skills.group,
+                ...window.equipmentDB.skills.series
+            ];
+
+            const skill = allSkills.find(s => s.id === skillId);
+
+            if (skill) {
+                return {
+                    name: skill.name,
+                    maxLevel: skill.max || 1,
+                    description: skill.text || "",
+                    levels: skill.lv || {}
+                };
+            }
+
+            return { name: `スキルID: ${skillId}`, maxLevel: 1 };
+        }
         // 共有URLの処理機能拡張
         function processShareLink() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -6040,6 +6158,9 @@
         document.head.appendChild(profileStyle);
 
     </script>
+    <!-- 既存のコンテンツ -->
+
+    <!-- ここに追加 -->
     <div id="share-modal-template" style="display: none;">
         <div class="share-modal">
             <div class="share-modal-content">
