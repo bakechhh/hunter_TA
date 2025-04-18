@@ -5243,7 +5243,7 @@
                 const decSel = document.createElement('select');
                 decSel.className = 'form-control';
                 decSel.innerHTML = `<option value="">装飾品なし</option>`
-                  + window.equipmentDB.decow
+                  + window.equipmentDB.decorations.weapon
                       .filter(d=>d.slot<=size)
                       .map(d=>`<option value="${d.id}">${d.name} (Lv${d.slot})</option>`)
                       .join('');
@@ -5277,7 +5277,7 @@
             decorations[part] = Array.from(container.querySelectorAll('select')).map(s=>{
               const decoId = s.value;
               return decoId
-                ? window.equipmentDB.decow.concat(window.equipmentDB.decoa).find(d=>d.id==decoId)
+                ? window.equipmentDB.decorations.weapon.concat(window.equipmentDB.decorations.armor).find(d=>d.id==decoId)
                 : null;
             });
           });
@@ -5313,7 +5313,17 @@
         });
 
         // 初期化
-        document.addEventListener('DOMContentLoaded', initSimulationUI);
+        // 初期化（装備DB読込 → UI構築 の順）
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 装備 JSON 群を読み込む
+            const ok = await loadEquipmentData();
+            if (!ok) {
+                alert('装備データの読み込みに失敗しました');
+            return;
+            }
+            // UI を組み立て
+            initSimulationUI();
+        });
 
         // 記録の共有拡張（装備データを含める）
         function shareRecord(recordId) {
