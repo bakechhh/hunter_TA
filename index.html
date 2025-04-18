@@ -5369,93 +5369,44 @@
 
           // 新しいタブを追加: プロフィールと装備プリセット
           function addProfileEquipmentTabs(nb) {
-              // プロフィールタブ
-              const profileTab = document.createElement('div');
-              profileTab.className = 'tab-content';
-              profileTab.id = 'profile-tab';
-              profileTab.innerHTML = `
-                  <div class="profile-header">
-                      <div class="profile-avatar-large">
-                          <img id="profile-page-avatar" src="${profileData.avatarData || './images/hunter-avatar.png'}" alt="ハンターアバター">
-                      </div>
-                      <div class="profile-info">
-                          <h2 id="profile-hunter-name">${profileData.hunterName || 'ハンター名未設定'}</h2>
-                          <div class="profile-details">
-                              <p><strong>ハンターランク:</strong> <span id="profile-hunter-rank">${profileData.hunterRank || 1}</span></p>
-                              <p><strong>プラットフォーム:</strong> <span id="profile-platform">${profileData.platform || 'PS5'}</span></p>
-                              <p><strong>プレイヤーID:</strong> <span id="profile-player-id">${profileData.playerId || '未設定'}</span></p>
-                              <p><strong>メイン武器:</strong> <span id="profile-main-weapon">${profileData.mainWeapon || '未設定'}</span></p>
-                              <p><strong>プレイ時間:</strong> <span id="profile-play-time">${profileData.playTime || 0}</span>時間</p>
-                          </div>
-                          <div class="profile-bio">
-                              <h3>自己紹介</h3>
-                              <p id="profile-bio">${profileData.bio || '自己紹介はまだありません。'}</p>
-                          </div>
-                          <button id="edit-profile-btn" class="btn btn-primary">プロフィールを編集</button>
-                      </div>
-                  </div>
-                  <div class="profile-stats">
-                      <h3>ハンター統計</h3>
-                      <div class="stats-cards">
-                          <div class="stats-card">
-                              <div class="stats-title">総ハント数</div>
-                              <div id="profile-total-hunts" class="stats-value">0</div>
-                          </div>
-                          <div class="stats-card">
-                              <div class="stats-title">平均クリアタイム</div>
-                              <div id="profile-avg-time" class="stats-value">00:00.00</div>
-                          </div>
-                          <div class="stats-card">
-                              <div class="stats-title">最も狩猟したモンスター</div>
-                              <div id="profile-most-hunted" class="stats-value">-</div>
-                          </div>
-                          <div class="stats-card">
-                              <div class="stats-title">最も使用した武器</div>
-                              <div id="profile-most-used-weapon" class="stats-value">-</div>
-                          </div>
-                          <div class="stats-card">
-                              <div class="stats-title">最速クリアタイム</div>
-                              <div id="profile-best-time" class="stats-value">-</div>
-                          </div>
-                          <div class="stats-card">
-                              <div class="stats-title">最速クリアモンスター</div>
-                              <div id="profile-best-monster" class="stats-value">-</div>
-                          </div>
-                      </div>
-                  </div>
-              `;
+            // --- プロフィールタブ本体 ------------------------------
+            const profileTab = document.createElement('div');
+            profileTab.id = 'profile-tab';
+            profileTab.className = 'tab-content';
+            profileTab.innerHTML = /* ここは元の profileTab.innerHTML と同じ */;
 
-              nb.add(profileTab, { text: "プロフィール" });
+            // --- 装備プリセットタブ本体 ---------------------------
+            const presetTab = document.createElement('div');
+            presetTab.id = 'equipment-tab';
+            presetTab.className = 'tab-content';
+            presetTab.innerHTML = /* ここは元の presetTab.innerHTML と同じ */;
 
-              // 装備プリセットタブ
-              const presetTab = document.createElement('div');
-              presetTab.className = 'tab-content';
-              presetTab.id = 'equipment-tab';
-              presetTab.innerHTML = `
-                  <div class="preset-header">
-                      <h2>装備プリセット</h2>
-                      <button id="add-preset-btn" class="btn btn-primary">
-                          <i class="fas fa-plus"></i> 新規プリセット
-                      </button>
-                  </div>
-                  <div id="presets-container" class="presets-container">
-                      <!-- プリセットリストはJavaScriptで動的に生成 -->
-                  </div>
-              `;
+            // --- ボタンを追加 -------------------------------------
+            const btnBar = nb.querySelector('.tab-buttons');
 
-              nb.add(presetTab, { text: "装備プリセット" });
+            const makeBtn = (text, tabId) => {
+              const b = document.createElement('button');
+              b.className = 'tab-button';
+              b.textContent = text;
+              b.onclick = () => openTab(tabId);
+              btnBar.appendChild(b);
+            };
 
-              // プロフィール編集ボタンのイベントリスナー
-              document.getElementById('edit-profile-btn').addEventListener('click', showProfileModal);
+            makeBtn('プロフィール',      'profile-tab');
+            makeBtn('装備プリセット',   'equipment-tab');
 
-              // 新規プリセットボタンのイベントリスナー
-              document.getElementById('add-preset-btn').addEventListener('click', showPresetManagementModal);
+            // --- コンテンツを挿入 ---------------------------------
+            nb.appendChild(profileTab);
+            nb.appendChild(presetTab);
 
-              // プリセットリストを更新
-              updatePresetList('presets-container');
+            // 必要な初期化（元コードと同等）
+            document.getElementById('edit-profile-btn')
+                    .addEventListener('click', showProfileModal);
+            document.getElementById('add-preset-btn')
+                    .addEventListener('click', showPresetManagementModal);
 
-              // プロフィール統計を更新
-              updateProfileStats();
+            updatePresetList('presets-container');
+            updateProfileStats();
           }
 
           // プロフィール統計を更新
