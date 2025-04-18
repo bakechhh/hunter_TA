@@ -5214,7 +5214,17 @@
         // ================================
         // 3. JavaScript 側の初期化と挙動
         // ================================
-        function initSimulationUI() {
+        async function initSimulationUI() {
+
+            /* ★ 1) 装備データがまだ無ければここでロード ★ */
+            if (!window.equipmentDB || !window.equipmentDB.weapons) {
+                const ok = await loadEquipmentData();    // ← 非同期で JSON 群を読む
+                if (!ok) {                               // 失敗時は処理中断
+                    alert('装備データの読み込みに失敗しました');
+                return;
+                }
+            }
+            
           const partMap = {
             weapon: [...window.equipmentDB.weapons.normal, ...window.equipmentDB.weapons.bowgun],
             head: window.equipmentDB.armors.filter(a=>a.bui==='頭'),
