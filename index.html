@@ -1,1405 +1,1586 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>モンハン タイムアタックトラッカー</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        :root {
-            --primary: #8a5319;
-            --primary-dark: #6a3d0f;
-            --secondary: #c39b60;
-            --accent: #e7c78e;
-            --background: #f9f3e6;
-            --background-dark: #e8e0d0;
-            --card-bg: #ffffff;
-            --text: #2e1a05;
-            --text-light: #5a4530;
-            --border-radius: 12px;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
+      :root {
+        --primary: #8a5319;
+        --primary-dark: #6a3d0f;
+        --secondary: #c39b60;
+        --accent: #e7c78e;
+        --background: #f9f3e6;
+        --background-dark: #e8e0d0;
+        --card-bg: #ffffff;
+        --text: #2e1a05;
+        --text-light: #5a4530;
+        --border-radius: 12px;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+      }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-            padding-bottom: 2rem;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--background);
+        color: var(--text);
+        line-height: 1.6;
+        padding-bottom: 2rem;
+      }
 
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-            position: relative;
-        }
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+        position: relative;
+      }
 
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
+      .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
 
-        .logo {
-            max-height: 100px;
-            max-width: 100%;
-            object-fit: contain;
-        }
+      .logo {
+        max-height: 100px;
+        max-width: 100%;
+        object-fit: contain;
+      }
 
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
 
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
+      .control-panel {
+        flex: 1;
+        min-width: 320px;
+      }
+
+      .records-panel {
+        flex: 2;
+        min-width: 320px;
+      }
+
+      .card {
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: var(--transition);
+        margin-bottom: 2rem;
+      }
+
+      .card:hover {
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .card-header {
+        background-color: var(--primary);
+        padding: 1rem;
+        color: white;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card-body {
+        padding: 1.5rem;
+      }
+
+      .tab-container {
+        position: relative;
+        margin-bottom: 1rem;
+      }
+
+      .tab-buttons {
+        display: flex;
+        border-bottom: 2px solid var(--background-dark);
+        margin-bottom: 1.5rem;
+      }
+
+      .tab-button {
+        padding: 0.75rem 1.5rem;
+        background: none;
+        border: none;
+        font-weight: 600;
+        color: var(--text-light);
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+      }
+
+      .tab-button:hover {
+        color: var(--primary);
+      }
+
+      .tab-button.active {
+        color: var(--primary);
+      }
+
+      .tab-button.active::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--primary);
+      }
+
+      .tab-content {
+        display: none;
+      }
+      .ranking-tabs {
+        margin-bottom: 1rem;
+      }
+
+      .ranking-content {
+        display: none;
+      }
+
+      .ranking-content.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+      .stats-overview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .stats-card {
+        flex: 1;
+        min-width: 200px;
+        background: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        text-align: center;
+        transition: var(--transition);
+      }
+
+      .stats-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .stats-title {
+        font-size: 0.9rem;
+        color: var(--text-light);
+        margin-bottom: 0.5rem;
+      }
+
+      .stats-value {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .stats-charts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .stats-chart-container {
+        flex: 1;
+        min-width: 300px;
+        background: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+      }
+
+      .stats-chart-container h3 {
+        margin-bottom: 1rem;
+        text-align: center;
+        color: var(--text);
+      }
+      .checklist-header {
+        margin-bottom: 1.5rem;
+      }
+
+      .progress-container {
+        background: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+      }
+
+      .progress-text {
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .progress-bar {
+        height: 10px;
+        background-color: var(--background-dark);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background-color: var(--primary);
+        border-radius: 5px;
+        transition: width 0.3s ease;
+      }
+
+      .checklist-filters {
+        margin-bottom: 1.5rem;
+      }
+
+      .checklist-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+
+      .monster-card {
+        background: var(--card-bg);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        border-left: 4px solid transparent;
+      }
+
+      .monster-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .monster-card.completed {
+        border-left-color: #4caf50;
+      }
+
+      .monster-name {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .completion-icon {
+        color: #4caf50;
+      }
+
+      .monster-time {
+        font-size: 0.9rem;
+        color: var(--text-light);
+      }
+
+      .monster-weapon {
+        font-size: 0.8rem;
+        color: var(--text-light);
+        margin-top: 0.25rem;
+      }
+      .tag-badge {
+        display: inline-block;
+        background-color: var(--accent);
+        color: var(--text);
+        font-size: 0.75rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 12px;
+        margin-right: 0.25rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .tags-cell {
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .tags-cell:hover {
+        white-space: normal;
+        overflow: visible;
+      }
+      .trends-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .trends-filters .form-group {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .trend-chart-container {
+        background: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+        display: none;
+      }
+
+      .trend-empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: var(--text-light);
+      }
+
+      .trend-empty-state .empty-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+      .tab-content.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: var(--transition);
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 3px rgba(195, 155, 96, 0.2);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 1rem;
+      }
+
+      .btn-primary {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+      }
+
+      .btn-secondary {
+        background-color: var(--secondary);
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background-color: #b38c50;
+      }
+
+      .btn-danger {
+        background-color: #d9534f;
+        color: white;
+      }
+
+      .btn-danger:hover {
+        background-color: #c9302c;
+      }
+
+      .btn-block {
+        display: block;
+        width: 100%;
+      }
+
+      .time-input {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .time-input .form-control {
+        width: 70px;
+        text-align: center;
+      }
+
+      .time-input span {
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .search-box {
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+
+      .search-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .search-filters .form-control {
+        width: auto;
+        flex-grow: 1;
+        min-width: 150px;
+      }
+
+      .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: var(--text-light);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      table th {
+        background-color: var(--background-dark);
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      table tr:hover {
+        background-color: rgba(231, 199, 142, 0.2);
+      }
+
+      .actions-cell {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .action-btn {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: var(--transition);
+        background-color: var(--background);
+        color: var(--text);
+      }
+
+      .action-btn:hover {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .action-btn.delete {
+        background-color: rgba(217, 83, 79, 0.1);
+        color: #d9534f;
+      }
+
+      .action-btn.delete:hover {
+        background-color: #d9534f;
+        color: white;
+      }
+
+      .image-preview {
+        width: 50px;
+        height: 50px;
+        border-radius: 4px;
+        object-fit: cover;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .image-preview:hover {
+        transform: scale(1.1);
+      }
+
+      #imageModal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        transition: var(--transition);
+      }
+
+      .modal-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 2rem;
+      }
+
+      .modal-image {
+        max-width: 90%;
+        max-height: 80vh;
+        border-radius: 6px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .modal-close:hover {
+        color: var(--accent);
+      }
+
+      .image-upload {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem;
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        background-color: #f9f9f9;
+        transition: var(--transition);
+        cursor: pointer;
+      }
+
+      .image-upload:hover {
+        border-color: var(--secondary);
+        background-color: rgba(231, 199, 142, 0.1);
+      }
+
+      .image-upload-icon {
+        font-size: 2rem;
+        color: var(--text-light);
+        margin-bottom: 0.75rem;
+      }
+
+      .image-upload input {
+        display: none;
+      }
+
+      .image-preview-container {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+      }
+
+      .form-preview-image {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      .image-remove {
+        margin-top: 0.5rem;
+        color: #d9534f;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+
+      .image-remove:hover {
+        text-decoration: underline;
+      }
+
+      .hr {
+        margin: 2rem 0;
+        border: none;
+        height: 1px;
+        background-color: #ddd;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .text-muted {
+        color: var(--text-light);
+        font-size: 0.9rem;
+      }
+
+      .empty-state {
+        padding: 3rem;
+        text-align: center;
+        color: var(--text-light);
+      }
+
+      .empty-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+      }
+
+      .filters-toggle {
+        margin-bottom: 1rem;
+        cursor: pointer;
+        color: var(--primary);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      @media (max-width: 768px) {
         .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
+          flex-direction: column;
         }
 
-        .control-panel {
-            flex: 1;
-            min-width: 320px;
-        }
-
+        .control-panel,
         .records-panel {
-            flex: 2;
-            min-width: 320px;
+          width: 100%;
         }
 
-        .card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            transition: var(--transition);
-            margin-bottom: 2rem;
-        }
-
-        .card:hover {
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .card-header {
-            background-color: var(--primary);
-            padding: 1rem;
-            color: white;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .tab-button {
+          padding: 0.5rem 1rem;
+          font-size: 0.9rem;
         }
 
         .card-body {
-            padding: 1.5rem;
-        }
-
-        .tab-container {
-            position: relative;
-            margin-bottom: 1rem;
-        }
-
-        .tab-buttons {
-            display: flex;
-            border-bottom: 2px solid var(--background-dark);
-            margin-bottom: 1.5rem;
-        }
-
-        .tab-button {
-            padding: 0.75rem 1.5rem;
-            background: none;
-            border: none;
-            font-weight: 600;
-            color: var(--text-light);
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .tab-button:hover {
-            color: var(--primary);
-        }
-
-        .tab-button.active {
-            color: var(--primary);
-        }
-
-        .tab-button.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--primary);
-        }
-
-        .tab-content {
-            display: none;
-        }
-        .ranking-tabs {
-            margin-bottom: 1rem;
-        }
-
-        .ranking-content {
-            display: none;
-        }
-
-        .ranking-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-        .stats-overview {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .stats-card {
-            flex: 1;
-            min-width: 200px;
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .stats-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .stats-title {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-        }
-
-        .stats-value {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .stats-charts {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stats-chart-container {
-            flex: 1;
-            min-width: 300px;
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-
-        .stats-chart-container h3 {
-            margin-bottom: 1rem;
-            text-align: center;
-            color: var(--text);
-        }
-        .checklist-header {
-            margin-bottom: 1.5rem;
-        }
-
-        .progress-container {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-
-        .progress-text {
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .progress-bar {
-            height: 10px;
-            background-color: var(--background-dark);
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background-color: var(--primary);
-            border-radius: 5px;
-            transition: width 0.3s ease;
-        }
-
-        .checklist-filters {
-            margin-bottom: 1.5rem;
-        }
-
-        .checklist-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-
-        .monster-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 1rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border-left: 4px solid transparent;
-        }
-
-        .monster-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .monster-card.completed {
-            border-left-color: #4caf50;
-        }
-
-        .monster-name {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .completion-icon {
-            color: #4caf50;
-        }
-
-        .monster-time {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        .monster-weapon {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-top: 0.25rem;
-        }
-        .tag-badge {
-            display: inline-block;
-            background-color: var(--accent);
-            color: var(--text);
-            font-size: 0.75rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 12px;
-            margin-right: 0.25rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .tags-cell {
-            max-width: 150px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .tags-cell:hover {
-            white-space: normal;
-            overflow: visible;
-        }
-        .trends-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .trends-filters .form-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .trend-chart-container {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-            display: none;
-        }
-
-        .trend-empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-light);
-        }
-
-        .trend-empty-state .empty-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(195, 155, 96, 0.2);
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            text-align: center;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #b38c50;
-        }
-
-        .btn-danger {
-            background-color: #d9534f;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: #c9302c;
-        }
-
-        .btn-block {
-            display: block;
-            width: 100%;
-        }
-
-        .time-input {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+          padding: 1rem;
         }
 
         .time-input .form-control {
-            width: 70px;
-            text-align: center;
+          width: 60px;
         }
 
-        .time-input span {
-            font-weight: 600;
-            color: var(--text);
+        table th,
+        table td {
+          padding: 0.5rem;
+          font-size: 0.9rem;
         }
 
-        .search-box {
-            margin-bottom: 1.5rem;
-            position: relative;
+        .table-responsive {
+          overflow-x: auto;
         }
 
-        .search-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+        .logo {
+          max-height: 70px;
         }
+      }
+      /* ダークモードのスタイル */
+      body.dark-mode {
+        --primary: #6a3d0f;
+        --primary-dark: #4a2d0f;
+        --secondary: #8a5319;
+        --accent: #b3834b;
+        --background: #292520;
+        --background-dark: #1e1c19;
+        --card-bg: #332e29;
+        --text: #e0d0c0;
+        --text-light: #c0b0a0;
+      }
 
-        .search-filters .form-control {
-            width: auto;
-            flex-grow: 1;
-            min-width: 150px;
-        }
+      .theme-toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 1.5rem;
+        color: white;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: var(--transition);
+      }
 
-        .search-icon {
-            position: absolute;
-            top: 50%;
-            left: 15px;
-            transform: translateY(-50%);
-            color: var(--text-light);
-        }
+      .theme-toggle:hover {
+        color: var(--accent);
+        transform: scale(1.1);
+      }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
+      /* 以下を追加: モバイル最適化 */
+      .tab-buttons {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        padding-bottom: 5px;
+      }
 
-        table th, table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
+      .tab-button {
+        display: inline-block;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
 
-        table th {
-            background-color: var(--background-dark);
-            font-weight: 600;
-            color: var(--text);
-        }
+      /* 共有機能のスタイル */
+      .share-modal {
+        display: flex;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
 
-        table tr:hover {
-            background-color: rgba(231, 199, 142, 0.2);
-        }
+      .share-modal.active {
+        opacity: 1;
+      }
 
-        .actions-cell {
-            display: flex;
-            gap: 0.5rem;
-        }
+      .share-modal-content {
+        background-color: var(--card-bg);
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        max-width: 90%;
+        width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
 
+      .share-modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-light);
+      }
+
+      .share-details {
+        margin: 1.5rem 0;
+      }
+
+      .share-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .share-btn {
+        flex: 1;
+        min-width: 120px;
+      }
+
+      .qr-code-container {
+        display: flex;
+        justify-content: center;
+        margin: 1rem 0;
+      }
+
+      .share-status {
+        text-align: center;
+        color: var(--primary);
+        font-weight: 600;
+        min-height: 1.5rem;
+      }
+
+      /* バックアップ設定スタイル */
+      .backup-settings {
+        margin-bottom: 1.5rem;
+      }
+
+      .backup-status {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--text-light);
+      }
+
+      /* 詳細ランキングスタイル */
+      .ranking-filter {
+        margin-bottom: 1rem;
+      }
+
+      .action-btn.share {
+        background-color: rgba(74, 144, 226, 0.1);
+        color: #4a90e2;
+      }
+
+      .action-btn.share:hover {
+        background-color: #4a90e2;
+        color: white;
+      }
+
+      /* スマホ最適化のためのタッチ操作改善 */
+      @media (max-width: 768px) {
         .action-btn {
-            width: 30px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-            background-color: var(--background);
-            color: var(--text);
+          width: 40px;
+          height: 40px;
         }
 
-        .action-btn:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .action-btn.delete {
-            background-color: rgba(217, 83, 79, 0.1);
-            color: #d9534f;
-        }
-
-        .action-btn.delete:hover {
-            background-color: #d9534f;
-            color: white;
-        }
-
-        .image-preview {
-            width: 50px;
-            height: 50px;
-            border-radius: 4px;
-            object-fit: cover;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .image-preview:hover {
-            transform: scale(1.1);
-        }
-
-        #imageModal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            transition: var(--transition);
-        }
-
-        .modal-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            padding: 2rem;
-        }
-
-        .modal-image {
-            max-width: 90%;
-            max-height: 80vh;
-            border-radius: 6px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover {
-            color: var(--accent);
-        }
-
-        .image-upload {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1.5rem;
-            border: 2px dashed #ddd;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            background-color: #f9f9f9;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .image-upload:hover {
-            border-color: var(--secondary);
-            background-color: rgba(231, 199, 142, 0.1);
-        }
-
-        .image-upload-icon {
-            font-size: 2rem;
-            color: var(--text-light);
-            margin-bottom: 0.75rem;
-        }
-
-        .image-upload input {
-            display: none;
-        }
-
-        .image-preview-container {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-        }
-
-        .form-preview-image {
-            max-width: 100%;
-            max-height: 200px;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-        }
-
-        .image-remove {
-            margin-top: 0.5rem;
-            color: #d9534f;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .image-remove:hover {
-            text-decoration: underline;
-        }
-
-        .hr {
-            margin: 2rem 0;
-            border: none;
-            height: 1px;
-            background-color: #ddd;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .text-muted {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        .empty-state {
-            padding: 3rem;
-            text-align: center;
-            color: var(--text-light);
-        }
-
-        .empty-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        .filters-toggle {
-            margin-bottom: 1rem;
-            cursor: pointer;
-            color: var(--primary);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .control-panel, .records-panel {
-                width: 100%;
-            }
-
-            .tab-button {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-            }
-
-            .card-body {
-                padding: 1rem;
-            }
-
-            .time-input .form-control {
-                width: 60px;
-            }
-
-            table th, table td {
-                padding: 0.5rem;
-                font-size: 0.9rem;
-            }
-
-            .table-responsive {
-                overflow-x: auto;
-            }
-
-            .logo {
-                max-height: 70px;
-            }
-        }
-        /* ダークモードのスタイル */
-        body.dark-mode {
-          --primary: #6a3d0f;
-          --primary-dark: #4a2d0f;
-          --secondary: #8a5319;
-          --accent: #b3834b;
-          --background: #292520;
-          --background-dark: #1e1c19;
-          --card-bg: #332e29;
-          --text: #e0d0c0;
-          --text-light: #c0b0a0;
-        }
-
-        .theme-toggle {
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          font-size: 1.5rem;
-          color: white;
-          background: none;
-          border: none;
-          cursor: pointer;
-          transition: var(--transition);
-        }
-
-        .theme-toggle:hover {
-          color: var(--accent);
-          transform: scale(1.1);
-        }
-
-        /* 以下を追加: モバイル最適化 */
-        .tab-buttons {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            white-space: nowrap;
-            padding-bottom: 5px;
-        }
-
-        .tab-button {
-            display: inline-block;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        /* 共有機能のスタイル */
-        .share-modal {
-            display: flex;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .share-modal.active {
-            opacity: 1;
-        }
-
-        .share-modal-content {
-            background-color: var(--card-bg);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            max-width: 90%;
-            width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .share-modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-light);
-        }
-
-        .share-details {
-            margin: 1.5rem 0;
+        .form-control,
+        .btn {
+          padding: 0.8rem;
         }
 
         .share-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+          flex-direction: column;
         }
 
-        .share-btn {
-            flex: 1;
-            min-width: 120px;
+        .tab-button {
+          padding: 0.8rem 1.2rem;
         }
-
-        .qr-code-container {
-            display: flex;
-            justify-content: center;
-            margin: 1rem 0;
-        }
-
-        .share-status {
-            text-align: center;
-            color: var(--primary);
-            font-weight: 600;
-            min-height: 1.5rem;
-        }
-
-        /* バックアップ設定スタイル */
-        .backup-settings {
-            margin-bottom: 1.5rem;
-        }
-
-        .backup-status {
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        /* 詳細ランキングスタイル */
-        .ranking-filter {
-            margin-bottom: 1rem;
-        }
-
-        .action-btn.share {
-            background-color: rgba(74, 144, 226, 0.1);
-            color: #4a90e2;
-        }
-
-        .action-btn.share:hover {
-            background-color: #4a90e2;
-            color: white;
-        }
-
-        /* スマホ最適化のためのタッチ操作改善 */
-        @media (max-width: 768px) {
-            .action-btn {
-                width: 40px;
-                height: 40px;
-            }
-
-            .form-control, .btn {
-                padding: 0.8rem;
-            }
-
-            .share-options {
-                flex-direction: column;
-            }
-
-            .tab-button {
-                padding: 0.8rem 1.2rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="logo-container">
-            <img id="headerLogo" class="logo" src="./images/logo.png" alt="モンハン タイムアタックトラッカー">
-        </div>
-        <h1>モンハン タイムアタックトラッカー</h1>
-        <button id="themeToggle" class="theme-toggle">
-          <i class="fas fa-moon"></i>
-        </button>
-        <!-- ここに追加 -->
-        <div id="header-profile" class="header-profile" style="display: none;">
-            <div class="header-profile-avatar">
-            </div>
-            <span class="header-profile-name">ハンター名</span>
-        </div>
+      <div class="logo-container">
+        <img
+          id="headerLogo"
+          class="logo"
+          src="./images/logo.png"
+          alt="モンハン タイムアタックトラッカー"
+        />
+      </div>
+      <h1>モンハン タイムアタックトラッカー</h1>
+      <button id="themeToggle" class="theme-toggle">
+        <i class="fas fa-moon"></i>
+      </button>
+      <!-- ここに追加 -->
+      <div id="header-profile" class="header-profile" style="display: none">
+        <div class="header-profile-avatar"></div>
+        <span class="header-profile-name">ハンター名</span>
+      </div>
     </header>
 
     <main>
-        <div class="container">
-            <div class="control-panel">
-                <div class="card">
-                    <div class="card-header">
-                        コントロールパネル
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-container">
-                            <div class="tab-buttons">
-                                <button class="tab-button active" onclick="openTab('add-record')">記録追加</button>
-                                <button class="tab-button" onclick="openTab('import-export')">インポート/エクスポート</button>
-                                <button class="tab-button" onclick="openTab('rankings')">ランキング</button>
-                                <button class="tab-button" onclick="openTab('statistics')">統計</button>
-                                <button class="tab-button" onclick="openTab('checklist')">チェックリスト</button>
-                                <button class="tab-button" onclick="openTab('trends')">トレンド</button>
-                                <button class="tab-button" onclick="openTab('backup-settings')">バックアップ</button>
-                            </div>
-
-                            <!-- 記録追加タブ -->
-                            <div id="add-record" class="tab-content active">
-                                <form id="record-form">
-                                    <div class="form-group">
-                                        <label for="monster-select" class="form-label">モンスター選択:</label>
-                                        <select id="monster-select" class="form-control" required>
-                                            <option value="">モンスターを選択</option>
-                                            <!-- モンスターリストはJavaScriptで動的に生成 -->
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="weapon-select" class="form-label">武器種:</label>
-                                        <select id="weapon-select" class="form-control" required>
-                                            <option value="">武器を選択</option>
-                                            <option value="大剣">大剣</option>
-                                            <option value="太刀">太刀</option>
-                                            <option value="片手剣">片手剣</option>
-                                            <option value="双剣">双剣</option>
-                                            <option value="ハンマー">ハンマー</option>
-                                            <option value="狩猟笛">狩猟笛</option>
-                                            <option value="ランス">ランス</option>
-                                            <option value="ガンランス">ガンランス</option>
-                                            <option value="スラッシュアックス">スラッシュアックス</option>
-                                            <option value="チャージアックス">チャージアックス</option>
-                                            <option value="操虫棍">操虫棍</option>
-                                            <option value="ライトボウガン">ライトボウガン</option>
-                                            <option value="ヘビィボウガン">ヘビィボウガン</option>
-                                            <option value="弓">弓</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="quest-type" class="form-label">クエストタイプ:</label>
-                                        <select id="quest-type" class="form-control" required>
-                                            <option value="通常">通常</option>
-                                            <option value="歴戦">歴戦</option>
-                                            <option value="狂竜化">狂竜化</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="stage-select" class="form-label">ステージ:</label>
-                                        <select id="stage-select" class="form-control" required>
-                                            <option value="">ステージを選択</option>
-                                            <option value="隔ての砂原">隔ての砂原</option>
-                                            <option value="緋の森">緋の森</option>
-                                            <option value="油涌き谷">油涌き谷</option>
-                                            <option value="氷霧の断崖">氷霧の断崖</option>
-                                            <option value="竜都の跡形">竜都の跡形</option>
-                                            <option value="竜谷の跡地(闘技場)">竜谷の跡地(闘技場)</option>
-                                            <option value="その他">その他</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="strength" class="form-label">強さ:</label>
-                                        <select id="strength" class="form-control" required>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label">タイム:</label>
-                                        <div class="time-input">
-                                            <input type="number" id="time-minutes" class="form-control" min="0" placeholder="分" required>
-                                            <span>:</span>
-                                            <input type="number" id="time-seconds" class="form-control" min="0" max="59" placeholder="秒" required>
-                                            <span>.</span>
-                                            <input type="number" id="time-milliseconds" class="form-control" min="0" max="99" placeholder="ミリ秒" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="notes" class="form-label">メモ:</label>
-                                        <input type="text" id="notes" class="form-control" placeholder="装備や戦略など">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="tags" class="form-label">タグ:</label>
-                                        <input type="text" id="tags" class="form-control" placeholder="カンマ区切りでタグを入力（例: 事故、練習中、装備検証）">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label">スクリーンショット:</label>
-                                        <div class="image-upload" id="imageUploadContainer">
-                                            <i class="fas fa-cloud-upload-alt image-upload-icon"></i>
-                                            <span>クリックして画像をアップロード</span>
-                                            <input type="file" id="imageUpload" accept="image/*">
-                                        </div>
-                                        <div class="image-preview-container" id="imagePreviewContainer" style="display: none;">
-                                            <div>
-                                                <img id="formPreviewImage" class="form-preview-image" src="" alt="プレビュー">
-                                                <div class="text-center">
-                                                    <span class="image-remove" id="removeImage">画像を削除</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary btn-block">記録を保存</button>
-                                </form>
-                            </div>
-
-                            <!-- インポート/エクスポートタブ -->
-                            <div id="import-export" class="tab-content">
-                                <div class="form-group">
-                                    <button id="export-json" class="btn btn-secondary btn-block">JSONでエクスポート</button>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="import-file" class="form-label">JSONファイルをインポート:</label>
-                                    <input type="file" id="import-file" class="form-control" accept=".json">
-                                </div>
-
-                                <div class="form-group">
-                                    <button id="import-button" class="btn btn-secondary btn-block">インポート</button>
-                                </div>
-
-                                <div class="hr"></div>
-
-                                <div class="form-group">
-                                    <button id="clear-data" class="btn btn-danger btn-block">全データ削除</button>
-                                </div>
-                            </div>
-
-                            <!-- ランキングタブ -->
-                            <div id="rankings" class="tab-content">
-                                <div class="tab-container">
-                                    <div class="tab-buttons ranking-tabs">
-                                        <button class="tab-button active" onclick="openRankingTab('monster-ranking')">モンスター別</button>
-                                        <button class="tab-button" onclick="openRankingTab('weapon-ranking')">武器種別</button>
-                                        <button class="tab-button" onclick="openRankingTab('combined-ranking')">モンスター×武器</button>
-                                        <button class="tab-button" onclick="openRankingTab('stage-ranking')">ステージ別</button>
-                                        <button class="tab-button" onclick="openRankingTab('quest-ranking')">クエスト別</button>
-                                    </div>
-
-                                    <div id="monster-ranking" class="ranking-content active">
-                                        <div class="table-responsive">
-                                            <table id="monster-ranking-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>モンスター</th>
-                                                        <th>ベストタイム</th>
-                                                        <th>武器種</th>
-                                                        <th>日付</th>
-                                                        <th>共有</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <!-- ランキングデータはJSで動的に生成 -->
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div id="weapon-ranking" class="ranking-content">
-                                        <div class="table-responsive">
-                                            <table id="weapon-ranking-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>武器種</th>
-                                                        <th>モンスター</th>
-                                                        <th>ベストタイム</th>
-                                                        <th>日付</th>
-                                                        <th>共有</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <!-- ランキングデータはJSで動的に生成 -->
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <!-- 以下を追加: 新しいランキング -->
-                                    <div id="combined-ranking" class="ranking-content">
-                                        <div class="ranking-filter">
-                                            <select id="combined-monster-filter" class="form-control">
-                                                <option value="">モンスターでフィルター</option>
-                                                <!-- 動的に生成 -->
-                                            </select>
-                                        </div>
-                                        <div class="table-responsive">
-                                            <table id="combined-ranking-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>モンスター</th>
-                                                        <th>武器種</th>
-                                                        <th>ベストタイム</th>
-                                                        <th>日付</th>
-                                                        <th>共有</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <!-- ランキングデータはJSで動的に生成 -->
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div id="stage-ranking" class="ranking-content">
-                                        <div class="table-responsive">
-                                            <table id="stage-ranking-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ステージ</th>
-                                                        <th>モンスター</th>
-                                                        <th>武器種</th>
-                                                        <th>ベストタイム</th>
-                                                        <th>日付</th>
-                                                        <th>共有</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <!-- ランキングデータはJSで動的に生成 -->
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                    <div id="quest-ranking" class="ranking-content">
-                                        <div class="table-responsive">
-                                            <table id="quest-ranking-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>クエストタイプ</th>
-                                                        <th>モンスター</th>
-                                                        <th>武器種</th>
-                                                        <th>ベストタイム</th>
-                                                        <th>日付</th>
-                                                        <th>共有</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <!-- ランキングデータはJSで動的に生成 -->
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 統計タブ -->
-                            <div id="statistics" class="tab-content">
-                                <div class="stats-overview">
-                                    <div class="stats-card">
-                                        <div class="stats-title">総ハント数</div>
-                                        <div id="total-hunts" class="stats-value">0</div>
-                                    </div>
-                                    <div class="stats-card">
-                                        <div class="stats-title">平均クリアタイム</div>
-                                        <div id="avg-time" class="stats-value">00:00.00</div>
-                                    </div>
-                                    <div class="stats-card">
-                                        <div class="stats-title">最も狩猟したモンスター</div>
-                                        <div id="most-hunted" class="stats-value">-</div>
-                                    </div>
-                                    <div class="stats-card">
-                                        <div class="stats-title">最も使用した武器</div>
-                                        <div id="most-used-weapon" class="stats-value">-</div>
-                                    </div>
-                                </div>
-
-                                <div class="stats-charts">
-                                    <div class="stats-chart-container">
-                                        <h3>モンスター別狩猟回数</h3>
-                                        <canvas id="monsters-chart"></canvas>
-                                    </div>
-                                    <div class="stats-chart-container">
-                                        <h3>武器種別使用回数</h3>
-                                        <canvas id="weapons-chart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- チェックリストタブ -->
-                            <div id="checklist" class="tab-content">
-                                <div class="checklist-header">
-                                    <div class="progress-container">
-                                        <div class="progress-text">攻略率: <span id="completion-rate">0%</span></div>
-                                        <div class="progress-bar">
-                                            <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="checklist-filters">
-                                    <select id="checklist-filter" class="form-control">
-                                        <option value="all">すべてのモンスター</option>
-                                        <option value="completed">攻略済み</option>
-                                        <option value="incomplete">未攻略</option>
-                                    </select>
-                                </div>
-
-                                <div id="checklist-container" class="checklist-container">
-                                    <!-- チェックリストはJSで動的に生成 -->
-                                </div>
-                            </div>
-                            <div id="trends" class="tab-content">
-                                <div class="trends-filters">
-                                    <div class="form-group">
-                                        <label for="trend-monster" class="form-label">モンスター:</label>
-                                        <select id="trend-monster" class="form-control">
-                                            <option value="">モンスターを選択</option>
-                                            <!-- 動的に生成 -->
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="trend-weapon" class="form-label">武器種（オプション）:</label>
-                                        <select id="trend-weapon" class="form-control">
-                                            <option value="">すべての武器種</option>
-                                            <option value="大剣">大剣</option>
-                                            <option value="太刀">太刀</option>
-                                            <option value="片手剣">片手剣</option>
-                                            <option value="双剣">双剣</option>
-                                            <option value="ハンマー">ハンマー</option>
-                                            <option value="狩猟笛">狩猟笛</option>
-                                            <option value="ランス">ランス</option>
-                                            <option value="ガンランス">ガンランス</option>
-                                            <option value="スラッシュアックス">スラッシュアックス</option>
-                                            <option value="チャージアックス">チャージアックス</option>
-                                            <option value="操虫棍">操虫棍</option>
-                                            <option value="ライトボウガン">ライトボウガン</option>
-                                            <option value="ヘビィボウガン">ヘビィボウガン</option>
-                                            <option value="弓">弓</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="trend-chart-container">
-                                    <canvas id="trend-chart"></canvas>
-                                </div>
-
-                                <div class="trend-empty-state" id="trend-empty-state">
-                                    <i class="fas fa-chart-line empty-icon"></i>
-                                    <p>モンスターを選択すると、タイムの推移を表示します</p>
-                                </div>
-                            </div>
-                            <!-- バックアップ設定タブ -->
-                            <div id="backup-settings" class="tab-content">
-                                <div class="backup-settings">
-                                    <h3>自動バックアップ設定</h3>
-
-                                    <div class="form-group">
-                                        <label class="checkbox-label">
-                                            <input type="checkbox" id="backup-enabled">
-                                            自動バックアップを有効にする
-                                        </label>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="backup-interval" class="form-label">バックアップ頻度:</label>
-                                        <select id="backup-interval" class="form-control">
-                                            <option value="daily">毎日</option>
-                                            <option value="weekly">毎週</option>
-                                            <option value="monthly">毎月</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="backup-status">
-                                        最終バックアップ: <span id="last-backup-date">なし</span>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <button id="save-backup-settings" class="btn btn-primary btn-block">設定を保存</button>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <button id="manual-backup" class="btn btn-secondary btn-block">今すぐバックアップを実行</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div class="container">
+        <div class="control-panel">
+          <div class="card">
+            <div class="card-header">コントロールパネル</div>
+            <div class="card-body">
+              <div class="tab-container">
+                <div class="tab-buttons">
+                  <button
+                    class="tab-button active"
+                    onclick="openTab('add-record')"
+                  >
+                    記録追加
+                  </button>
+                  <button class="tab-button" onclick="openTab('import-export')">
+                    インポート/エクスポート
+                  </button>
+                  <button class="tab-button" onclick="openTab('rankings')">
+                    ランキング
+                  </button>
+                  <button class="tab-button" onclick="openTab('statistics')">
+                    統計
+                  </button>
+                  <button class="tab-button" onclick="openTab('checklist')">
+                    チェックリスト
+                  </button>
+                  <button class="tab-button" onclick="openTab('trends')">
+                    トレンド
+                  </button>
+                  <button
+                    class="tab-button"
+                    onclick="openTab('backup-settings')"
+                  >
+                    バックアップ
+                  </button>
                 </div>
-            </div>
 
-            <div class="records-panel">
-                <div class="card">
-                    <div class="card-header">
-                        記録一覧
+                <!-- 記録追加タブ -->
+                <div id="add-record" class="tab-content active">
+                  <form id="record-form">
+                    <div class="form-group">
+                      <label for="monster-select" class="form-label"
+                        >モンスター選択:</label
+                      >
+                      <select id="monster-select" class="form-control" required>
+                        <option value="">モンスターを選択</option>
+                        <!-- モンスターリストはJavaScriptで動的に生成 -->
+                      </select>
                     </div>
-                    <div class="card-body">
-                        <div class="filters-toggle" onclick="toggleFilterPanel()">
-                            <i class="fas fa-filter"></i> フィルター
-                        </div>
 
-                        <div id="filter-panel" class="search-box">
-                            <div class="search-filters">
-                                <select id="filter-monster" class="form-control">
-                                    <option value="">モンスター（全て）</option>
-                                    <!-- 動的に生成 -->
-                                </select>
-
-                                <select id="filter-weapon" class="form-control">
-                                    <option value="">武器種（全て）</option>
-                                    <option value="大剣">大剣</option>
-                                    <option value="太刀">太刀</option>
-                                    <option value="片手剣">片手剣</option>
-                                    <option value="双剣">双剣</option>
-                                    <option value="ハンマー">ハンマー</option>
-                                    <option value="狩猟笛">狩猟笛</option>
-                                    <option value="ランス">ランス</option>
-                                    <option value="ガンランス">ガンランス</option>
-                                    <option value="スラッシュアックス">スラッシュアックス</option>
-                                    <option value="チャージアックス">チャージアックス</option>
-                                    <option value="操虫棍">操虫棍</option>
-                                    <option value="ライトボウガン">ライトボウガン</option>
-                                    <option value="ヘビィボウガン">ヘビィボウガン</option>
-                                    <option value="弓">弓</option>
-                                </select>
-
-                                <select id="filter-quest" class="form-control">
-                                    <option value="">クエストタイプ（全て）</option>
-                                    <option value="通常">通常</option>
-                                    <option value="歴戦">歴戦</option>
-                                    <option value="狂竜化">狂竜化</option>
-                                </select>
-
-                                <select id="filter-stage" class="form-control">
-                                    <option value="">ステージ（全て）</option>
-                                    <!-- 動的に生成 -->
-                                </select>
-                                <select id="filter-tag" class="form-control">
-                                    <option value="">タグ（全て）</option>
-                                    <!-- 動的に生成 -->
-                                </select>
-                            </div>
-
-                            <div class="search-text">
-                                <i class="fas fa-search search-icon"></i>
-                                <input type="text" id="search-input" class="form-control" placeholder="テキスト検索...">
-                            </div>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table id="records-table">
-                                <thead>
-                                    <tr>
-                                        <th>モンスター</th>
-                                        <th>武器種</th>
-                                        <th>クエスト</th>
-                                        <th>ステージ</th>
-                                        <th>強さ</th>
-                                        <th>タイム</th>
-                                        <th>登録日</th>
-                                        <th>タグ</th>
-                                        <th>画像</th>
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- テーブルの内容はJavaScriptで動的に生成 -->
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="form-group">
+                      <label for="weapon-select" class="form-label"
+                        >武器種:</label
+                      >
+                      <select id="weapon-select" class="form-control" required>
+                        <option value="">武器を選択</option>
+                        <option value="大剣">大剣</option>
+                        <option value="太刀">太刀</option>
+                        <option value="片手剣">片手剣</option>
+                        <option value="双剣">双剣</option>
+                        <option value="ハンマー">ハンマー</option>
+                        <option value="狩猟笛">狩猟笛</option>
+                        <option value="ランス">ランス</option>
+                        <option value="ガンランス">ガンランス</option>
+                        <option value="スラッシュアックス">
+                          スラッシュアックス
+                        </option>
+                        <option value="チャージアックス">
+                          チャージアックス
+                        </option>
+                        <option value="操虫棍">操虫棍</option>
+                        <option value="ライトボウガン">ライトボウガン</option>
+                        <option value="ヘビィボウガン">ヘビィボウガン</option>
+                        <option value="弓">弓</option>
+                      </select>
                     </div>
+
+                    <div class="form-group">
+                      <label for="quest-type" class="form-label"
+                        >クエストタイプ:</label
+                      >
+                      <select id="quest-type" class="form-control" required>
+                        <option value="通常">通常</option>
+                        <option value="歴戦">歴戦</option>
+                        <option value="狂竜化">狂竜化</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="stage-select" class="form-label"
+                        >ステージ:</label
+                      >
+                      <select id="stage-select" class="form-control" required>
+                        <option value="">ステージを選択</option>
+                        <option value="隔ての砂原">隔ての砂原</option>
+                        <option value="緋の森">緋の森</option>
+                        <option value="油涌き谷">油涌き谷</option>
+                        <option value="氷霧の断崖">氷霧の断崖</option>
+                        <option value="竜都の跡形">竜都の跡形</option>
+                        <option value="竜谷の跡地(闘技場)">
+                          竜谷の跡地(闘技場)
+                        </option>
+                        <option value="その他">その他</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="strength" class="form-label">強さ:</label>
+                      <select id="strength" class="form-control" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">タイム:</label>
+                      <div class="time-input">
+                        <input
+                          type="number"
+                          id="time-minutes"
+                          class="form-control"
+                          min="0"
+                          placeholder="分"
+                          required
+                        />
+                        <span>:</span>
+                        <input
+                          type="number"
+                          id="time-seconds"
+                          class="form-control"
+                          min="0"
+                          max="59"
+                          placeholder="秒"
+                          required
+                        />
+                        <span>.</span>
+                        <input
+                          type="number"
+                          id="time-milliseconds"
+                          class="form-control"
+                          min="0"
+                          max="99"
+                          placeholder="ミリ秒"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="notes" class="form-label">メモ:</label>
+                      <input
+                        type="text"
+                        id="notes"
+                        class="form-control"
+                        placeholder="装備や戦略など"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="tags" class="form-label">タグ:</label>
+                      <input
+                        type="text"
+                        id="tags"
+                        class="form-control"
+                        placeholder="カンマ区切りでタグを入力（例: 事故、練習中、装備検証）"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">スクリーンショット:</label>
+                      <div class="image-upload" id="imageUploadContainer">
+                        <i
+                          class="fas fa-cloud-upload-alt image-upload-icon"
+                        ></i>
+                        <span>クリックして画像をアップロード</span>
+                        <input type="file" id="imageUpload" accept="image/*" />
+                      </div>
+                      <div
+                        class="image-preview-container"
+                        id="imagePreviewContainer"
+                        style="display: none"
+                      >
+                        <div>
+                          <img
+                            id="formPreviewImage"
+                            class="form-preview-image"
+                            src=""
+                            alt="プレビュー"
+                          />
+                          <div class="text-center">
+                            <span class="image-remove" id="removeImage"
+                              >画像を削除</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">
+                      記録を保存
+                    </button>
+                  </form>
                 </div>
+
+                <!-- インポート/エクスポートタブ -->
+                <div id="import-export" class="tab-content">
+                  <div class="form-group">
+                    <button
+                      id="export-json"
+                      class="btn btn-secondary btn-block"
+                    >
+                      JSONでエクスポート
+                    </button>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="import-file" class="form-label"
+                      >JSONファイルをインポート:</label
+                    >
+                    <input
+                      type="file"
+                      id="import-file"
+                      class="form-control"
+                      accept=".json"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <button
+                      id="import-button"
+                      class="btn btn-secondary btn-block"
+                    >
+                      インポート
+                    </button>
+                  </div>
+
+                  <div class="hr"></div>
+
+                  <div class="form-group">
+                    <button id="clear-data" class="btn btn-danger btn-block">
+                      全データ削除
+                    </button>
+                  </div>
+                </div>
+
+                <!-- ランキングタブ -->
+                <div id="rankings" class="tab-content">
+                  <div class="tab-container">
+                    <div class="tab-buttons ranking-tabs">
+                      <button
+                        class="tab-button active"
+                        onclick="openRankingTab('monster-ranking')"
+                      >
+                        モンスター別
+                      </button>
+                      <button
+                        class="tab-button"
+                        onclick="openRankingTab('weapon-ranking')"
+                      >
+                        武器種別
+                      </button>
+                      <button
+                        class="tab-button"
+                        onclick="openRankingTab('combined-ranking')"
+                      >
+                        モンスター×武器
+                      </button>
+                      <button
+                        class="tab-button"
+                        onclick="openRankingTab('stage-ranking')"
+                      >
+                        ステージ別
+                      </button>
+                      <button
+                        class="tab-button"
+                        onclick="openRankingTab('quest-ranking')"
+                      >
+                        クエスト別
+                      </button>
+                    </div>
+
+                    <div id="monster-ranking" class="ranking-content active">
+                      <div class="table-responsive">
+                        <table id="monster-ranking-table">
+                          <thead>
+                            <tr>
+                              <th>モンスター</th>
+                              <th>ベストタイム</th>
+                              <th>武器種</th>
+                              <th>日付</th>
+                              <th>共有</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- ランキングデータはJSで動的に生成 -->
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div id="weapon-ranking" class="ranking-content">
+                      <div class="table-responsive">
+                        <table id="weapon-ranking-table">
+                          <thead>
+                            <tr>
+                              <th>武器種</th>
+                              <th>モンスター</th>
+                              <th>ベストタイム</th>
+                              <th>日付</th>
+                              <th>共有</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- ランキングデータはJSで動的に生成 -->
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- 以下を追加: 新しいランキング -->
+                    <div id="combined-ranking" class="ranking-content">
+                      <div class="ranking-filter">
+                        <select
+                          id="combined-monster-filter"
+                          class="form-control"
+                        >
+                          <option value="">モンスターでフィルター</option>
+                          <!-- 動的に生成 -->
+                        </select>
+                      </div>
+                      <div class="table-responsive">
+                        <table id="combined-ranking-table">
+                          <thead>
+                            <tr>
+                              <th>モンスター</th>
+                              <th>武器種</th>
+                              <th>ベストタイム</th>
+                              <th>日付</th>
+                              <th>共有</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- ランキングデータはJSで動的に生成 -->
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div id="stage-ranking" class="ranking-content">
+                      <div class="table-responsive">
+                        <table id="stage-ranking-table">
+                          <thead>
+                            <tr>
+                              <th>ステージ</th>
+                              <th>モンスター</th>
+                              <th>武器種</th>
+                              <th>ベストタイム</th>
+                              <th>日付</th>
+                              <th>共有</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- ランキングデータはJSで動的に生成 -->
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div id="quest-ranking" class="ranking-content">
+                      <div class="table-responsive">
+                        <table id="quest-ranking-table">
+                          <thead>
+                            <tr>
+                              <th>クエストタイプ</th>
+                              <th>モンスター</th>
+                              <th>武器種</th>
+                              <th>ベストタイム</th>
+                              <th>日付</th>
+                              <th>共有</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- ランキングデータはJSで動的に生成 -->
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 統計タブ -->
+                <div id="statistics" class="tab-content">
+                  <div class="stats-overview">
+                    <div class="stats-card">
+                      <div class="stats-title">総ハント数</div>
+                      <div id="total-hunts" class="stats-value">0</div>
+                    </div>
+                    <div class="stats-card">
+                      <div class="stats-title">平均クリアタイム</div>
+                      <div id="avg-time" class="stats-value">00:00.00</div>
+                    </div>
+                    <div class="stats-card">
+                      <div class="stats-title">最も狩猟したモンスター</div>
+                      <div id="most-hunted" class="stats-value">-</div>
+                    </div>
+                    <div class="stats-card">
+                      <div class="stats-title">最も使用した武器</div>
+                      <div id="most-used-weapon" class="stats-value">-</div>
+                    </div>
+                  </div>
+
+                  <div class="stats-charts">
+                    <div class="stats-chart-container">
+                      <h3>モンスター別狩猟回数</h3>
+                      <canvas id="monsters-chart"></canvas>
+                    </div>
+                    <div class="stats-chart-container">
+                      <h3>武器種別使用回数</h3>
+                      <canvas id="weapons-chart"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- チェックリストタブ -->
+                <div id="checklist" class="tab-content">
+                  <div class="checklist-header">
+                    <div class="progress-container">
+                      <div class="progress-text">
+                        攻略率: <span id="completion-rate">0%</span>
+                      </div>
+                      <div class="progress-bar">
+                        <div
+                          id="progress-fill"
+                          class="progress-fill"
+                          style="width: 0%"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="checklist-filters">
+                    <select id="checklist-filter" class="form-control">
+                      <option value="all">すべてのモンスター</option>
+                      <option value="completed">攻略済み</option>
+                      <option value="incomplete">未攻略</option>
+                    </select>
+                  </div>
+
+                  <div id="checklist-container" class="checklist-container">
+                    <!-- チェックリストはJSで動的に生成 -->
+                  </div>
+                </div>
+                <div id="trends" class="tab-content">
+                  <div class="trends-filters">
+                    <div class="form-group">
+                      <label for="trend-monster" class="form-label"
+                        >モンスター:</label
+                      >
+                      <select id="trend-monster" class="form-control">
+                        <option value="">モンスターを選択</option>
+                        <!-- 動的に生成 -->
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="trend-weapon" class="form-label"
+                        >武器種（オプション）:</label
+                      >
+                      <select id="trend-weapon" class="form-control">
+                        <option value="">すべての武器種</option>
+                        <option value="大剣">大剣</option>
+                        <option value="太刀">太刀</option>
+                        <option value="片手剣">片手剣</option>
+                        <option value="双剣">双剣</option>
+                        <option value="ハンマー">ハンマー</option>
+                        <option value="狩猟笛">狩猟笛</option>
+                        <option value="ランス">ランス</option>
+                        <option value="ガンランス">ガンランス</option>
+                        <option value="スラッシュアックス">
+                          スラッシュアックス
+                        </option>
+                        <option value="チャージアックス">
+                          チャージアックス
+                        </option>
+                        <option value="操虫棍">操虫棍</option>
+                        <option value="ライトボウガン">ライトボウガン</option>
+                        <option value="ヘビィボウガン">ヘビィボウガン</option>
+                        <option value="弓">弓</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="trend-chart-container">
+                    <canvas id="trend-chart"></canvas>
+                  </div>
+
+                  <div class="trend-empty-state" id="trend-empty-state">
+                    <i class="fas fa-chart-line empty-icon"></i>
+                    <p>モンスターを選択すると、タイムの推移を表示します</p>
+                  </div>
+                </div>
+                <!-- バックアップ設定タブ -->
+                <div id="backup-settings" class="tab-content">
+                  <div class="backup-settings">
+                    <h3>自動バックアップ設定</h3>
+
+                    <div class="form-group">
+                      <label class="checkbox-label">
+                        <input type="checkbox" id="backup-enabled" />
+                        自動バックアップを有効にする
+                      </label>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="backup-interval" class="form-label"
+                        >バックアップ頻度:</label
+                      >
+                      <select id="backup-interval" class="form-control">
+                        <option value="daily">毎日</option>
+                        <option value="weekly">毎週</option>
+                        <option value="monthly">毎月</option>
+                      </select>
+                    </div>
+
+                    <div class="backup-status">
+                      最終バックアップ: <span id="last-backup-date">なし</span>
+                    </div>
+
+                    <div class="form-group">
+                      <button
+                        id="save-backup-settings"
+                        class="btn btn-primary btn-block"
+                      >
+                        設定を保存
+                      </button>
+                    </div>
+
+                    <div class="form-group">
+                      <button
+                        id="manual-backup"
+                        class="btn btn-secondary btn-block"
+                      >
+                        今すぐバックアップを実行
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+
+        <div class="records-panel">
+          <div class="card">
+            <div class="card-header">記録一覧</div>
+            <div class="card-body">
+              <div class="filters-toggle" onclick="toggleFilterPanel()">
+                <i class="fas fa-filter"></i> フィルター
+              </div>
+
+              <div id="filter-panel" class="search-box">
+                <div class="search-filters">
+                  <select id="filter-monster" class="form-control">
+                    <option value="">モンスター（全て）</option>
+                    <!-- 動的に生成 -->
+                  </select>
+
+                  <select id="filter-weapon" class="form-control">
+                    <option value="">武器種（全て）</option>
+                    <option value="大剣">大剣</option>
+                    <option value="太刀">太刀</option>
+                    <option value="片手剣">片手剣</option>
+                    <option value="双剣">双剣</option>
+                    <option value="ハンマー">ハンマー</option>
+                    <option value="狩猟笛">狩猟笛</option>
+                    <option value="ランス">ランス</option>
+                    <option value="ガンランス">ガンランス</option>
+                    <option value="スラッシュアックス">
+                      スラッシュアックス
+                    </option>
+                    <option value="チャージアックス">チャージアックス</option>
+                    <option value="操虫棍">操虫棍</option>
+                    <option value="ライトボウガン">ライトボウガン</option>
+                    <option value="ヘビィボウガン">ヘビィボウガン</option>
+                    <option value="弓">弓</option>
+                  </select>
+
+                  <select id="filter-quest" class="form-control">
+                    <option value="">クエストタイプ（全て）</option>
+                    <option value="通常">通常</option>
+                    <option value="歴戦">歴戦</option>
+                    <option value="狂竜化">狂竜化</option>
+                  </select>
+
+                  <select id="filter-stage" class="form-control">
+                    <option value="">ステージ（全て）</option>
+                    <!-- 動的に生成 -->
+                  </select>
+                  <select id="filter-tag" class="form-control">
+                    <option value="">タグ（全て）</option>
+                    <!-- 動的に生成 -->
+                  </select>
+                </div>
+
+                <div class="search-text">
+                  <i class="fas fa-search search-icon"></i>
+                  <input
+                    type="text"
+                    id="search-input"
+                    class="form-control"
+                    placeholder="テキスト検索..."
+                  />
+                </div>
+              </div>
+
+              <div class="table-responsive">
+                <table id="records-table">
+                  <thead>
+                    <tr>
+                      <th>モンスター</th>
+                      <th>武器種</th>
+                      <th>クエスト</th>
+                      <th>ステージ</th>
+                      <th>強さ</th>
+                      <th>タイム</th>
+                      <th>登録日</th>
+                      <th>タグ</th>
+                      <th>画像</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- テーブルの内容はJavaScriptで動的に生成 -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- 画像モーダル -->
     <div id="imageModal">
-        <span class="modal-close">&times;</span>
-        <div class="modal-content">
-            <img id="modalImage" class="modal-image" src="" alt="スクリーンショット">
-        </div>
+      <span class="modal-close">&times;</span>
+      <div class="modal-content">
+        <img
+          id="modalImage"
+          class="modal-image"
+          src=""
+          alt="スクリーンショット"
+        />
+      </div>
     </div>
 
-    <div id="share-modal-template" style="display:none;">
-        <div class="share-modal">
-          <div class="share-modal-content">
-            <span class="share-modal-close">&times;</span>
-            <h3>共有</h3>
-            <div class="share-details"></div>
-            <div class="share-options"></div>
-            <div id="qrCodeContainer" class="qr-code-container"></div>
-            <div id="shareStatus" class="share-status"></div>
-          </div>
+    <div id="share-modal-template" style="display: none">
+      <div class="share-modal">
+        <div class="share-modal-content">
+          <span class="share-modal-close">&times;</span>
+          <h3>共有</h3>
+          <div class="share-details"></div>
+          <div class="share-options"></div>
+          <div id="qrCodeContainer" class="qr-code-container"></div>
+          <div id="shareStatus" class="share-status"></div>
         </div>
+      </div>
     </div>
 
-    
     <script>
         // モンスターリスト
         const monsters = [
@@ -4344,85 +4525,85 @@
         }
         // 装備選択ダイアログでJSONデータを利用
         function _show_equipment_selector(data_list, equip_type) {
-        // 既存の実装に加えて、window.equipmentDBからデータを取得する場合の処理を追加
-        if (!data_list || data_list.length === 0) {
-            if (window.equipmentDB) {
-                if (equip_type === "weapon") {
-                    // 通常武器とボウガンの両方を結合
-                    data_list = [...window.equipmentDB.weapons.normal, ...window.equipmentDB.weapons.bowgun];
-                } else if (equip_type === "charm") {
-                    data_list = window.equipmentDB.charms;
-                } else {
-                    // 部位に応じた防具データのフィルタリング
-                    const part_map = {"head": "頭", "body": "胴", "arms": "腕", "waist": "腰", "legs": "脚"};
-                    data_list = window.equipmentDB.armors.filter(a => a["bui"] === part_map[equip_type]);
-                }
-            }
-        }
-        // グループスキルとシリーズスキルの要件を確認する関数
-        function checkSetRequirements(head, body, arm, waist, leg) {
-            if (!window.equipmentDB || !window.equipmentDB.requirements) {
-                return { success: false, groupSkills: [], seriesSkills: [] };
-            }
-
-            // グループIDとシリーズIDを抽出
-            const parts = { "頭": head, "胴": body, "腕": arm, "腰": waist, "脚": leg };
-
-            // 各部位のグループIDとシリーズIDを集計
-            const groupCounts = {};
-            const seriesCounts = {};
-
-            for (const [partName, armor] of Object.entries(parts)) {
-                if (armor && armor.groupId) {
-                    const gid = armor.groupId;
-                    if (!groupCounts[gid]) {
-                        groupCounts[gid] = new Set();
+            // 既存の実装に加えて、window.equipmentDBからデータを取得する場合の処理を追加
+            if (!data_list || data_list.length === 0) {
+                if (window.equipmentDB) {
+                    if (equip_type === "weapon") {
+                        // 通常武器とボウガンの両方を結合
+                        data_list = [...window.equipmentDB.weapons.normal, ...window.equipmentDB.weapons.bowgun];
+                    } else if (equip_type === "charm") {
+                        data_list = window.equipmentDB.charms;
+                    } else {
+                        // 部位に応じた防具データのフィルタリング
+                        const part_map = {"head": "頭", "body": "胴", "arms": "腕", "waist": "腰", "legs": "脚"};
+                        data_list = window.equipmentDB.armors.filter(a => a["bui"] === part_map[equip_type]);
                     }
-                    groupCounts[gid].add(partName);
-                }
-
-                if (armor && armor.seriesId) {
-                    const sid = armor.seriesId;
-                    if (!seriesCounts[sid]) {
-                        seriesCounts[sid] = new Set();
-                    }
-                    seriesCounts[sid].add(partName);
                 }
             }
+            // グループスキルとシリーズスキルの要件を確認する関数
+            function checkSetRequirements(head, body, arm, waist, leg) {
+                if (!window.equipmentDB || !window.equipmentDB.requirements) {
+                    return { success: false, groupSkills: [], seriesSkills: [] };
+                }
 
-            // グループスキルの発動スキルを確認
-            const activatedGroupSkills = new Set();
-            for (const [gid, partsSet] of Object.entries(groupCounts)) {
-                const groupReqs = window.equipmentDB.requirements.group.find(g => g.id === parseInt(gid));
-                if (groupReqs) {
-                    for (const req of groupReqs.req) {
-                        if (partsSet.size >= req.parts) { // 必要部位数を満たす
-                            req.skillIds.forEach(id => activatedGroupSkills.add(id));
+                // グループIDとシリーズIDを抽出
+                const parts = { "頭": head, "胴": body, "腕": arm, "腰": waist, "脚": leg };
+
+                // 各部位のグループIDとシリーズIDを集計
+                const groupCounts = {};
+                const seriesCounts = {};
+
+                for (const [partName, armor] of Object.entries(parts)) {
+                    if (armor && armor.groupId) {
+                        const gid = armor.groupId;
+                        if (!groupCounts[gid]) {
+                            groupCounts[gid] = new Set();
+                        }
+                        groupCounts[gid].add(partName);
+                    }
+
+                    if (armor && armor.seriesId) {
+                        const sid = armor.seriesId;
+                        if (!seriesCounts[sid]) {
+                            seriesCounts[sid] = new Set();
+                        }
+                        seriesCounts[sid].add(partName);
+                    }
+                }
+
+                // グループスキルの発動スキルを確認
+                const activatedGroupSkills = new Set();
+                for (const [gid, partsSet] of Object.entries(groupCounts)) {
+                    const groupReqs = window.equipmentDB.requirements.group.find(g => g.id === parseInt(gid));
+                    if (groupReqs) {
+                        for (const req of groupReqs.req) {
+                            if (partsSet.size >= req.parts) { // 必要部位数を満たす
+                                req.skillIds.forEach(id => activatedGroupSkills.add(id));
+                            }
                         }
                     }
                 }
-            }
 
-            // シリーズスキルの発動スキルを確認
-            const activatedSeriesSkills = new Set();
-            for (const [sid, partsSet] of Object.entries(seriesCounts)) {
-                const seriesReqs = window.equipmentDB.requirements.series.find(s => s.id === parseInt(sid));
-                if (seriesReqs) {
-                    for (const req of seriesReqs.req) {
-                        if (partsSet.size >= req.parts) { // 必要部位数を満たす
-                            req.skillIds.forEach(id => activatedSeriesSkills.add(id));
+                // シリーズスキルの発動スキルを確認
+                const activatedSeriesSkills = new Set();
+                for (const [sid, partsSet] of Object.entries(seriesCounts)) {
+                    const seriesReqs = window.equipmentDB.requirements.series.find(s => s.id === parseInt(sid));
+                    if (seriesReqs) {
+                        for (const req of seriesReqs.req) {
+                            if (partsSet.size >= req.parts) { // 必要部位数を満たす
+                                req.skillIds.forEach(id => activatedSeriesSkills.add(id));
+                            }
                         }
                     }
                 }
+
+                return {
+                    success: true,
+                    groupSkills: Array.from(activatedGroupSkills),
+                    seriesSkills: Array.from(activatedSeriesSkills)
+                };
             }
-
-            return {
-                success: true,
-                groupSkills: Array.from(activatedGroupSkills),
-                seriesSkills: Array.from(activatedSeriesSkills)
-            };
         }
-
         // スキル名とレベル情報を取得する関数
         function getSkillInfo(skillId) {
             if (!window.equipmentDB || !window.equipmentDB.skills) {
@@ -5159,6 +5340,9 @@
                           }
                       };
                   }
+                });   // setTimeout の閉じ
+            }          // shareRecord の閉じ
+                
 
           // 共有された記録に装備データがある場合の処理
           function processRecordShareLink(shareData) {
@@ -6180,7 +6364,6 @@
         `;
 
         document.head.appendChild(profileStyle);
-        
-        </script>
-</body>
+    </script>
+  </body>
 </html>
