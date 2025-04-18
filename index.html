@@ -946,6 +946,7 @@
                   >
                     バックアップ
                   </button>
+                  <button class="tab-button" onclick="openTab('simulation')">シミュレーション</button>
                 </div>
 
                 <!-- 記録追加タブ -->
@@ -1458,6 +1459,49 @@
                         今すぐバックアップを実行
                       </button>
                     </div>
+                  </div>
+                </div>
+                <div id="simulation" class="tab-content">
+                  <h2>装備シミュレーション</h2>
+                  <div class="form-group">
+                    <label for="sim-weapon" class="form-label">武器:</label>
+                    <select id="sim-weapon" class="form-control"></select>
+                    <div id="deco-slots-weapon" class="deco-container"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="sim-head" class="form-label">頭装備:</label>
+                    <select id="sim-head" class="form-control"></select>
+                    <div id="deco-slots-head" class="deco-container"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="sim-body" class="form-label">胴装備:</label>
+                    <select id="sim-body" class="form-control"></select>
+                    <div id="deco-slots-body" class="deco-container"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="sim-arms" class="form-label">腕装備:</label>
+                    <select id="sim-arms" class="form-control"></select>
+                    <div id="deco-slots-arms" class="deco-container"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="sim-waist" class="form-label">腰装備:</label>
+                    <select id="sim-waist" class="form-control"></select>
+                    <div id="deco-slots-waist" class="deco-container"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="sim-legs" class="form-label">脚装備:</label>
+                    <select id="sim-legs" class="form-control"></select>
+                    <div id="deco-slots-legs" class="deco-container"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="sim-charm" class="form-label">護石:</label>
+                    <select id="sim-charm" class="form-control"></select>
+                  </div>
+                  <button id="run-simulation" class="btn btn-primary btn-block">シミュレーション実行</button>
+
+                  <div id="simulation-results" style="margin-top:1.5rem;">
+                    <h3>発動スキル</h3>
+                    <ul id="sim-skill-list"></ul>
                   </div>
                 </div>
               </div>
@@ -5168,6 +5212,110 @@
             return equipmentData;
         }
 
+        // ================================
+        // 3. JavaScript 側の初期化と挙動
+        // ================================
+        function initSimulationUI() {
+          const partMap = {
+            weapon: [...window.equipmentDB.weapons.normal, ...window.equipmentDB.weapons.bowgun],
+            head: window.equipmentDB.armors.filter(a=>a.bui==='頭'),
+            body: window.equipmentDB.armors.filter(a=>a.bui==='胴'),
+            arms: window.equipmentDB.armors.filter(a=>a.bui==='腕'),
+            waist: window.equipmentDB.armors.filter(a=>a.bui==='腰'),
+            legs: window.equipmentDB.armors.filter(a=>a.bui==='脚'),
+            charm: window.equipmentDB.charms
+          };
+
+          // 装備と装飾品セレクトを作る
+          Object.keys(partMap).forEach(part => {
+            const sel = document.getElementById(`sim-${part}`);
+            sel.innerHTML = `<option value="">選択なし</option>`
+              + partMap[part]
+                  .map(e=>`<option value="${e.id}">${e.name}</option>`)
+                  .join('');
+            // 装備が変わったらスロット数に応じた装飾品セレクトを生成
+            sel.addEventListener('change', () => {
+              const equip = partMap[part].find(e=>e.id==sel.value);
+              const decoContainer = document.getElementById(`deco-slots-${part}`);
+              decoContainer.innerHTML = '';
+              if (!equip || !equip.slots) return;
+              // 各スロット分、セレクトを追加
+              equip.slots.forEach((size, idx) => {
+                const decSel = document.createElement('select');
+                decSel.className = 'form-control';
+                decSel.innerHTML = `<option value="">装飾品なし</option>`
+                  + window.equipmentDB.decow
+                      .filter(d=>d.slot<=size)
+                      .map(d=>`<option value="${d.id}">${d.name} (Lv${d.slot})</option>`)
+                      .join('');
+                decSel.addEventListener('change', () => {/* 変更後に結果再計算 */});
+                const label = document.createElement('label');
+                label.textContent = `装飾品(${size}スロット):`;
+                decoContainer.append(label, decSel);
+              });
+            });
+          });
+        }
+
+        // 実行ボタン
+        document.getElementById('run-simulation').addEventListener('click', () => {
+          const selected = {};
+          ['weapon','head','body','arms','waist','legs','charm'].forEach(part => {
+            const id = document.getElementById(`sim-${part}`).value;
+            selected[part] = id
+              ? [...(part==='weapon'
+                    ? [...window.equipmentDB.weapons.normal, ...window.equipmentDB.weapons.bowgun]
+                    : part==='charm'
+                      ? window.equipmentDB.charms
+                      : window.equipmentDB.armors.filter(a=>a.bui==={'head':'頭','body':'胴','arms':'腕','waist':'腰','legs':'脚'}[part])[0]
+                   )].find(e=>e.id==id)
+              : null;
+          });
+          // 装飾品は deco-slots-<part> 内の select から取得
+          const decorations = {};
+          Object.keys(selected).forEach(part => {
+            const container = document.getElementById(`deco-slots-${part}`);
+            decorations[part] = Array.from(container.querySelectorAll('select')).map(s=>{
+              const decoId = s.value;
+              return decoId
+                ? window.equipmentDB.decow.concat(window.equipmentDB.decoa).find(d=>d.id==decoId)
+                : null;
+            });
+          });
+
+          // スキル集計
+          let skillTotal = {};
+          Object.values(selected).forEach(equip=>{
+            if (equip && equip.skills) {
+              equip.skills.forEach(s=>{
+                skillTotal[s.id] = (skillTotal[s.id]||0) + s.lv;
+              });
+            }
+          });
+          Object.values(decorations).flat().forEach(deco=>{
+            if (deco && deco.skills) {
+              deco.skills.forEach(s=>{
+                skillTotal[s.id] = (skillTotal[s.id]||0) + s.lv;
+              });
+            }
+          });
+
+          // 結果表示
+          const ul = document.getElementById('sim-skill-list');
+          ul.innerHTML = '';
+          Object.entries(skillTotal)
+            .sort((a,b)=>window.equipmentDB.skills.find(s=>s.id==a[0]).name.localeCompare(
+                           window.equipmentDB.skills.find(s=>s.id==b[0]).name))
+            .forEach(([id,lv])=>{
+              const skill = window.equipmentDB.skills.find(s=>s.id==+id) || {};
+              const name = skill.name || `ID${id}`;
+              ul.innerHTML += `<li>${name} Lv${lv}</li>`;
+            });
+        });
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', initSimulationUI);
+
         // 記録の共有拡張（装備データを含める）
         function shareRecord(recordId) {
             const record = recordsData.find(r => r.id === recordId);
@@ -5342,7 +5490,7 @@
                   }
                 });   // setTimeout の閉じ
             }          // shareRecord の閉じ
-                
+
 
           // 共有された記録に装備データがある場合の処理
           function processRecordShareLink(shareData) {
