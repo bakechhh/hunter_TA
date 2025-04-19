@@ -5183,10 +5183,10 @@
                 ul.innerHTML += `<li>${name} Lv${lv}</li>`;
             });
 
-        // 追加スキルを一覧に表示（extraSkillsに含まれるが、skillTotalには含まれていないスキル）
+        // 追加スキルを一覧に表示
         extraSkills.forEach(skillId => {
-            // skillTotalに既に含まれている場合はスキップ
-            if (Object.keys(skillTotal).includes(skillId.toString())) return;
+            // 文字列と数値の両方に対応するため、両方変換して比較
+            if (Object.keys(skillTotal).some(id => Number(id) === Number(skillId))) return;
             
             const name = getSkillNameById(skillId);
             console.log(`Additional Skill ID: ${skillId}, Name: ${name}, Level: 1`);
@@ -5865,18 +5865,26 @@
                     }
                 });
                 
-                // スキルリストを取得
-                const skillItems = skillListElem.querySelectorAll('li');
-                skillItems.forEach(item => {
-                    const text = item.textContent.trim();
-                    const match = text.match(/(.+) Lv(\d+)/);
-                    if (match && match.length >= 3) {
-                        equipmentData.skills.push({
-                            name: match[1],
-                            level: parseInt(match[2]) || 1
+                try {
+                    // スキルリストを取得
+                    const skillListElem = document.getElementById('sim-skill-list');
+                    if (skillListElem) {
+                        const skillItems = skillListElem.querySelectorAll('li');
+                        skillItems.forEach(item => {
+                            const text = item.textContent.trim();
+                            const match = text.match(/(.+) Lv(\d+)/);
+                            if (match && match.length >= 3) {
+                                equipmentData.skills.push({
+                                    name: match[1],
+                                    level: parseInt(match[2]) || 1
+                                });
+                            }
                         });
                     }
-                });
+                } catch (error) {
+                    console.warn('スキルデータの取得中にエラーが発生しました:', error);
+                    // エラーが発生しても処理を継続
+                }
                 
                 console.log('取得した装備データ:', equipmentData);
                 return equipmentData;
@@ -6007,8 +6015,19 @@
             .sort((a, b) => getSkillNameById(a[0]).localeCompare(getSkillNameById(b[0])))
             .forEach(([id,lv])=>{
                 const name = getSkillNameById(id);
-              ul.innerHTML += `<li>${name} Lv${lv}</li>`;
+                // デバッグログ追加
+                console.log(`Skill ID: ${id}, Name: ${name}, Level: ${lv}`);
+                ul.innerHTML += `<li>${name} Lv${lv}</li>`;
             });
+          // 追加スキルを一覧に表示
+          extraSkills.forEach(skillId => {
+              // 文字列と数値の両方に対応するため、両方変換して比較
+              if (Object.keys(skillTotal).some(id => Number(id) === Number(skillId))) return;
+              
+              const name = getSkillNameById(skillId);
+              console.log(`Additional Skill ID: ${skillId}, Name: ${name}, Level: 1`);
+              ul.innerHTML += `<li>${name} Lv1</li>`;
+          });
         });
 
         // 初期化
