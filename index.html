@@ -4879,7 +4879,19 @@
             equipmentData.equipment.weapon ? equipmentData.equipment.weapon.name : '新しい装備セット');
             
         if (!presetName) return; // キャンセルされた場合
-        
+        // スキルリストを取得する（HTML要素から直接取得することで、表示されている全スキル（追加スキル含む）を取得）
+        const skillList = [];
+        const skillItems = document.getElementById('sim-skill-list').querySelectorAll('li');
+        skillItems.forEach(item => {
+            const text = item.textContent.trim();
+            const match = text.match(/(.+) Lv(\d+)/);
+            if (match && match.length >= 3) {
+                skillList.push({
+                    name: match[1],
+                    level: parseInt(match[2]) || 1
+                });
+            }
+        });
         // プリセットデータを作成
         const newPreset = {
             id: Date.now().toString(),
@@ -4887,7 +4899,7 @@
             created: new Date().toISOString(),
             lastUsed: new Date().toISOString(),
             equipment: equipmentData.equipment,
-            skills: equipmentData.skills,
+            skills: skillList,
             notes: ""
         };
         
@@ -5165,11 +5177,21 @@
         Object.entries(skillTotal)
             .sort((a, b) => getSkillNameById(a[0]).localeCompare(getSkillNameById(b[0])))
             .forEach(([id,lv])=>{
-            const name = getSkillNameById(id);
-            // デバッグログ追加
-            console.log(`Skill ID: ${id}, Name: ${name}, Level: ${lv}`);
-            ul.innerHTML += `<li>${name} Lv${lv}</li>`;
+                const name = getSkillNameById(id);
+                // デバッグログ追加
+                console.log(`Skill ID: ${id}, Name: ${name}, Level: ${lv}`);
+                ul.innerHTML += `<li>${name} Lv${lv}</li>`;
             });
+
+        // 追加スキルを一覧に表示（extraSkillsに含まれるが、skillTotalには含まれていないスキル）
+        extraSkills.forEach(skillId => {
+            // skillTotalに既に含まれている場合はスキップ
+            if (Object.keys(skillTotal).includes(skillId.toString())) return;
+            
+            const name = getSkillNameById(skillId);
+            console.log(`Additional Skill ID: ${skillId}, Name: ${name}, Level: 1`);
+            ul.innerHTML += `<li>${name} Lv1</li>`;
+        });
             
         // 「プリセットとして保存」ボタンを表示
         const resultDiv = document.getElementById('simulation-results');
@@ -5844,20 +5866,17 @@
                 });
                 
                 // スキルリストを取得
-                const skillListElem = document.getElementById('sim-skill-list');
-                if (skillListElem) {
-                    const skillItems = skillListElem.querySelectorAll('li');
-                    skillItems.forEach(item => {
-                        const text = item.textContent.trim();
-                        const match = text.match(/(.+) Lv(\d+)/);
-                        if (match && match.length >= 3) {
-                            equipmentData.skills.push({
-                                name: match[1],
-                                level: parseInt(match[2]) || 1
-                            });
-                        }
-                    });
-                }
+                const skillItems = skillListElem.querySelectorAll('li');
+                skillItems.forEach(item => {
+                    const text = item.textContent.trim();
+                    const match = text.match(/(.+) Lv(\d+)/);
+                    if (match && match.length >= 3) {
+                        equipmentData.skills.push({
+                            name: match[1],
+                            level: parseInt(match[2]) || 1
+                        });
+                    }
+                });
                 
                 console.log('取得した装備データ:', equipmentData);
                 return equipmentData;
