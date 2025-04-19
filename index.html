@@ -2365,6 +2365,8 @@
 
         // 画像クリックでモーダルを表示（セキュリティ対策版）
         function showImageModal(imageUrl) {
+            closeAllModals();
+            
             const modal = document.getElementById('imageModal');
             const modalImage = document.getElementById('modalImage');
 
@@ -2372,6 +2374,15 @@
             if (imageUrl.startsWith('data:image/')) {
                 modalImage.src = imageUrl;
                 modal.style.display = 'block';
+                
+                // ESCキーで閉じる
+                const escHandler = function(e) {
+                    if (e.key === 'Escape') {
+                        modal.style.display = 'none';
+                        document.removeEventListener('keydown', escHandler);
+                    }
+                };
+                document.addEventListener('keydown', escHandler);
             }
         }
 
@@ -3157,6 +3168,12 @@
         }
         // 記録の詳細を表示する関数
         function showRecordDetails(recordId) {
+            // 既存のモーダルを全て閉じる
+            const existingModals = document.querySelectorAll('.share-modal');
+            existingModals.forEach(modal => {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            });
             const record = recordsData.find(r => r.id === recordId);
             if (!record) return;
 
@@ -3281,6 +3298,13 @@
                 modal.classList.remove('active');
                 setTimeout(() => modal.remove(), 300);
             };
+            // モーダルの外側をクリックしても閉じるように設定
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    modal.classList.remove('active');
+                    setTimeout(() => modal.remove(), 300);
+                }
+            });
         }
 
         // モーダルを閉じる補助関数
@@ -3291,6 +3315,22 @@
                 setTimeout(() => modal.remove(), 300);
             }
         }
+        // モーダル管理関数
+        function closeAllModals() {
+            const modals = document.querySelectorAll('.share-modal');
+            modals.forEach(modal => {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            });
+        }
+
+        // ESCキーでモーダルを閉じる
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeAllModals();
+            }
+        });
+
         // 日付のフォーマットを修正（エラーハンドリング追加）
         function formatDate(dateString) {
             try {
@@ -3349,6 +3389,9 @@
         }
         // 装備詳細を表示
         function showEquipmentDetails(presetId) {
+            // 既存のモーダルを全て閉じる
+            closeAllModals();
+
             const preset = getPresetById(presetId);
             if (!preset) return;
 
