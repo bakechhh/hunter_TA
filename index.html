@@ -5335,7 +5335,94 @@
             });
 
             // プリセットリストを更新
-            updatePresetList('presets-container');
+            const presetsContainer = modal.querySelector('#presets-list #presets-container');
+            if (presetsContainer) {
+                // プリセットリストをモーダル内の要素に直接描画
+                presetsContainer.innerHTML = '';
+                
+                if (equipmentPresets.length === 0) {
+                    presetsContainer.innerHTML = '<div class="empty-state"><i class="fas fa-scroll empty-icon"></i><p>プリセットがありません</p><p class="text-muted">新しいプリセットを追加してください</p></div>';
+                } else {
+                    // プリセットをソート（最後に使用した順）
+                    const sortedPresets = [...equipmentPresets].sort((a, b) =>
+                        new Date(b.lastUsed || b.created) - new Date(a.lastUsed || a.created)
+                    );
+
+                    sortedPresets.forEach(preset => {
+                        const presetCard = document.createElement('div');
+                        presetCard.className = 'preset-card card';
+
+                        // スキル一覧を構築
+                        let skillsList = '';
+                        if (preset.skills && preset.skills.length > 0) {
+                            skillsList = preset.skills.map(skill =>
+                                `<span class="tag-badge">${skill.name} Lv${skill.level}</span>`
+                            ).join(' ');
+                        } else {
+                            skillsList = '<span class="text-muted">スキル情報なし</span>';
+                        }
+
+                        // 武器種アイコンの選択
+                        let weaponIcon = 'fa-question';
+                        if (preset.equipment.weapon) {
+                            const weaponType = preset.equipment.weapon.type;
+                            if (weaponType.includes('大剣')) weaponIcon = 'fa-khanda';
+                            else if (weaponType.includes('太刀')) weaponIcon = 'fa-wind';
+                            else if (weaponType.includes('片手剣')) weaponIcon = 'fa-sword';
+                            else if (weaponType.includes('双剣')) weaponIcon = 'fa-swords';
+                            else if (weaponType.includes('ハンマー')) weaponIcon = 'fa-hammer';
+                            else if (weaponType.includes('狩猟笛')) weaponIcon = 'fa-music';
+                            else if (weaponType.includes('ランス')) weaponIcon = 'fa-splotch';
+                            else if (weaponType.includes('ガンランス')) weaponIcon = 'fa-rocket';
+                            else if (weaponType.includes('スラッシュアックス')) weaponIcon = 'fa-axe';
+                            else if (weaponType.includes('チャージアックス')) weaponIcon = 'fa-bolt';
+                            else if (weaponType.includes('操虫棍')) weaponIcon = 'fa-bug';
+                            else if (weaponType.includes('ライトボウガン')) weaponIcon = 'fa-gun';
+                            else if (weaponType.includes('ヘヴィボウガン')) weaponIcon = 'fa-bazooka';
+                            else if (weaponType.includes('弓')) weaponIcon = 'fa-bow-arrow';
+                        }
+
+                        presetCard.innerHTML = `
+                            <div class="card-header">
+                                <div>
+                                    <i class="fas ${weaponIcon}"></i> ${preset.name}
+                                </div>
+                                <div class="preset-actions">
+                                    <span class="action-btn" onclick="editPreset('${preset.id}')">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                    <span class="action-btn delete" onclick="confirmDeletePreset('${preset.id}')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="preset-equipment">
+                                    <div><strong>武器:</strong> ${preset.equipment.weapon ? preset.equipment.weapon.name : '未設定'}</div>
+                                    <div><strong>頭:</strong> ${preset.equipment.head ? preset.equipment.head.name : '未設定'}</div>
+                                    <div><strong>胴:</strong> ${preset.equipment.body ? preset.equipment.body.name : '未設定'}</div>
+                                    <div><strong>腕:</strong> ${preset.equipment.arms ? preset.equipment.arms.name : '未設定'}</div>
+                                    <div><strong>腰:</strong> ${preset.equipment.waist ? preset.equipment.waist.name : '未設定'}</div>
+                                    <div><strong>脚:</strong> ${preset.equipment.legs ? preset.equipment.legs.name : '未設定'}</div>
+                                    <div><strong>護石:</strong> ${preset.equipment.charm ? preset.equipment.charm.name : '未設定'}</div>
+                                </div>
+                                <div class="preset-skills">
+                                    <div><strong>発動スキル:</strong></div>
+                                    <div class="skills-container">
+                                        ${skillsList}
+                                    </div>
+                                </div>
+                                <div class="preset-footer">
+                                    <button class="btn btn-primary btn-sm" onclick="applyPreset('${preset.id}')">使用する</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="sharePreset('${preset.id}')">共有</button>
+                                </div>
+                            </div>
+                        `;
+
+                        presetsContainer.appendChild(presetCard);
+                    });
+                }
+            }
 
             // シミュレーションからインポートボタンの処理
             const importBtn = document.getElementById('import-from-simulation');
