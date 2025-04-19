@@ -1584,6 +1584,7 @@
                       <th>登録日</th>
                       <th>タグ</th>
                       <th>画像</th>
+                      <th>装備</th>
                       <th>操作</th>
                     </tr>
                   </thead>
@@ -3114,7 +3115,16 @@
                     <td>${formattedDate}</td>
                     <td class="tags-cell">${tagsDisplay}</td>
                     ${imageCell}
+                    <td class="equipment-cell">
+                        ${record.equipmentPresetId ? 
+                        `<span class="preset-badge" onclick="showEquipmentDetails('${record.equipmentPresetId}')">
+                            <i class="fas fa-shield-alt"></i> 装備あり
+                        </span>` : '-'}
+                    </td>
                     <td class="actions-cell">
+                        <span class="action-btn edit" onclick="editRecord('${record.id}')">
+                            <i class="fas fa-edit"></i>
+                        </span>
                         <span class="action-btn share" onclick="shareRecord('${record.id}')">
                             <i class="fas fa-share-alt"></i>
                         </span>
@@ -3183,6 +3193,218 @@
             });
 
             renderRecordsTable(filteredData);
+        }
+        // 装備詳細を表示
+        function showEquipmentDetails(presetId) {
+            const preset = getPresetById(presetId);
+            if (!preset) return;
+
+            // モーダルを作成・表示
+            const modal = document.createElement('div');
+            modal.className = 'share-modal active';
+
+            // スキル一覧を構築
+            let skillsList = '';
+            if (preset.skills && preset.skills.length > 0) {
+                skillsList = preset.skills.map(skill =>
+                    `<span class="tag-badge">${skill.name} Lv${skill.level}</span>`
+                ).join(' ');
+            } else {
+                skillsList = '<span class="text-muted">スキル情報なし</span>';
+            }
+
+            modal.innerHTML = `
+                <div class="share-modal-content">
+                    <span class="share-modal-close">&times;</span>
+                    <h3>装備詳細: ${preset.name}</h3>
+                    <div class="preset-details">
+                        <div class="preset-equipment">
+                            <h4>装備情報</h4>
+                            <div><strong>武器:</strong> ${preset.equipment.weapon ? preset.equipment.weapon.name : '未設定'}</div>
+                            <div><strong>頭:</strong> ${preset.equipment.head ? preset.equipment.head.name : '未設定'}</div>
+                            <div><strong>胴:</strong> ${preset.equipment.body ? preset.equipment.body.name : '未設定'}</div>
+                            <div><strong>腕:</strong> ${preset.equipment.arms ? preset.equipment.arms.name : '未設定'}</div>
+                            <div><strong>腰:</strong> ${preset.equipment.waist ? preset.equipment.waist.name : '未設定'}</div>
+                            <div><strong>脚:</strong> ${preset.equipment.legs ? preset.equipment.legs.name : '未設定'}</div>
+                            <div><strong>護石:</strong> ${preset.equipment.charm ? preset.equipment.charm.name : '未設定'}</div>
+                        </div>
+                        <div class="preset-skills">
+                            <h4>発動スキル</h4>
+                            <div class="skills-container">
+                                ${skillsList}
+                            </div>
+                        </div>
+                        ${preset.notes ? `<div class="preset-notes"><h4>メモ</h4><p>${preset.notes}</p></div>` : ''}
+                    </div>
+                    <div class="preset-actions">
+                        <button class="btn btn-primary" onclick="editPreset('${preset.id}')">
+                            <i class="fas fa-edit"></i> 編集
+                        </button>
+                        <button class="btn btn-secondary" onclick="sharePreset('${preset.id}')">
+                            <i class="fas fa-share-alt"></i> 共有
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // 閉じるボタンの処理
+            const closeBtn = modal.querySelector('.share-modal-close');
+            closeBtn.onclick = () => {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            };
+        }
+
+        // 記録を編集
+        function editRecord(recordId) {
+            const record = recordsData.find(r => r.id === recordId);
+            if (!record) return;
+
+            // モーダルを作成・表示
+            const modal = document.createElement('div');
+            modal.className = 'share-modal active';
+            modal.innerHTML = `
+                <div class="share-modal-content record-edit-modal">
+                    <span class="share-modal-close">&times;</span>
+                    <h3>記録を編集</h3>
+                    <form id="edit-record-form">
+                        <div class="form-group">
+                            <label for="edit-monster" class="form-label">モンスター:</label>
+                            <select id="edit-monster" class="form-control" required>
+                                ${monsters.sort().map(m => `<option value="${m}" ${record.monster === m ? 'selected' : ''}>${m}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-weapon" class="form-label">武器種:</label>
+                            <select id="edit-weapon" class="form-control" required>
+                                <option value="大剣" ${record.weapon === '大剣' ? 'selected' : ''}>大剣</option>
+                                <option value="太刀" ${record.weapon === '太刀' ? 'selected' : ''}>太刀</option>
+                                <option value="片手剣" ${record.weapon === '片手剣' ? 'selected' : ''}>片手剣</option>
+                                <option value="双剣" ${record.weapon === '双剣' ? 'selected' : ''}>双剣</option>
+                                <option value="ハンマー" ${record.weapon === 'ハンマー' ? 'selected' : ''}>ハンマー</option>
+                                <option value="狩猟笛" ${record.weapon === '狩猟笛' ? 'selected' : ''}>狩猟笛</option>
+                                <option value="ランス" ${record.weapon === 'ランス' ? 'selected' : ''}>ランス</option>
+                                <option value="ガンランス" ${record.weapon === 'ガンランス' ? 'selected' : ''}>ガンランス</option>
+                                <option value="スラッシュアックス" ${record.weapon === 'スラッシュアックス' ? 'selected' : ''}>スラッシュアックス</option>
+                                <option value="チャージアックス" ${record.weapon === 'チャージアックス' ? 'selected' : ''}>チャージアックス</option>
+                                <option value="操虫棍" ${record.weapon === '操虫棍' ? 'selected' : ''}>操虫棍</option>
+                                <option value="ライトボウガン" ${record.weapon === 'ライトボウガン' ? 'selected' : ''}>ライトボウガン</option>
+                                <option value="ヘビィボウガン" ${record.weapon === 'ヘビィボウガン' ? 'selected' : ''}>ヘビィボウガン</option>
+                                <option value="弓" ${record.weapon === '弓' ? 'selected' : ''}>弓</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-quest-type" class="form-label">クエストタイプ:</label>
+                            <select id="edit-quest-type" class="form-control" required>
+                                <option value="通常" ${record.questType === '通常' ? 'selected' : ''}>通常</option>
+                                <option value="歴戦" ${record.questType === '歴戦' ? 'selected' : ''}>歴戦</option>
+                                <option value="狂竜化" ${record.questType === '狂竜化' ? 'selected' : ''}>狂竜化</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-stage" class="form-label">ステージ:</label>
+                            <select id="edit-stage" class="form-control" required>
+                                ${stages.map(s => `<option value="${s}" ${record.stage === s ? 'selected' : ''}>${s}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-strength" class="form-label">強さ:</label>
+                            <select id="edit-strength" class="form-control" required>
+                                <option value="1" ${record.strength === '1' ? 'selected' : ''}>1</option>
+                                <option value="2" ${record.strength === '2' ? 'selected' : ''}>2</option>
+                                <option value="3" ${record.strength === '3' ? 'selected' : ''}>3</option>
+                                <option value="4" ${record.strength === '4' ? 'selected' : ''}>4</option>
+                                <option value="5" ${record.strength === '5' ? 'selected' : ''}>5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">タイム:</label>
+                            <div class="time-input">
+                                <input type="number" id="edit-minutes" class="form-control" min="0" value="${record.timeString.split(':')[0]}" required />
+                                <span>:</span>
+                                <input type="number" id="edit-seconds" class="form-control" min="0" max="59" value="${record.timeString.split(':')[1].split('.')[0]}" required />
+                                <span>.</span>
+                                <input type="number" id="edit-milliseconds" class="form-control" min="0" max="99" value="${record.timeString.split('.')[1]}" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-notes" class="form-label">メモ:</label>
+                            <input type="text" id="edit-notes" class="form-control" value="${record.notes || ''}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-tags" class="form-label">タグ:</label>
+                            <input type="text" id="edit-tags" class="form-control" value="${record.tags ? record.tags.join(', ') : ''}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-preset" class="form-label">装備プリセット:</label>
+                            <select id="edit-preset" class="form-control">
+                                <option value="">選択なし</option>
+                                ${equipmentPresets.map(p => `<option value="${p.id}" ${record.equipmentPresetId === p.id ? 'selected' : ''}>${p.name}</option>`).join('')}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            更新
+                        </button>
+                    </form>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // フォーム送信処理
+            const form = modal.querySelector('#edit-record-form');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+
+                // 編集した値を取得
+                const editedRecord = {
+                    ...record,
+                    monster: document.getElementById('edit-monster').value,
+                    weapon: document.getElementById('edit-weapon').value,
+                    questType: document.getElementById('edit-quest-type').value,
+                    stage: document.getElementById('edit-stage').value,
+                    strength: document.getElementById('edit-strength').value,
+                    notes: document.getElementById('edit-notes').value,
+                    tags: document.getElementById('edit-tags').value.split(',').map(tag => tag.trim()).filter(tag => tag !== ''),
+                    equipmentPresetId: document.getElementById('edit-preset').value || null
+                };
+
+                // タイムを更新
+                const minutes = parseInt(document.getElementById('edit-minutes').value) || 0;
+                const seconds = parseInt(document.getElementById('edit-seconds').value) || 0;
+                const milliseconds = parseInt(document.getElementById('edit-milliseconds').value) || 0;
+                
+                editedRecord.timeString = `${minutes}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+                editedRecord.timeValue = (minutes * 60 * 1000) + (seconds * 1000) + milliseconds;
+
+                // 記録を更新
+                const index = recordsData.findIndex(r => r.id === recordId);
+                if (index !== -1) {
+                    recordsData[index] = editedRecord;
+                    
+                    // 保存して画面更新
+                    saveRecordsToStorage();
+                    renderRecordsTable();
+                    updateRankings();
+                    updateStatistics();
+                    updateChecklist();
+                    
+                    // モーダルを閉じる
+                    modal.classList.remove('active');
+                    setTimeout(() => modal.remove(), 300);
+                    
+                    alert('記録が更新されました');
+                }
+            };
+
+            // 閉じるボタンの処理
+            const closeBtn = modal.querySelector('.share-modal-close');
+            closeBtn.onclick = () => {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            };
         }
 
         // 記録を削除
@@ -6815,7 +7037,42 @@
               padding-top: 10px;
               border-top: 1px solid rgba(0, 0, 0, 0.1);
           }
+          /* 装備プリセットバッジ */
+          .preset-badge {
+              display: inline-flex;
+              align-items: center;
+              gap: 5px;
+              background-color: var(--accent);
+              color: var(--text);
+              font-size: 0.8rem;
+              padding: 0.3rem 0.6rem;
+              border-radius: 12px;
+              cursor: pointer;
+              transition: var(--transition);
+          }
 
+          .preset-badge:hover {
+              background-color: var(--primary);
+              color: white;
+              transform: translateY(-2px);
+          }
+
+          .equipment-cell {
+              text-align: center;
+          }
+          .action-btn.edit {
+              background-color: rgba(33, 150, 243, 0.1);
+              color: #2196f3;
+          }
+
+          .action-btn.edit:hover {
+              background-color: #2196f3;
+              color: white;
+          }
+
+          .record-edit-modal {
+              max-width: 600px;
+          }
           /* トースト通知 */
           .toast-message {
               position: fixed;
