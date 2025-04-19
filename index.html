@@ -3111,38 +3111,186 @@
                 }
 
                 row.innerHTML = `
-                    <td>${record.monster}</td>
-                    <td>${record.weapon}</td>
-                    <td>${record.questType || '通常'}</td>
-                    <td>${record.stage || '-'}</td>
-                    <td>${record.strength || '-'}</td>
-                    <td>${record.timeString}</td>
-                    <td>${formattedDate}</td>
-                    <td class="tags-cell">${tagsDisplay}</td>
+                    <td class="record-cell" data-record-id="${record.id}">${record.monster}</td>
+                    <td class="record-cell" data-record-id="${record.id}">${record.weapon}</td>
+                    <td class="record-cell" data-record-id="${record.id}">${record.questType || '通常'}</td>
+                    <td class="record-cell" data-record-id="${record.id}">${record.stage || '-'}</td>
+                    <td class="record-cell" data-record-id="${record.id}">${record.strength || '-'}</td>
+                    <td class="record-cell" data-record-id="${record.id}">${record.timeString}</td>
+                    <td class="record-cell" data-record-id="${record.id}">${formattedDate}</td>
+                    <td class="tags-cell record-cell" data-record-id="${record.id}">${tagsDisplay}</td>
                     ${imageCell}
-                    <td class="equipment-cell">
+                    <td class="equipment-cell record-cell" data-record-id="${record.id}">
                         ${record.equipmentPresetId && record.equipmentPresetId !== '' ? 
-                        `<span class="preset-badge" onclick="showEquipmentDetails('${record.equipmentPresetId}')">
+                        `<span class="preset-badge" onclick="event.stopPropagation(); showEquipmentDetails('${record.equipmentPresetId}')">
                             <i class="fas fa-shield-alt"></i> 装備あり
                         </span>` : '-'}
                     </td>
                     <td class="actions-cell">
-                        <span class="action-btn edit" onclick="editRecord('${record.id}')">
+                        <span class="action-btn edit" onclick="event.stopPropagation(); editRecord('${record.id}')">
                             <i class="fas fa-edit"></i>
                         </span>
-                        <span class="action-btn share" onclick="shareRecord('${record.id}')">
+                        <span class="action-btn share" onclick="event.stopPropagation(); shareRecord('${record.id}')">
                             <i class="fas fa-share-alt"></i>
                         </span>
-                        <span class="action-btn delete" onclick="deleteRecord('${record.id}')">
+                        <span class="action-btn delete" onclick="event.stopPropagation(); deleteRecord('${record.id}')">
                             <i class="fas fa-trash-alt"></i>
                         </span>
                     </td>
                 `;
 
-                tableBody.appendChild(row);
+                // すべての行を追加した後
+                for (const record of dataToRender) {
+                    // （行の作成と追加）
+                    tableBody.appendChild(row);
+                }
+                
+                // 記録セルにクリックイベントを追加（ここに配置）
+                const recordCells = document.querySelectorAll('.record-cell');
+                recordCells.forEach(cell => {
+                    cell.addEventListener('click', function() {
+                        const recordId = this.getAttribute('data-record-id');
+                        showRecordDetails(recordId);
+                    });
+                });
             }
         }
+        // 記録の詳細を表示する関数
+        function showRecordDetails(recordId) {
+            const record = recordsData.find(r => r.id === recordId);
+            if (!record) return;
 
+            // 装備プリセット情報を取得
+            let presetInfo = '';
+            if (record.equipmentPresetId) {
+                const preset = getPresetById(record.equipmentPresetId);
+                if (preset) {
+                    // スキル一覧を構築
+                    let skillsList = '';
+                    if (preset.skills && preset.skills.length > 0) {
+                        skillsList = preset.skills.map(skill =>
+                            `<span class="tag-badge">${skill.name} Lv${skill.level}</span>`
+                        ).join(' ');
+                    } else {
+                        skillsList = '<span class="text-muted">スキル情報なし</span>';
+                    }
+
+                    presetInfo = `
+                        <div class="record-equipment">
+                            <h4>装備情報: ${preset.name}</h4>
+                            <div class="equipment-details">
+                                <div><strong>武器:</strong> ${preset.equipment.weapon ? preset.equipment.weapon.name : '未設定'}</div>
+                                <div><strong>頭:</strong> ${preset.equipment.head ? preset.equipment.head.name : '未設定'}</div>
+                                <div><strong>胴:</strong> ${preset.equipment.body ? preset.equipment.body.name : '未設定'}</div>
+                                <div><strong>腕:</strong> ${preset.equipment.arms ? preset.equipment.arms.name : '未設定'}</div>
+                                <div><strong>腰:</strong> ${preset.equipment.waist ? preset.equipment.waist.name : '未設定'}</div>
+                                <div><strong>脚:</strong> ${preset.equipment.legs ? preset.equipment.legs.name : '未設定'}</div>
+                                <div><strong>護石:</strong> ${preset.equipment.charm ? preset.equipment.charm.name : '未設定'}</div>
+                            </div>
+                            <div class="equipment-skills">
+                                <div><strong>発動スキル:</strong></div>
+                                <div class="skills-container">
+                                    ${skillsList}
+                                </div>
+                            </div>
+                            ${preset.notes ? `<div class="equipment-notes"><strong>メモ:</strong> ${preset.notes}</div>` : ''}
+                        </div>
+                    `;
+                }
+            }
+
+            // 画像情報を取得
+            let imageHtml = '';
+            if (record.hasImage) {
+                getImage(record.id).then(imageData => {
+                    if (imageData && typeof imageData === 'string' && imageData.startsWith('data:image/')) {
+                        const escapedImageData = imageData.replace(/"/g, '&quot;');
+                        const imageElement = document.getElementById('record-detail-image');
+                        if (imageElement) {
+                            imageElement.src = escapedImageData;
+                            document.getElementById('record-image-container').style.display = 'block';
+                        }
+                    }
+                }).catch(error => {
+                    console.error('画像の取得に失敗しました:', error);
+                });
+
+                imageHtml = `
+                    <div id="record-image-container" class="record-image-container" style="display: none;">
+                        <h4>スクリーンショット</h4>
+                        <img id="record-detail-image" class="record-detail-image" src="" alt="スクリーンショット" onclick="showImageModal(this.src)">
+                    </div>
+                `;
+            }
+
+            // タグ情報を構築
+            let tagsHtml = '';
+            if (record.tags && record.tags.length > 0) {
+                const tagsDisplay = record.tags.map(tag =>
+                    `<span class="tag-badge">${tag}</span>`
+                ).join(' ');
+                tagsHtml = `
+                    <div class="record-tags">
+                        <strong>タグ:</strong> ${tagsDisplay}
+                    </div>
+                `;
+            }
+
+            // モーダルを作成
+            const modal = document.createElement('div');
+            modal.className = 'share-modal active';
+            modal.innerHTML = `
+                <div class="share-modal-content record-detail-modal">
+                    <span class="share-modal-close">&times;</span>
+                    <h3>記録詳細</h3>
+                    <div class="record-info">
+                        <div class="record-basic-info">
+                            <h4>基本情報</h4>
+                            <div><strong>モンスター:</strong> ${record.monster}</div>
+                            <div><strong>武器種:</strong> ${record.weapon}</div>
+                            <div><strong>クエストタイプ:</strong> ${record.questType || '通常'}</div>
+                            <div><strong>ステージ:</strong> ${record.stage || '-'}</div>
+                            <div><strong>強さ:</strong> ${record.strength || '-'}</div>
+                            <div><strong>タイム:</strong> ${record.timeString}</div>
+                            <div><strong>日時:</strong> ${formatDate(record.date)}</div>
+                            ${record.notes ? `<div><strong>メモ:</strong> ${record.notes}</div>` : ''}
+                            ${tagsHtml}
+                        </div>
+                        ${presetInfo}
+                        ${imageHtml}
+                    </div>
+                    <div class="record-detail-actions">
+                        <button class="btn btn-primary" onclick="editRecord('${record.id}')">
+                            <i class="fas fa-edit"></i> 編集
+                        </button>
+                        <button class="btn btn-secondary" onclick="shareRecord('${record.id}')">
+                            <i class="fas fa-share-alt"></i> 共有
+                        </button>
+                        <button class="btn btn-danger" onclick="if(confirm('この記録を削除してもよろしいですか？')) { deleteRecord('${record.id}'); closeModal(this); }">
+                            <i class="fas fa-trash-alt"></i> 削除
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            // 閉じるボタンの処理
+            const closeBtn = modal.querySelector('.share-modal-close');
+            closeBtn.onclick = () => {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            };
+        }
+
+        // モーダルを閉じる補助関数
+        function closeModal(element) {
+            const modal = element.closest('.share-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            }
+        }
         // 日付のフォーマットを修正（エラーハンドリング追加）
         function formatDate(dateString) {
             try {
@@ -6977,7 +7125,72 @@
               color: white;
               font-weight: 500;
           }
+          /* 記録詳細モーダルのスタイル */
+          .record-detail-modal {
+              max-width: 700px;
+              max-height: 80vh;
+              overflow-y: auto;
+          }
 
+          .record-info {
+              display: flex;
+              flex-direction: column;
+              gap: 20px;
+              margin-bottom: 20px;
+          }
+
+          .record-basic-info, .record-equipment {
+              background-color: var(--background);
+              padding: 15px;
+              border-radius: var(--border-radius);
+          }
+
+          .record-basic-info h4, .record-equipment h4, .record-image-container h4 {
+              margin-top: 0;
+              margin-bottom: 10px;
+              color: var(--primary);
+          }
+
+          .record-basic-info > div, .equipment-details > div {
+              margin-bottom: 5px;
+          }
+
+          .record-tags {
+              margin-top: 10px;
+          }
+
+          .record-detail-image {
+              max-width: 100%;
+              max-height: 300px;
+              border-radius: var(--border-radius);
+              cursor: pointer;
+              transition: var(--transition);
+          }
+
+          .record-detail-image:hover {
+              transform: scale(1.02);
+          }
+
+          .record-detail-actions {
+              display: flex;
+              justify-content: space-between;
+              gap: 10px;
+          }
+
+          .record-cell {
+              cursor: pointer;
+              transition: var(--transition);
+          }
+
+          .record-cell:hover {
+              background-color: rgba(195, 155, 96, 0.2);
+          }
+
+          @media (max-width: 768px) {
+              .record-detail-actions {
+                  flex-direction: column;
+              }
+          }
           /* プロフィールページスタイル */
           .profile-header {
               display: flex;
