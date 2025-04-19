@@ -4270,6 +4270,9 @@
                         <textarea id="preset-notes-edit" class="form-control" rows="3">${preset.notes || ''}</textarea>
                     </div>
                     <div class="form-group">
+                        <button id="edit-equipment-btn" class="btn btn-secondary btn-block">装備内容を編集</button>
+                    </div>
+                    <div class="form-group">
                         <button id="save-preset-edit" class="btn btn-primary btn-block">保存</button>
                     </div>
                 </div>
@@ -4280,6 +4283,45 @@
             // 閉じるボタンの処理
             const closeBtn = modal.querySelector('.share-modal-close');
             closeBtn.onclick = () => {
+                modal.classList.remove('active');
+                setTimeout(() => modal.remove(), 300);
+            };
+
+            // 装備編集ボタンの処理
+            const editEquipBtn = document.getElementById('edit-equipment-btn');
+            editEquipBtn.onclick = () => {
+                // シミュレーションタブに移動して装備をセット
+                openTab('simulation');
+                
+                // プリセットの装備をシミュレーションに設定
+                loadPresetToSimulation(preset);
+                
+                // 編集の案内メッセージを表示
+                const message = document.createElement('div');
+                message.className = 'equipment-edit-message';
+                message.innerHTML = `
+                    <div class="message-content">
+                        <p><strong>${preset.name}</strong>の装備内容を編集しています。編集が完了したら「シミュレーション実行」を押した後、「この装備をプリセットとして保存」を押してください。</p>
+                        <button class="btn btn-primary" id="close-message-btn">了解</button>
+                    </div>
+                `;
+                message.style.position = 'fixed';
+                message.style.top = '50%';
+                message.style.left = '50%';
+                message.style.transform = 'translate(-50%, -50%)';
+                message.style.backgroundColor = 'white';
+                message.style.padding = '20px';
+                message.style.borderRadius = '8px';
+                message.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
+                message.style.zIndex = '9999';
+                
+                document.body.appendChild(message);
+                
+                document.getElementById('close-message-btn').onclick = () => {
+                    message.remove();
+                };
+                
+                // モーダルを閉じる
                 modal.classList.remove('active');
                 setTimeout(() => modal.remove(), 300);
             };
@@ -4307,6 +4349,51 @@
                     setTimeout(() => modal.remove(), 300);
                 }
             };
+        }
+
+        // プリセットをシミュレーションにロードする関数
+        function loadPresetToSimulation(preset) {
+            if (!preset || !preset.equipment) return;
+            
+            // 各部位のセレクトボックスを設定
+            const parts = ['weapon', 'head', 'body', 'arms', 'waist', 'legs', 'charm'];
+            
+            parts.forEach(part => {
+                const selectElem = document.getElementById(`sim-${part}`);
+                if (!selectElem) return;
+                
+                // 装備が設定されている場合、IDをセット
+                if (preset.equipment[part] && preset.equipment[part].id) {
+                    selectElem.value = preset.equipment[part].id;
+                    
+                    // changeイベントを手動で発火させて装飾品スロットを更新
+                    const event = new Event('change');
+                    selectElem.dispatchEvent(event);
+                } else {
+                    selectElem.value = '';
+                }
+            });
+            
+            // シミュレーション実行ボタンの後に、元のプリセットIDを表示するための隠しフィールドを追加
+            const simResults = document.getElementById('simulation-results');
+            if (simResults) {
+                // 既存の隠しフィールドを削除
+                const existingField = document.getElementById('editing-preset-id');
+                if (existingField) existingField.remove();
+                
+                // 新しい隠しフィールドを追加
+                const hiddenField = document.createElement('input');
+                hiddenField.type = 'hidden';
+                hiddenField.id = 'editing-preset-id';
+                hiddenField.value = preset.id;
+                simResults.appendChild(hiddenField);
+                
+                // 保存ボタンのテキストを変更
+                const saveBtn = document.getElementById('save-as-preset-btn');
+                if (saveBtn) {
+                    saveBtn.textContent = 'プリセットを更新';
+                }
+            }
         }
 
         // プリセット削除確認
@@ -4866,57 +4953,101 @@
         }
         // シミュレーション結果をプリセットとして保存する関数
         function saveSimulationAsPreset() {
-        // 装備データを取得
-        const equipmentData = getSimulationEquipmentData();
-        
-        if (!equipmentData || !equipmentData.equipment || !Object.values(equipmentData.equipment).some(item => item)) {
-            alert('保存できる装備データがありません。装備を選択してシミュレーションを実行してください。');
-            return;
-        }
-        
-        // プリセット名入力ダイアログを表示
-        const presetName = prompt('装備プリセット名を入力してください:', 
-            equipmentData.equipment.weapon ? equipmentData.equipment.weapon.name : '新しい装備セット');
+            // 装備データを取得
+            const equipmentData = getSimulationEquipmentData();
             
-        if (!presetName) return; // キャンセルされた場合
-        // スキルリストを取得する（HTML要素から直接取得することで、表示されている全スキル（追加スキル含む）を取得）
-        const skillList = [];
-        const skillItems = document.getElementById('sim-skill-list').querySelectorAll('li');
-        skillItems.forEach(item => {
-            const text = item.textContent.trim();
-            const match = text.match(/(.+) Lv(\d+)/);
-            if (match && match.length >= 3) {
-                skillList.push({
-                    name: match[1],
-                    level: parseInt(match[2]) || 1
-                });
+            if (!equipmentData || !equipmentData.equipment || !Object.values(equipmentData.equipment).some(item => item)) {
+                alert('保存できる装備データがありません。装備を選択してシミュレーションを実行してください。');
+                return;
             }
-        });
-        // プリセットデータを作成
-        const newPreset = {
-            id: Date.now().toString(),
-            name: presetName,
-            created: new Date().toISOString(),
-            lastUsed: new Date().toISOString(),
-            equipment: equipmentData.equipment,
-            skills: skillList,
-            notes: ""
-        };
-        
-        // プリセットを保存
-        equipmentPresets.push(newPreset);
-        savePresets();
-        
-        // プリセットリストを更新
-        if (document.getElementById('presets-container')) {
-            updatePresetList('presets-container');
-        }
-        
-        // プリセットセレクトボックスを更新
-        updatePresetSelect();
-        
-        // 成功メッセージを表示
-        alert(`装備プリセット「${presetName}」を保存しました！`);
+            
+            // 編集中のプリセットIDがあるか確認
+            const editingPresetId = document.getElementById('editing-preset-id')?.value;
+            let editingPreset = null;
+            
+            if (editingPresetId) {
+                editingPreset = getPresetById(editingPresetId);
+            }
+            
+            // プリセット名入力ダイアログを表示（編集中ならそのプリセット名をデフォルト値に）
+            const defaultName = editingPreset ? editingPreset.name : (equipmentData.equipment.weapon ? equipmentData.equipment.weapon.name : '新しい装備セット');
+            const presetName = prompt('装備プリセット名を入力してください:', defaultName);
+                    
+            if (!presetName) return; // キャンセルされた場合
+            
+            // スキルリストを取得する（HTML要素から直接取得することで、表示されている全スキル（追加スキル含む）を取得）
+            const skillList = [];
+            const skillItems = document.getElementById('sim-skill-list').querySelectorAll('li');
+            skillItems.forEach(item => {
+                const text = item.textContent.trim();
+                const match = text.match(/(.+) Lv(\d+)/);
+                if (match && match.length >= 3) {
+                    skillList.push({
+                        name: match[1],
+                        level: parseInt(match[2]) || 1
+                    });
+                }
+            });
+            
+            // 既存のプリセットを更新する場合
+            if (editingPreset) {
+                const updatedPreset = {
+                    ...editingPreset,
+                    name: presetName,
+                    equipment: equipmentData.equipment,
+                    skills: skillList,
+                    lastUsed: new Date().toISOString()
+                };
+                
+                // プリセットを更新
+                if (updatePreset(editingPresetId, updatedPreset)) {
+                    // プリセットリストを更新
+                    if (document.getElementById('presets-container')) {
+                        updatePresetList('presets-container');
+                    }
+                    
+                    // プリセットセレクトボックスを更新
+                    updatePresetSelect();
+                    
+                    // 編集フラグをリセット
+                    document.getElementById('editing-preset-id').remove();
+                    
+                    // 保存ボタンのテキストを戻す
+                    const saveBtn = document.getElementById('save-as-preset-btn');
+                    if (saveBtn) {
+                        saveBtn.textContent = 'この装備をプリセットとして保存';
+                    }
+                    
+                    // 成功メッセージを表示
+                    alert(`装備プリセット「${presetName}」を更新しました！`);
+                }
+            } else {
+                // 新規プリセットを作成
+                const newPreset = {
+                    id: Date.now().toString(),
+                    name: presetName,
+                    created: new Date().toISOString(),
+                    lastUsed: new Date().toISOString(),
+                    equipment: equipmentData.equipment,
+                    skills: skillList,
+                    notes: ""
+                };
+                
+                // プリセットを保存
+                equipmentPresets.push(newPreset);
+                savePresets();
+                
+                // プリセットリストを更新
+                if (document.getElementById('presets-container')) {
+                    updatePresetList('presets-container');
+                }
+                
+                // プリセットセレクトボックスを更新
+                updatePresetSelect();
+                
+                // 成功メッセージを表示
+                alert(`装備プリセット「${presetName}」を保存しました！`);
+            }
         }
         // 装備選択ダイアログでJSONデータを利用
         function _show_equipment_selector(data_list, equip_type) {
@@ -5502,25 +5633,6 @@
                 }
             }
 
-            // 装備スキル情報をタグとして追加
-            if (document.getElementById('tags') && preset.skills && preset.skills.length > 0) {
-                const tagsElem = document.getElementById('tags');
-                const currentTags = tagsElem.value.trim();
-                const skillTags = preset.skills.map(skill => `${skill.name}${skill.level}`).join(',');
-
-                if (currentTags) {
-                    const tagArray = currentTags.split(',').map(tag => tag.trim());
-                    const newTags = preset.skills
-                        .map(skill => `${skill.name}${skill.level}`)
-                        .filter(tag => !tagArray.includes(tag));
-
-                    if (newTags.length > 0) {
-                        tagsElem.value = `${currentTags},${newTags.join(',')}`;
-                    }
-                } else {
-                    tagsElem.value = skillTags;
-                }
-            }
 
             // 最終使用日時を更新
             preset.lastUsed = new Date().toISOString();
