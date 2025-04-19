@@ -5170,6 +5170,7 @@
         extraSkills.forEach(skillId => {
             skillTotal[skillId] = (skillTotal[skillId] || 0) + 1;
         });
+        
 
         // 結果表示
         const ul = document.getElementById('sim-skill-list');
@@ -6007,7 +6008,19 @@
               });
             }
           });
+          // グループスキルとシリーズスキルの計算
+          const extraSkills = calculateExtraSkills(
+              selected.head, 
+              selected.body, 
+              selected.arms, 
+              selected.waist, 
+              selected.legs
+          );
 
+          // 追加スキルを合計に追加
+          extraSkills.forEach(skillId => {
+              skillTotal[skillId] = (skillTotal[skillId] || 0) + 1;
+          });
           // 結果表示
           const ul = document.getElementById('sim-skill-list');
           ul.innerHTML = '';
@@ -6019,6 +6032,15 @@
                 console.log(`Skill ID: ${id}, Name: ${name}, Level: ${lv}`);
                 ul.innerHTML += `<li>${name} Lv${lv}</li>`;
             });
+          // 追加スキルを一覧に表示（すでに表示されていないもののみ）
+          extraSkills.forEach(skillId => {
+              // 文字列と数値の両方に対応するため、両方変換して比較
+              if (Object.keys(skillTotal).some(id => Number(id) === Number(skillId))) return;
+              
+              const name = getSkillNameById(skillId);
+              console.log(`Additional Skill ID: ${skillId}, Name: ${name}, Level: 1`);
+              ul.innerHTML += `<li>${name} Lv1</li>`;
+          });
         });
 
         // 初期化
