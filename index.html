@@ -2951,6 +2951,10 @@
             // 時間を比較用に数値に変換（ミリ秒単位）
             const timeValue = (minutes * 60 * 1000) + (seconds * 1000) + milliseconds;
 
+            // プリセットIDを取得
+            const presetSelect = document.getElementById('preset-select');
+            const presetId = presetSelect ? presetSelect.value : '';
+
             // 新しい記録オブジェクト
             const newRecord = {
                 id: Date.now().toString(), // ユニークなID
@@ -2964,7 +2968,8 @@
                 notes,
                 hasImage: !!imageFile,
                 tags: document.getElementById('tags').value.split(',').map(tag => tag.trim()).filter(tag => tag !== ''), // ここを追加
-                date: new Date().toISOString()
+                date: new Date().toISOString(),
+                equipmentPresetId: presetId || null // 空文字列の場合はnullに変換
             };
 
             // 画像がある場合は保存
@@ -3116,7 +3121,7 @@
                     <td class="tags-cell">${tagsDisplay}</td>
                     ${imageCell}
                     <td class="equipment-cell">
-                        ${record.equipmentPresetId ? 
+                        ${record.equipmentPresetId && record.equipmentPresetId !== '' ? 
                         `<span class="preset-badge" onclick="showEquipmentDetails('${record.equipmentPresetId}')">
                             <i class="fas fa-shield-alt"></i> 装備あり
                         </span>` : '-'}
