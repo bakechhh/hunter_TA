@@ -2265,37 +2265,47 @@
                 container.appendChild(card);
             });
         }
-        // タブの切り替え
+        // タブの切り替え関数の修正版
         function openTab(tabId) {
-          // アクティブなタブを解除
-          document.querySelectorAll('.tab-content').forEach(content => {
-              content.classList.remove('active');
-          });
+        // まず対象の要素が存在するか確認
+        const tabElement = document.getElementById(tabId);
+        if (!tabElement) {
+            console.error(`タブ要素 "${tabId}" が見つかりません`);
+            return; // 要素がなければ処理中断
+        }
+        
+        // タブ要素とボタンを全て非アクティブにする
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
 
-          document.querySelectorAll('.tab-button').forEach(btn => {
-              btn.classList.remove('active');
-          });
-
-          // 指定されたタブをアクティブに
-          document.getElementById(tabId).classList.add('active');
-          document.querySelector(`.tab-button[onclick="openTab('${tabId}')"]`).classList.add('active');
-
-          // 統計タブが開かれたら統計データを更新
-          if (tabId === 'statistics') {
-              updateStatistics();
-          }
-          // ランキングタブが開かれたらランキングデータを更新
-          else if (tabId === 'rankings') {
-              updateRankings();
-          }
-          // チェックリストタブが開かれたらチェックリストを更新
-          else if (tabId === 'checklist') {
-              updateChecklist();
-          }
-          // トレンドタブが開かれたらトレンドを更新
-          else if (tabId === 'trends') {
-              initTrends();
-          }
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // 指定されたタブをアクティブにする
+        tabElement.classList.add('active');
+        
+        // ボタンを探す（より柔軟な方法）
+        const tabButton = document.querySelector(`.tab-button[onclick*="openTab('${tabId}')"]`);
+        if (tabButton) {
+            tabButton.classList.add('active');
+        }
+        
+        // 特定のタブが開かれたときの追加処理
+        if (tabId === 'statistics') {
+            updateStatistics();
+        } else if (tabId === 'rankings') {
+            updateRankings();
+        } else if (tabId === 'checklist') {
+            updateChecklist();
+        } else if (tabId === 'trends') {
+            initTrends();
+        } else if (tabId === 'profile-tab') {
+            updateProfileStats();
+        } else if (tabId === 'equipment-tab') {
+            updatePresetList('presets-container');
+        }
         }
 
         // 画像アップロード設定
