@@ -906,7 +906,6 @@
       </button>
       <!-- ここに追加 -->
       <div id="header-profile" class="header-profile" style="display: none">
-        <div class="header-profile-avatar"></div>
         <span class="header-profile-name">ハンター名</span>
       </div>
     </header>
@@ -3774,8 +3773,7 @@
             playerId: '',
             mainWeapon: '',
             playTime: 0,
-            bio: '',
-            avatarData: null // Base64画像データ
+            bio: ''
         };
 
         // 装備プリセット管理
@@ -3828,10 +3826,6 @@
             }
             if (document.getElementById('bio')) {
                 document.getElementById('bio').value = profileData.bio;
-            }
-            if (document.getElementById('profile-avatar') && profileData.avatarData) {
-                document.getElementById('profile-avatar').src = profileData.avatarData;
-                document.getElementById('profile-avatar').style.display = 'block';
             }
 
             // ヘッダープロフィール情報も更新
@@ -4254,15 +4248,6 @@
                 <div class="share-modal-content profile-modal">
                     <span class="share-modal-close">&times;</span>
                     <h3>プロフィール設定</h3>
-                    <div class="profile-avatar-container">
-                        <div class="profile-avatar-wrapper" id="avatar-upload">
-                            <div class="avatar-overlay">
-                                <i class="fas fa-camera"></i>
-                                <span>変更</span>
-                            </div>
-                        </div>
-                        <input type="file" id="avatar-file" accept="image/*" style="display: none;">
-                    </div>
                     <div class="form-group">
                         <label for="hunter-name" class="form-label">ハンター名:</label>
                         <input type="text" id="hunter-name" class="form-control" value="${profileData.hunterName || ''}">
@@ -4322,27 +4307,6 @@
 
             document.body.appendChild(modal);
 
-            // アバター変更のイベントリスナー
-            const avatarUpload = document.getElementById('avatar-upload');
-            const avatarFile = document.getElementById('avatar-file');
-
-            avatarUpload.addEventListener('click', () => {
-                avatarFile.click();
-            });
-
-            avatarFile.addEventListener('change', (e) => {
-                if (e.target.files && e.target.files[0]) {
-                    const file = e.target.files[0];
-                    const reader = new FileReader();
-
-                    reader.onload = (e) => {
-                        document.getElementById('profile-avatar').src = e.target.result;
-                    };
-
-                    reader.readAsDataURL(file);
-                }
-            });
-
             // 閉じるボタンの処理
             const closeBtn = modal.querySelector('.share-modal-close');
             closeBtn.onclick = () => {
@@ -4362,11 +4326,6 @@
                 profileData.playTime = parseInt(document.getElementById('play-time').value) || 0;
                 profileData.bio = document.getElementById('bio').value.trim();
 
-                // アバター画像を保存
-                const avatar = document.getElementById('profile-avatar');
-                if (avatar.src) {
-                    profileData.avatarData = avatar.src;
-                }
 
                 // プロフィールを保存
                 saveProfile();
@@ -6143,8 +6102,6 @@
           profileTab.id = 'profile-tab';
           profileTab.className = 'tab-content';
           profileTab.innerHTML = `<div class="profile-header">
-              <div class="profile-avatar-large">
-              </div>
               <div class="profile-info">
                   <h2 id="profile-hunter-name">${profileData.hunterName || 'ハンター名未設定'}</h2>
                   <div class="profile-details">
@@ -6325,8 +6282,6 @@
               profileElement.className = 'header-profile';
               profileElement.id = 'header-profile';
               profileElement.innerHTML = `
-                  <div class="header-profile-avatar">
-                  </div>
                   <span class="header-profile-name">${profileData.hunterName || 'ハンター名未設定'}</span>
               `;
 
@@ -6541,20 +6496,6 @@
               background: rgba(255, 255, 255, 0.3);
           }
 
-          .header-profile-avatar {
-              width: 30px;
-              height: 30px;
-              border-radius: 50%;
-              overflow: hidden;
-              margin-right: 8px;
-          }
-
-          .header-profile-avatar img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-          }
-
           .header-profile-name {
               color: white;
               font-weight: 500;
@@ -6568,22 +6509,6 @@
               border-radius: var(--border-radius);
               box-shadow: var(--shadow);
               margin-bottom: 20px;
-          }
-
-          .profile-avatar-large {
-              width: 150px;
-              height: 150px;
-              border-radius: 50%;
-              overflow: hidden;
-              margin-right: 30px;
-              flex-shrink: 0;
-              border: 4px solid var(--accent);
-          }
-
-          .profile-avatar-large img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
           }
 
           .profile-info {
@@ -6641,46 +6566,6 @@
               max-width: 600px;
           }
 
-          .profile-avatar-container {
-              display: flex;
-              justify-content: center;
-              margin-bottom: 20px;
-          }
-
-          .profile-avatar-wrapper {
-              position: relative;
-              width: 120px;
-              height: 120px;
-              border-radius: 50%;
-              overflow: hidden;
-              cursor: pointer;
-          }
-
-          .profile-avatar-wrapper img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-          }
-
-          .avatar-overlay {
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
-              background: rgba(0, 0, 0, 0.5);
-              color: white;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
-              opacity: 0;
-              transition: opacity 0.3s;
-          }
-
-          .profile-avatar-wrapper:hover .avatar-overlay {
-              opacity: 1;
-          }
 
           .form-row {
               display: flex;
@@ -6894,10 +6779,6 @@
           @media (max-width: 768px) {
               .profile-header {
                   flex-direction: column;
-              }
-
-              .profile-avatar-large {
-                  margin: 0 auto 20px;
               }
 
               .profile-details {
