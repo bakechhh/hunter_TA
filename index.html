@@ -2204,18 +2204,49 @@
                     throw new Error('無効な入力: 文字列ではありません');
                 }
                 
+                // コロン以降の部分を削除 (問題の原因になっている可能性がある)
+                str = str.split(':')[0];
+                
                 // URLセーフBase64を標準Base64に変換
                 const base64 = str.replace(/-/g, '+').replace(/_/g, '/');
                 
                 // パディングの追加（4の倍数にする）
                 const paddedBase64 = base64.padEnd(base64.length + (4 - base64.length % 4) % 4, '=');
                 
-                return decodeURIComponent(atob(paddedBase64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
+                try {
+                    // まずデコードを試みる
+                    return decodeURIComponent(atob(paddedBase64).split('').map(function(c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    }).join(''));
+                } catch (innerError) {
+                    // エラーが発生した場合、別の方法を試す
+                    console.warn('最初のデコード方法が失敗しました。別の方法を試します:', innerError);
+                    
+                    // Base64のパース部分をより堅牢に
+                    let decodedStr;
+                    try {
+                        decodedStr = atob(paddedBase64);
+                    } catch (e) {
+                        // Base64部分が無効な場合は、より許容度の高い方法を試みる
+                        const cleanBase64 = paddedBase64.replace(/[^A-Za-z0-9+/=]/g, '');
+                        decodedStr = atob(cleanBase64);
+                    }
+                    
+                    // UTF-8へのデコード
+                    return decodeURIComponent(
+                        decodedStr.split('').map(function(c) {
+                            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                        }).join('')
+                    );
+                }
             } catch (e) {
                 console.error('Base64デコードに失敗しました:', e);
-                throw new Error('共有データの解析に失敗しました: ' + e.message);
+                
+                // エラーを表示するが、アプリケーション自体はクラッシュさせない
+                alert('共有データの読み込みに問題が発生しました。URLを確認してください。');
+                
+                // 空のオブジェクトを返してアプリが動作し続けるようにする
+                return '{"type":"record","data":{}}';
             }
         }
 
@@ -3930,10 +3961,13 @@
 
         // 共有リンクを処理する関数
         function processShareLink() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const shareParam = urlParams.get('share');
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const shareParam = urlParams.get('share');
 
-            if (shareParam) {
+
+                if (!shareParam) return; // 共有パラメータがない場合は何もしない
+            
                 try {
                     // コロン以降の数字を除去する
                     const cleanShareParam = shareParam.split(':')[0];
@@ -4169,6 +4203,9 @@
                     console.error('共有データの解析に失敗しました:', e);
                     alert('共有データの解析中にエラーが発生しました: ' + e.message);
                 }
+            } catch (outerError) {
+                console.error('共有リンク処理中に予期しないエラーが発生しました:', outerError);
+                // エラーを表示するが、アプリケーション自体の動作は継続
             }
         }
 
