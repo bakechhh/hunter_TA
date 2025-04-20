@@ -2196,11 +2196,21 @@
             }));
         }
 
-        // Base64デコード（非ASCII文字対応版）
+        // Base64デコード（非ASCII文字対応版）を強化
         function b64_to_utf8(str) {
-            return decodeURIComponent(atob(str).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
+            try {
+                // 文字列チェック
+                if (!str || typeof str !== 'string') {
+                    throw new Error('無効な入力: 文字列ではありません');
+                }
+                
+                return decodeURIComponent(atob(str).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+            } catch (e) {
+                console.error('Base64デコードに失敗しました:', e);
+                throw new Error('共有データの解析に失敗しました: ' + e.message);
+            }
         }
 
         // チェックリストを更新
@@ -3921,8 +3931,12 @@
                 try {
                     // Base64デコード（非ASCII文字対応）
                     const shareData = JSON.parse(b64_to_utf8(shareParam));
+                    
+                    // デバッグログを追加
+                    console.log('共有データタイプ:', shareData.type);
 
                     if (shareData.type === 'record') {
+                        // 記録共有データの処理
                         const record = shareData.data;
 
                         // 共有された記録の詳細を表示するモーダルを作成
@@ -4026,9 +4040,125 @@
                                 alert('記録がインポートされました！');
                             };
                         }, 50);
+                    } 
+                    // ここにプリセット共有の処理を追加
+                    else if (shareData.type === 'preset') {
+                        // プリセット共有データの処理
+                        const preset = shareData.data;
+                        
+                        console.log('プリセットデータを処理:', preset);
+
+                        // スキル一覧を構築
+                        let skillsList = '';
+                        if (preset.skills && preset.skills.length > 0) {
+                            skillsList = preset.skills.map(skill =>
+                                `<span class="tag-badge">${skill.name} Lv${skill.level}</span>`
+                            ).join(' ');
+                        } else {
+                            skillsList = '<span class="text-muted">スキル情報なし</span>';
+                        }
+
+                        // 共有されたプリセットの詳細を表示するモーダルを作成
+                        const modal = document.createElement('div');
+                        modal.className = 'share-modal';
+                        modal.innerHTML = `
+                            <div class="share-modal-content">
+                                <span class="share-modal-close">&times;</span>
+                                <h3>共有された装備プリセット</h3>
+                                <div class="share-details">
+                                    <p><strong>プリセット名:</strong> ${preset.name}</p>
+                                    <div class="preset-equipment">
+                                        <div><strong>武器:</strong> ${preset.equipment.weapon ? preset.equipment.weapon.name : '未設定'}</div>
+                                        <div><strong>頭:</strong> ${preset.equipment.head ? preset.equipment.head.name : '未設定'}</div>
+                                        <div><strong>胴:</strong> ${preset.equipment.body ? preset.equipment.body.name : '未設定'}</div>
+                                        <div><strong>腕:</strong> ${preset.equipment.arms ? preset.equipment.arms.name : '未設定'}</div>
+                                        <div><strong>腰:</strong> ${preset.equipment.waist ? preset.equipment.waist.name : '未設定'}</div>
+                                        <div><strong>脚:</strong> ${preset.equipment.legs ? preset.equipment.legs.name : '未設定'}</div>
+                                        <div><strong>護石:</strong> ${preset.equipment.charm ? preset.equipment.charm.name : '未設定'}</div>
+                                    </div>
+                                    <div class="preset-skills">
+                                        <div><strong>発動スキル:</strong></div>
+                                        <div class="skills-container">
+                                            ${skillsList}
+                                        </div>
+                                    </div>
+                                    ${preset.notes ? `<div class="preset-notes"><strong>メモ:</strong> ${preset.notes}</div>` : ''}
+                                </div>
+                                <div class="share-options">
+                                    <button class="btn btn-primary btn-block" id="importSharedPreset">
+                                        このプリセットをインポート
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+
+                        document.body.appendChild(modal);
+
+                        // モーダルを表示
+                        setTimeout(() => {
+                            modal.classList.add('active');
+
+                            // 閉じるボタンの処理
+                            const closeBtn = modal.querySelector('.share-modal-close');
+                            closeBtn.onclick = () => {
+                                modal.classList.remove('active');
+                                setTimeout(() => modal.remove(), 300);
+
+                                // URLからパラメータを削除
+                                window.history.replaceState({}, document.title, window.location.pathname);
+                            };
+
+                            // インポートボタンの処理
+                            const importBtn = document.getElementById('importSharedPreset');
+                            importBtn.onclick = () => {
+                                // 既存のプリセットと重複がないか確認
+                                const isDuplicate = equipmentPresets.some(p =>
+                                    p.name === preset.name &&
+                                    p.equipment.weapon && preset.equipment.weapon &&
+                                    p.equipment.weapon.name === preset.equipment.weapon.name
+                                );
+
+                                if (isDuplicate) {
+                                    if (!confirm('同じ名前のプリセットが既に存在します。それでもインポートしますか？')) {
+                                        return;
+                                    }
+                                }
+
+                                // プリセットをインポート
+                                const newPreset = {
+                                    ...preset,
+                                    id: Date.now().toString(), // 新しいIDを割り当て
+                                    created: new Date().toISOString(),
+                                    lastUsed: new Date().toISOString()
+                                };
+
+                                equipmentPresets.push(newPreset);
+                                savePresets();
+
+                                // プリセットリストを更新
+                                if (document.getElementById('presets-container')) {
+                                    updatePresetList('presets-container');
+                                }
+
+                                // プリセットセレクトボックスを更新
+                                if (typeof updatePresetSelect === 'function') {
+                                    updatePresetSelect();
+                                }
+
+                                // モーダルを閉じる
+                                modal.classList.remove('active');
+                                setTimeout(() => modal.remove(), 300);
+
+                                // URLからパラメータを削除
+                                window.history.replaceState({}, document.title, window.location.pathname);
+
+                                alert(`プリセット「${newPreset.name}」をインポートしました！`);
+                            };
+                        }, 50);
                     }
                 } catch (e) {
                     console.error('共有データの解析に失敗しました:', e);
+                    alert('共有データの解析中にエラーが発生しました: ' + e.message);
                 }
             }
         }
@@ -4640,6 +4770,9 @@
             const shareString = utf8_to_b64(JSON.stringify(shareData));
             const shareUrl = `${window.location.href.split('?')[0]}?share=${shareString}`;
 
+            // ここでログを追加して確認
+            console.log('共有URL生成:', shareUrl);
+
             // 共有モーダルを表示
             const modal = document.createElement('div');
             modal.className = 'share-modal active';
@@ -4686,6 +4819,7 @@
                     }, 2000);
                 }).catch(err => {
                     console.error('クリップボードへのコピーに失敗しました:', err);
+                    // フォールバック
                     const textArea = document.createElement('textarea');
                     textArea.value = shareUrl;
                     document.body.appendChild(textArea);
@@ -4849,8 +4983,15 @@
             if (shareData.type !== 'preset') return;
 
             const preset = shareData.data;
+            if (!preset) {
+                console.error('プリセットデータがありません');
+                return;
+            }
 
-            // 共有プリセットの詳細を表示するモーダルを作成
+            // デバッグ用に共有データをログ出力
+            console.log('共有プリセットデータ:', preset);
+
+            // 共有されたプリセットの詳細を表示するモーダルを作成
             const modal = document.createElement('div');
             modal.className = 'share-modal active';
 
@@ -4939,6 +5080,11 @@
                     updatePresetList('presets-container');
                 }
 
+                // プリセットセレクトボックスを更新
+                if (typeof updatePresetSelect === 'function') {
+                    updatePresetSelect();
+                }
+
                 // モーダルを閉じる
                 modal.classList.remove('active');
                 setTimeout(() => modal.remove(), 300);
@@ -4947,18 +5093,7 @@
                 window.history.replaceState({}, document.title, window.location.pathname);
 
                 // 成功メッセージを表示
-                const message = document.createElement('div');
-                message.className = 'toast-message';
-                message.innerHTML = `<i class="fas fa-check-circle"></i> プリセット「${newPreset.name}」をインポートしました`;
-                document.body.appendChild(message);
-
-                setTimeout(() => {
-                    message.classList.add('toast-show');
-                    setTimeout(() => {
-                        message.classList.remove('toast-show');
-                        setTimeout(() => message.remove(), 300);
-                    }, 3000);
-                }, 10);
+                alert(`プリセット「${newPreset.name}」をインポートしました！`);
             };
         }
 
@@ -6972,28 +7107,6 @@
               // 記録フォームを装備プリセット対応に拡張
               enhanceRecordForm();
 
-              // 共有リンク処理を拡張
-              const originalProcessShareLink = window.processShareLink;
-              window.processShareLink = function() {
-                  const urlParams = new URLSearchParams(window.location.search);
-                  const shareParam = urlParams.get('share');
-
-                  if (shareParam) {
-                      try {
-                          // Base64デコード
-                          const shareData = JSON.parse(b64_to_utf8(shareParam));
-
-                          if (shareData.type === 'record') {
-                              processRecordShareLink(shareData);
-                          } else if (shareData.type === 'preset') {
-                              processPresetShareLink(shareData);
-                          }
-                      } catch (e) {
-                          console.error('共有データの解析に失敗しました:', e);
-                      }
-                  }
-              };
-
               // 記録保存処理を拡張
               const originalSaveRecord = window.saveRecord;
               window.saveRecord = async function(e) {
@@ -7112,35 +7225,118 @@
 
         // DOMContentLoadedイベントを拡張
         document.addEventListener('DOMContentLoaded', async function() {
-          // オリジナルの初期化コードは維持
+            try {
+                console.log('初期化を開始...');
+                
+                // モンスターリストを生成
+                populateMonsterSelect();
 
-          // プロファイルとプリセットを読み込み
-          loadProfile();
-          loadPresets();
+                // 保存されたデータを読み込む
+                loadRecords();
 
-          // 装備データ（JSONファイル）も読み込み
-          await loadEquipmentData();
+                // プロファイルとプリセットを読み込み
+                loadProfile();
+                loadPresets();
 
-          // タブノートブックを取得
-          let notebook = null;
-          for (const element of document.querySelectorAll('.TNotebook, .tab-container')) {
-              if (element.classList.contains('TNotebook') ||
-                  (element.classList.contains('tab-container') && element.querySelector('.tab-buttons'))) {
-                  notebook = element;
-                  break;
-              }
-          }
+                // 装備データを読み込み
+                await loadEquipmentData();
+                console.log('装備データ読み込み完了');
 
-          if (notebook) {
-              // プロフィールと装備プリセットタブを追加
-              addProfileEquipmentTabs(notebook);
-          }
+                // ランキングを初期化
+                updateRankings();
 
-          // ヘッダーにプロフィール表示を追加
-          addProfileToHeader();
+                // 統計を初期化
+                updateStatistics();
 
-          // 記録と装備の連携初期化
-          initRecordEquipmentIntegration();
+                // チェックリストを初期化
+                updateChecklist();
+
+                // トレンドを初期化
+                initTrends();
+
+                // フォーム送信イベントを設定
+                document.getElementById('record-form').addEventListener('submit', saveRecord);
+
+                // 検索イベントを設定
+                document.getElementById('search-input').addEventListener('input', filterRecords);
+
+                // フィルターイベントを設定
+                document.getElementById('filter-monster').addEventListener('change', filterRecords);
+                document.getElementById('filter-weapon').addEventListener('change', filterRecords);
+                document.getElementById('filter-quest').addEventListener('change', filterRecords);
+                document.getElementById('filter-stage').addEventListener('change', filterRecords);
+                document.getElementById('filter-tag').addEventListener('change', filterRecords);
+
+                // エクスポートボタンイベントを設定
+                document.getElementById('export-json').addEventListener('click', exportToJson);
+
+                // インポートボタンイベントを設定
+                document.getElementById('import-button').addEventListener('click', importFromJson);
+
+                // クリアボタンイベントを設定
+                document.getElementById('clear-data').addEventListener('click', clearAllData);
+
+                // 画像アップロードイベントを設定
+                setupImageUpload();
+
+                // 画像モーダルイベントを設定
+                setupImageModal();
+
+                // ダークモード設定を読み込む
+                loadThemePreference();
+
+                // テーマ切り替えボタンのイベントリスナー
+                document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+                // チェックリストフィルターのイベントリスナー
+                document.getElementById('checklist-filter').addEventListener('change', updateChecklist);
+
+                // バックアップ設定を読み込む
+                loadBackupSettings();
+
+                // バックアップ設定保存ボタンのイベントリスナー
+                document.getElementById('save-backup-settings').addEventListener('click', function() {
+                    backupSettings.enabled = document.getElementById('backup-enabled').checked;
+                    backupSettings.interval = document.getElementById('backup-interval').value;
+                    saveBackupSettings();
+                    alert('バックアップ設定を保存しました');
+                });
+
+                // 手動バックアップボタンのイベントリスナー
+                document.getElementById('manual-backup').addEventListener('click', function() {
+                    performBackup().then(() => {
+                        alert('バックアップが完了しました');
+                    }).catch(error => {
+                        console.error('バックアップに失敗しました:', error);
+                        alert('バックアップに失敗しました');
+                    });
+                });
+                
+                // プロフィールと装備プリセットタブを追加
+                let notebook = document.querySelector('.tab-container');
+                if (notebook) {
+                    addProfileEquipmentTabs(notebook);
+                    console.log('プロフィールと装備プリセットタブを追加しました');
+                }
+
+                // ヘッダーにプロフィール表示を追加
+                addProfileToHeader();
+
+                // 記録と装備の連携初期化
+                initRecordEquipmentIntegration();
+                
+                // シミュレーションUI初期化
+                initSimulationUI();
+                
+                // 最後に共有リンクの処理（ここを確実に最後に実行）
+                console.log('共有リンクの処理を実行...');
+                processShareLink();
+                console.log('初期化完了');
+                
+            } catch (error) {
+                console.error('初期化中にエラーが発生しました:', error);
+                alert('アプリケーションの初期化中にエラーが発生しました。再読み込みしてください。');
+            }
         });
 
         // スタイルを追加
