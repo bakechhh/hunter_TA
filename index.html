@@ -3935,8 +3935,11 @@
 
             if (shareParam) {
                 try {
+                    // コロン以降の数字を除去する
+                    const cleanShareParam = shareParam.split(':')[0];
+
                     // Base64デコード（非ASCII文字対応）
-                    const shareData = JSON.parse(b64_to_utf8(shareParam));
+                    const shareData = JSON.parse(b64_to_utf8(cleanShareParam));
                     
                     // デバッグログを追加
                     console.log('共有データタイプ:', shareData.type);
