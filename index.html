@@ -5754,29 +5754,6 @@
                 }
             });
         }
-        // 共有URLの処理機能拡張
-        function processShareLink() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const shareParam = urlParams.get('share');
-
-            if (shareParam) {
-                try {
-                    // Base64デコード（非ASCII文字対応）
-                    const shareData = JSON.parse(b64_to_utf8(shareParam));
-
-                    // 共有タイプに応じた処理
-                    if (shareData.type === 'record') {
-                        // 既存の記録共有処理
-                        processRecordShareLink(shareData);
-                    } else if (shareData.type === 'preset') {
-                        // 新規追加: プリセット共有処理
-                        processPresetShareLink(shareData);
-                    }
-                } catch (e) {
-                    console.error('共有データの解析に失敗しました:', e);
-                }
-            }
-        }
 
         // 記録追加時に装備設定を使用できるように拡張
         function enhanceRecordForm() {
