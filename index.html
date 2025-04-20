@@ -3020,161 +3020,221 @@
                 });
             }
         }
+        // 共通モーダル関数
+        function showModal(contentHTML) {
+        // 既存のモーダルを閉じる
+        closeAllModals();
+        
+        // 新しいモーダルを作成
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.id = 'customModal';
+        modal.style.display = 'block';
+        modal.style.position = 'fixed';
+        modal.style.zIndex = '1000';
+        modal.style.left = '0';
+        modal.style.top = '0';
+        modal.style.width = '100%';
+        modal.style.height = '100%';
+        modal.style.overflow = 'auto';
+        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        
+        modal.innerHTML = `
+            <div class="modal-content" style="background-color: var(--card-bg); margin: 10% auto; padding: 20px; border-radius: var(--border-radius); width: 80%; max-width: 700px; position: relative; animation: modalFadeIn 0.3s;">
+            <span class="modal-close" style="position: absolute; top: 10px; right: 15px; color: var(--text); font-size: 24px; font-weight: bold; cursor: pointer;">&times;</span>
+            ${contentHTML}
+            </div>
+        `;
+        
+        // スタイルを追加
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .modal-content {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            }
+            
+            .modal-close:hover {
+            color: var(--primary);
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // ドキュメントに追加
+        document.body.appendChild(modal);
+        
+        // 閉じるボタンのイベントリスナー
+        modal.querySelector('.modal-close').addEventListener('click', function() {
+            closeModal(modal);
+        });
+        
+        // モーダル外クリックで閉じる
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+            closeModal(modal);
+            }
+        });
+        
+        // ESCキーで閉じる
+        const escHandler = function(e) {
+            if (e.key === 'Escape') {
+            closeModal(modal);
+            document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+        
+        return modal;
+        }
         // 記録の詳細を表示する関数
         function showRecordDetails(recordId) {
-            // 既存のモーダルを全て閉じる
-            const existingModals = document.querySelectorAll('.share-modal');
-            existingModals.forEach(modal => {
-                modal.classList.remove('active');
-                setTimeout(() => modal.remove(), 300);
-            });
-            const record = recordsData.find(r => r.id === recordId);
-            if (!record) return;
+          const record = recordsData.find(r => r.id === recordId);
+          if (!record) return;
 
-            // 装備プリセット情報を取得
-            let presetInfo = '';
-            if (record.equipmentPresetId) {
-                const preset = getPresetById(record.equipmentPresetId);
-                if (preset) {
-                    // スキル一覧を構築
-                    let skillsList = '';
-                    if (preset.skills && preset.skills.length > 0) {
-                        skillsList = preset.skills.map(skill =>
-                            `<span class="tag-badge">${skill.name} Lv${skill.level}</span>`
-                        ).join(' ');
-                    } else {
-                        skillsList = '<span class="text-muted">スキル情報なし</span>';
-                    }
-
-                    presetInfo = `
-                        <div class="record-equipment">
-                            <h4>装備情報: ${preset.name}</h4>
-                            <div class="equipment-details">
-                                <div><strong>武器:</strong> ${preset.equipment.weapon ? preset.equipment.weapon.name : '未設定'}</div>
-                                <div><strong>頭:</strong> ${preset.equipment.head ? preset.equipment.head.name : '未設定'}</div>
-                                <div><strong>胴:</strong> ${preset.equipment.body ? preset.equipment.body.name : '未設定'}</div>
-                                <div><strong>腕:</strong> ${preset.equipment.arms ? preset.equipment.arms.name : '未設定'}</div>
-                                <div><strong>腰:</strong> ${preset.equipment.waist ? preset.equipment.waist.name : '未設定'}</div>
-                                <div><strong>脚:</strong> ${preset.equipment.legs ? preset.equipment.legs.name : '未設定'}</div>
-                                <div><strong>護石:</strong> ${preset.equipment.charm ? preset.equipment.charm.name : '未設定'}</div>
-                            </div>
-                            <div class="equipment-skills">
-                                <div><strong>発動スキル:</strong></div>
-                                <div class="skills-container">
-                                    ${skillsList}
-                                </div>
-                            </div>
-                            ${preset.notes ? `<div class="equipment-notes"><strong>メモ:</strong> ${preset.notes}</div>` : ''}
-                        </div>
-                    `;
-                }
-            }
-
-            // 画像情報を取得
-            let imageHtml = '';
-            if (record.hasImage) {
-                getImage(record.id).then(imageData => {
-                    if (imageData && typeof imageData === 'string' && imageData.startsWith('data:image/')) {
-                        const escapedImageData = imageData.replace(/"/g, '&quot;');
-                        const imageElement = document.getElementById('record-detail-image');
-                        if (imageElement) {
-                            imageElement.src = escapedImageData;
-                            document.getElementById('record-image-container').style.display = 'block';
-                        }
-                    }
-                }).catch(error => {
-                    console.error('画像の取得に失敗しました:', error);
-                });
-
-                imageHtml = `
-                    <div id="record-image-container" class="record-image-container" style="display: none;">
-                        <h4>スクリーンショット</h4>
-                        <img id="record-detail-image" class="record-detail-image" src="" alt="スクリーンショット" onclick="showImageModal(this.src)">
-                    </div>
-                `;
-            }
-
-            // タグ情報を構築
-            let tagsHtml = '';
-            if (record.tags && record.tags.length > 0) {
-                const tagsDisplay = record.tags.map(tag =>
-                    `<span class="tag-badge">${tag}</span>`
+          // 装備プリセット情報を取得
+          let presetInfo = '';
+          if (record.equipmentPresetId) {
+            const preset = getPresetById(record.equipmentPresetId);
+            if (preset) {
+              // スキル一覧を構築
+              let skillsList = '';
+              if (preset.skills && preset.skills.length > 0) {
+                skillsList = preset.skills.map(skill =>
+                  `<span class="tag-badge">${skill.name} Lv${skill.level}</span>`
                 ).join(' ');
-                tagsHtml = `
-                    <div class="record-tags">
-                        <strong>タグ:</strong> ${tagsDisplay}
-                    </div>
-                `;
-            }
+              } else {
+                skillsList = '<span class="text-muted">スキル情報なし</span>';
+              }
 
-            // モーダルを作成
-            const modal = document.createElement('div');
-            modal.className = 'share-modal active';
-            modal.innerHTML = `
-                <div class="share-modal-content record-detail-modal">
-                    <span class="share-modal-close">&times;</span>
-                    <h3>記録詳細</h3>
-                    <div class="record-info">
-                        <div class="record-basic-info">
-                            <h4>基本情報</h4>
-                            <div><strong>モンスター:</strong> ${record.monster}</div>
-                            <div><strong>武器種:</strong> ${record.weapon}</div>
-                            <div><strong>クエストタイプ:</strong> ${record.questType || '通常'}</div>
-                            <div><strong>ステージ:</strong> ${record.stage || '-'}</div>
-                            <div><strong>強さ:</strong> ${record.strength || '-'}</div>
-                            <div><strong>タイム:</strong> ${record.timeString}</div>
-                            <div><strong>日時:</strong> ${formatDate(record.date)}</div>
-                            ${record.notes ? `<div><strong>メモ:</strong> ${record.notes}</div>` : ''}
-                            ${tagsHtml}
-                        </div>
-                        ${presetInfo}
-                        ${imageHtml}
+              presetInfo = `
+                <div class="record-equipment">
+                  <h4>装備情報: ${preset.name}</h4>
+                  <div class="equipment-details">
+                    <div><strong>武器:</strong> ${preset.equipment.weapon ? preset.equipment.weapon.name : '未設定'}</div>
+                    <div><strong>頭:</strong> ${preset.equipment.head ? preset.equipment.head.name : '未設定'}</div>
+                    <div><strong>胴:</strong> ${preset.equipment.body ? preset.equipment.body.name : '未設定'}</div>
+                    <div><strong>腕:</strong> ${preset.equipment.arms ? preset.equipment.arms.name : '未設定'}</div>
+                    <div><strong>腰:</strong> ${preset.equipment.waist ? preset.equipment.waist.name : '未設定'}</div>
+                    <div><strong>脚:</strong> ${preset.equipment.legs ? preset.equipment.legs.name : '未設定'}</div>
+                    <div><strong>護石:</strong> ${preset.equipment.charm ? preset.equipment.charm.name : '未設定'}</div>
+                  </div>
+                  <div class="equipment-skills">
+                    <div><strong>発動スキル:</strong></div>
+                    <div class="skills-container">
+                      ${skillsList}
                     </div>
-                    <div class="record-detail-actions">
-                        <button class="btn btn-primary" onclick="editRecord('${record.id}')">
-                            <i class="fas fa-edit"></i> 編集
-                        </button>
-                        <button class="btn btn-danger" onclick="if(confirm('この記録を削除してもよろしいですか？')) { deleteRecord('${record.id}'); closeModal(this); }">
-                            <i class="fas fa-trash-alt"></i> 削除
-                        </button>
-                    </div>
+                  </div>
+                  ${preset.notes ? `<div class="equipment-notes"><strong>メモ:</strong> ${preset.notes}</div>` : ''}
                 </div>
+              `;
+            }
+          }
+
+          // 画像情報を取得
+          let imageHtml = '';
+          if (record.hasImage) {
+            // 画像HTMLを用意
+            imageHtml = `
+              <div id="record-image-container" class="record-image-container" style="display: none;">
+                <h4>スクリーンショット</h4>
+                <img id="record-detail-image" class="record-detail-image" src="" alt="スクリーンショット" onclick="showImageModal(this.src)">
+              </div>
             `;
+          }
 
-            document.body.appendChild(modal);
+          // タグ情報を構築
+          let tagsHtml = '';
+          if (record.tags && record.tags.length > 0) {
+            const tagsDisplay = record.tags.map(tag =>
+              `<span class="tag-badge">${tag}</span>`
+            ).join(' ');
+            tagsHtml = `
+              <div class="record-tags">
+                <strong>タグ:</strong> ${tagsDisplay}
+              </div>
+            `;
+          }
 
-            // 閉じるボタンの処理
-            const closeBtn = modal.querySelector('.share-modal-close');
-            closeBtn.onclick = () => {
-                modal.classList.remove('active');
-                setTimeout(() => modal.remove(), 300);
-            };
-            // モーダルの外側をクリックしても閉じるように設定
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    modal.classList.remove('active');
-                    setTimeout(() => modal.remove(), 300);
+          // モーダルコンテンツを作成
+          const modalContent = `
+            <h3>記録詳細</h3>
+            <div class="record-info">
+              <div class="record-basic-info">
+                <h4>基本情報</h4>
+                <div><strong>モンスター:</strong> ${record.monster}</div>
+                <div><strong>武器種:</strong> ${record.weapon}</div>
+                <div><strong>クエストタイプ:</strong> ${record.questType || '通常'}</div>
+                <div><strong>ステージ:</strong> ${record.stage || '-'}</div>
+                <div><strong>強さ:</strong> ${record.strength || '-'}</div>
+                <div><strong>タイム:</strong> ${record.timeString}</div>
+                <div><strong>日時:</strong> ${formatDate(record.date)}</div>
+                ${record.notes ? `<div><strong>メモ:</strong> ${record.notes}</div>` : ''}
+                ${tagsHtml}
+              </div>
+              ${presetInfo}
+              ${imageHtml}
+            </div>
+            <div class="record-detail-actions">
+              <button class="btn btn-primary" onclick="editRecord('${record.id}'); closeAllModals();">
+                <i class="fas fa-edit"></i> 編集
+              </button>
+              <button class="btn btn-danger" onclick="if(confirm('この記録を削除してもよろしいですか？')) { deleteRecord('${record.id}'); closeAllModals(); }">
+                <i class="fas fa-trash-alt"></i> 削除
+              </button>
+            </div>
+          `;
+
+          const modal = showModal(modalContent);
+
+          // 画像がある場合はその取得と表示
+          if (record.hasImage) {
+            getImage(record.id).then(imageData => {
+              if (imageData && typeof imageData === 'string' && imageData.startsWith('data:image/')) {
+                const escapedImageData = imageData.replace(/"/g, '&quot;');
+                const imageElement = modal.querySelector('#record-detail-image');
+                if (imageElement) {
+                  imageElement.src = escapedImageData;
+                  modal.querySelector('#record-image-container').style.display = 'block';
                 }
+              }
+            }).catch(error => {
+              console.error('画像の取得に失敗しました:', error);
             });
+          }
         }
+
 
         // モーダルを閉じる補助関数
-        function closeModal(element) {
-            const modal = element.closest('.share-modal');
-            if (modal) {
-                modal.classList.remove('active');
-                setTimeout(() => modal.remove(), 300);
-            }
-        }
+        function closeModal(modal) {
+          if (!modal) return;
+          
+          // フェードアウト効果を追加
+          modal.style.opacity = '0';
+          modal.style.transform = 'translateY(-20px)';
+          modal.style.transition = 'opacity 0.3s, transform 0.3s';
+          
+          // アニメーション後に削除
+          setTimeout(() => {
+              if (modal.parentNode) {
+              modal.parentNode.removeChild(modal);
+              }
+          }, 300);
+          }
         // モーダル管理関数
         function closeAllModals() {
-            const modals = document.querySelectorAll('.modal-content');
-            modals.forEach(modal => {
-                const parentModal = modal.closest('.modal');
-                if (parentModal) {
-                    parentModal.style.display = 'none';
-                }
-            });
+          const customModal = document.getElementById('customModal');
+          if (customModal) {
+            closeModal(customModal);
+          }
+          
+          const imageModal = document.getElementById('imageModal');
+          if (imageModal) {
+            imageModal.style.display = 'none';
+          }
         }
 
         // ESCキーでモーダルを閉じる
@@ -3242,215 +3302,184 @@
         }
         // 装備詳細を表示
         function showEquipmentDetails(presetId) {
-            // 既存のモーダルを全て閉じる
-            closeAllModals();
+          const preset = getPresetById(presetId);
+          if (!preset) return;
 
-            const preset = getPresetById(presetId);
-            if (!preset) return;
+          // スキル一覧を構築
+          let skillsList = '';
+          if (preset.skills && preset.skills.length > 0) {
+            skillsList = preset.skills.map(skill =>
+              `<span class="tag-badge">${skill.name} Lv${skill.level}</span>`
+            ).join(' ');
+          } else {
+            skillsList = '<span class="text-muted">スキル情報なし</span>';
+          }
 
-            // モーダルを作成・表示
-            const modal = document.createElement('div');
-            modal.className = 'share-modal active';
-
-            // スキル一覧を構築
-            let skillsList = '';
-            if (preset.skills && preset.skills.length > 0) {
-                skillsList = preset.skills.map(skill =>
-                    `<span class="tag-badge">${skill.name} Lv${skill.level}</span>`
-                ).join(' ');
-            } else {
-                skillsList = '<span class="text-muted">スキル情報なし</span>';
-            }
-
-            modal.innerHTML = `
-                <div class="share-modal-content">
-                    <span class="share-modal-close">&times;</span>
-                    <h3>装備詳細: ${preset.name}</h3>
-                    <div class="preset-details">
-                        <div class="preset-equipment">
-                            <h4>装備情報</h4>
-                            <div><strong>武器:</strong> ${preset.equipment.weapon ? preset.equipment.weapon.name : '未設定'}</div>
-                            <div><strong>頭:</strong> ${preset.equipment.head ? preset.equipment.head.name : '未設定'}</div>
-                            <div><strong>胴:</strong> ${preset.equipment.body ? preset.equipment.body.name : '未設定'}</div>
-                            <div><strong>腕:</strong> ${preset.equipment.arms ? preset.equipment.arms.name : '未設定'}</div>
-                            <div><strong>腰:</strong> ${preset.equipment.waist ? preset.equipment.waist.name : '未設定'}</div>
-                            <div><strong>脚:</strong> ${preset.equipment.legs ? preset.equipment.legs.name : '未設定'}</div>
-                            <div><strong>護石:</strong> ${preset.equipment.charm ? preset.equipment.charm.name : '未設定'}</div>
-                        </div>
-                        <div class="preset-skills">
-                            <h4>発動スキル</h4>
-                            <div class="skills-container">
-                                ${skillsList}
-                            </div>
-                        </div>
-                        ${preset.notes ? `<div class="preset-notes"><h4>メモ</h4><p>${preset.notes}</p></div>` : ''}
-                    </div>
-                    <div class="preset-actions">
-                        <button class="btn btn-primary" onclick="editPreset('${preset.id}')">
-                            <i class="fas fa-edit"></i> 編集
-                        </button>
-                    </div>
+          const modalContent = `
+            <h3>装備詳細: ${preset.name}</h3>
+            <div class="preset-details">
+              <div class="preset-equipment">
+                <h4>装備情報</h4>
+                <div><strong>武器:</strong> ${preset.equipment.weapon ? preset.equipment.weapon.name : '未設定'}</div>
+                <div><strong>頭:</strong> ${preset.equipment.head ? preset.equipment.head.name : '未設定'}</div>
+                <div><strong>胴:</strong> ${preset.equipment.body ? preset.equipment.body.name : '未設定'}</div>
+                <div><strong>腕:</strong> ${preset.equipment.arms ? preset.equipment.arms.name : '未設定'}</div>
+                <div><strong>腰:</strong> ${preset.equipment.waist ? preset.equipment.waist.name : '未設定'}</div>
+                <div><strong>脚:</strong> ${preset.equipment.legs ? preset.equipment.legs.name : '未設定'}</div>
+                <div><strong>護石:</strong> ${preset.equipment.charm ? preset.equipment.charm.name : '未設定'}</div>
+              </div>
+              <div class="preset-skills">
+                <h4>発動スキル</h4>
+                <div class="skills-container">
+                  ${skillsList}
                 </div>
-            `;
+              </div>
+              ${preset.notes ? `<div class="preset-notes"><h4>メモ</h4><p>${preset.notes}</p></div>` : ''}
+            </div>
+            <div class="preset-actions" style="margin-top: 15px;">
+              <button class="btn btn-primary" onclick="editPreset('${preset.id}'); closeAllModals();">
+                <i class="fas fa-edit"></i> 編集
+              </button>
+            </div>
+          `;
 
-            document.body.appendChild(modal);
-
-            // 閉じるボタンの処理
-            const closeBtn = modal.querySelector('.share-modal-close');
-            closeBtn.onclick = () => {
-                modal.classList.remove('active');
-                setTimeout(() => modal.remove(), 300);
-            };
+          showModal(modalContent);
         }
 
         // 記録を編集
         function editRecord(recordId) {
-            const record = recordsData.find(r => r.id === recordId);
-            if (!record) return;
+          const record = recordsData.find(r => r.id === recordId);
+          if (!record) return;
 
-            // モーダルを作成・表示
-            const modal = document.createElement('div');
-            modal.className = 'share-modal active';
-            modal.innerHTML = `
-                <div class="share-modal-content record-edit-modal">
-                    <span class="share-modal-close">&times;</span>
-                    <h3>記録を編集</h3>
-                    <form id="edit-record-form">
-                        <div class="form-group">
-                            <label for="edit-monster" class="form-label">モンスター:</label>
-                            <select id="edit-monster" class="form-control" required>
-                                ${monsters.sort().map(m => `<option value="${m}" ${record.monster === m ? 'selected' : ''}>${m}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-weapon" class="form-label">武器種:</label>
-                            <select id="edit-weapon" class="form-control" required>
-                                <option value="大剣" ${record.weapon === '大剣' ? 'selected' : ''}>大剣</option>
-                                <option value="太刀" ${record.weapon === '太刀' ? 'selected' : ''}>太刀</option>
-                                <option value="片手剣" ${record.weapon === '片手剣' ? 'selected' : ''}>片手剣</option>
-                                <option value="双剣" ${record.weapon === '双剣' ? 'selected' : ''}>双剣</option>
-                                <option value="ハンマー" ${record.weapon === 'ハンマー' ? 'selected' : ''}>ハンマー</option>
-                                <option value="狩猟笛" ${record.weapon === '狩猟笛' ? 'selected' : ''}>狩猟笛</option>
-                                <option value="ランス" ${record.weapon === 'ランス' ? 'selected' : ''}>ランス</option>
-                                <option value="ガンランス" ${record.weapon === 'ガンランス' ? 'selected' : ''}>ガンランス</option>
-                                <option value="スラッシュアックス" ${record.weapon === 'スラッシュアックス' ? 'selected' : ''}>スラッシュアックス</option>
-                                <option value="チャージアックス" ${record.weapon === 'チャージアックス' ? 'selected' : ''}>チャージアックス</option>
-                                <option value="操虫棍" ${record.weapon === '操虫棍' ? 'selected' : ''}>操虫棍</option>
-                                <option value="ライトボウガン" ${record.weapon === 'ライトボウガン' ? 'selected' : ''}>ライトボウガン</option>
-                                <option value="ヘビィボウガン" ${record.weapon === 'ヘビィボウガン' ? 'selected' : ''}>ヘビィボウガン</option>
-                                <option value="弓" ${record.weapon === '弓' ? 'selected' : ''}>弓</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-quest-type" class="form-label">クエストタイプ:</label>
-                            <select id="edit-quest-type" class="form-control" required>
-                                <option value="通常" ${record.questType === '通常' ? 'selected' : ''}>通常</option>
-                                <option value="歴戦" ${record.questType === '歴戦' ? 'selected' : ''}>歴戦</option>
-                                <option value="狂竜化" ${record.questType === '狂竜化' ? 'selected' : ''}>狂竜化</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-stage" class="form-label">ステージ:</label>
-                            <select id="edit-stage" class="form-control" required>
-                                ${stages.map(s => `<option value="${s}" ${record.stage === s ? 'selected' : ''}>${s}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-strength" class="form-label">強さ:</label>
-                            <select id="edit-strength" class="form-control" required>
-                                <option value="1" ${record.strength === '1' ? 'selected' : ''}>1</option>
-                                <option value="2" ${record.strength === '2' ? 'selected' : ''}>2</option>
-                                <option value="3" ${record.strength === '3' ? 'selected' : ''}>3</option>
-                                <option value="4" ${record.strength === '4' ? 'selected' : ''}>4</option>
-                                <option value="5" ${record.strength === '5' ? 'selected' : ''}>5</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">タイム:</label>
-                            <div class="time-input">
-                                <input type="number" id="edit-minutes" class="form-control" min="0" value="${record.timeString.split(':')[0]}" required />
-                                <span>:</span>
-                                <input type="number" id="edit-seconds" class="form-control" min="0" max="59" value="${record.timeString.split(':')[1].split('.')[0]}" required />
-                                <span>.</span>
-                                <input type="number" id="edit-milliseconds" class="form-control" min="0" max="99" value="${record.timeString.split('.')[1]}" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-notes" class="form-label">メモ:</label>
-                            <input type="text" id="edit-notes" class="form-control" value="${record.notes || ''}" />
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-tags" class="form-label">タグ:</label>
-                            <input type="text" id="edit-tags" class="form-control" value="${record.tags ? record.tags.join(', ') : ''}" />
-                        </div>
-                        <div class="form-group">
-                            <label for="edit-preset" class="form-label">装備プリセット:</label>
-                            <select id="edit-preset" class="form-control">
-                                <option value="">選択なし</option>
-                                ${equipmentPresets.map(p => `<option value="${p.id}" ${record.equipmentPresetId === p.id ? 'selected' : ''}>${p.name}</option>`).join('')}
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">
-                            更新
-                        </button>
-                    </form>
+          const modalContent = `
+            <h3>記録を編集</h3>
+            <form id="edit-record-form">
+              <div class="form-group">
+                <label for="edit-monster" class="form-label">モンスター:</label>
+                <select id="edit-monster" class="form-control" required>
+                  ${monsters.sort().map(m => `<option value="${m}" ${record.monster === m ? 'selected' : ''}>${m}</option>`).join('')}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="edit-weapon" class="form-label">武器種:</label>
+                <select id="edit-weapon" class="form-control" required>
+                  <option value="大剣" ${record.weapon === '大剣' ? 'selected' : ''}>大剣</option>
+                  <option value="太刀" ${record.weapon === '太刀' ? 'selected' : ''}>太刀</option>
+                  <option value="片手剣" ${record.weapon === '片手剣' ? 'selected' : ''}>片手剣</option>
+                  <option value="双剣" ${record.weapon === '双剣' ? 'selected' : ''}>双剣</option>
+                  <option value="ハンマー" ${record.weapon === 'ハンマー' ? 'selected' : ''}>ハンマー</option>
+                  <option value="狩猟笛" ${record.weapon === '狩猟笛' ? 'selected' : ''}>狩猟笛</option>
+                  <option value="ランス" ${record.weapon === 'ランス' ? 'selected' : ''}>ランス</option>
+                  <option value="ガンランス" ${record.weapon === 'ガンランス' ? 'selected' : ''}>ガンランス</option>
+                  <option value="スラッシュアックス" ${record.weapon === 'スラッシュアックス' ? 'selected' : ''}>スラッシュアックス</option>
+                  <option value="チャージアックス" ${record.weapon === 'チャージアックス' ? 'selected' : ''}>チャージアックス</option>
+                  <option value="操虫棍" ${record.weapon === '操虫棍' ? 'selected' : ''}>操虫棍</option>
+                  <option value="ライトボウガン" ${record.weapon === 'ライトボウガン' ? 'selected' : ''}>ライトボウガン</option>
+                  <option value="ヘビィボウガン" ${record.weapon === 'ヘビィボウガン' ? 'selected' : ''}>ヘビィボウガン</option>
+                  <option value="弓" ${record.weapon === '弓' ? 'selected' : ''}>弓</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="edit-quest-type" class="form-label">クエストタイプ:</label>
+                <select id="edit-quest-type" class="form-control" required>
+                  <option value="通常" ${record.questType === '通常' ? 'selected' : ''}>通常</option>
+                  <option value="歴戦" ${record.questType === '歴戦' ? 'selected' : ''}>歴戦</option>
+                  <option value="狂竜化" ${record.questType === '狂竜化' ? 'selected' : ''}>狂竜化</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="edit-stage" class="form-label">ステージ:</label>
+                <select id="edit-stage" class="form-control" required>
+                  ${stages.map(s => `<option value="${s}" ${record.stage === s ? 'selected' : ''}>${s}</option>`).join('')}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="edit-strength" class="form-label">強さ:</label>
+                <select id="edit-strength" class="form-control" required>
+                  <option value="1" ${record.strength === '1' ? 'selected' : ''}>1</option>
+                  <option value="2" ${record.strength === '2' ? 'selected' : ''}>2</option>
+                  <option value="3" ${record.strength === '3' ? 'selected' : ''}>3</option>
+                  <option value="4" ${record.strength === '4' ? 'selected' : ''}>4</option>
+                  <option value="5" ${record.strength === '5' ? 'selected' : ''}>5</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">タイム:</label>
+                <div class="time-input">
+                  <input type="number" id="edit-minutes" class="form-control" min="0" value="${record.timeString.split(':')[0]}" required />
+                  <span>:</span>
+                  <input type="number" id="edit-seconds" class="form-control" min="0" max="59" value="${record.timeString.split(':')[1].split('.')[0]}" required />
+                  <span>.</span>
+                  <input type="number" id="edit-milliseconds" class="form-control" min="0" max="99" value="${record.timeString.split('.')[1]}" required />
                 </div>
-            `;
+              </div>
+              <div class="form-group">
+                <label for="edit-notes" class="form-label">メモ:</label>
+                <input type="text" id="edit-notes" class="form-control" value="${record.notes || ''}" />
+              </div>
+              <div class="form-group">
+                <label for="edit-tags" class="form-label">タグ:</label>
+                <input type="text" id="edit-tags" class="form-control" value="${record.tags ? record.tags.join(', ') : ''}" />
+              </div>
+              <div class="form-group">
+                <label for="edit-preset" class="form-label">装備プリセット:</label>
+                <select id="edit-preset" class="form-control">
+                  <option value="">選択なし</option>
+                  ${equipmentPresets.map(p => `<option value="${p.id}" ${record.equipmentPresetId === p.id ? 'selected' : ''}>${p.name}</option>`).join('')}
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">
+                更新
+              </button>
+            </form>
+          `;
 
-            document.body.appendChild(modal);
+          const modal = showModal(modalContent);
 
-            // フォーム送信処理
-            const form = modal.querySelector('#edit-record-form');
-            form.onsubmit = function(e) {
-                e.preventDefault();
+          // フォーム送信処理
+          const form = modal.querySelector('#edit-record-form');
+          form.onsubmit = function(e) {
+            e.preventDefault();
 
-                // 編集した値を取得
-                const editedRecord = {
-                    ...record,
-                    monster: document.getElementById('edit-monster').value,
-                    weapon: document.getElementById('edit-weapon').value,
-                    questType: document.getElementById('edit-quest-type').value,
-                    stage: document.getElementById('edit-stage').value,
-                    strength: document.getElementById('edit-strength').value,
-                    notes: document.getElementById('edit-notes').value,
-                    tags: document.getElementById('edit-tags').value.split(',').map(tag => tag.trim()).filter(tag => tag !== ''),
-                    equipmentPresetId: document.getElementById('edit-preset').value || null
-                };
-
-                // タイムを更新
-                const minutes = parseInt(document.getElementById('edit-minutes').value) || 0;
-                const seconds = parseInt(document.getElementById('edit-seconds').value) || 0;
-                const milliseconds = parseInt(document.getElementById('edit-milliseconds').value) || 0;
-                
-                editedRecord.timeString = `${minutes}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
-                editedRecord.timeValue = (minutes * 60 * 1000) + (seconds * 1000) + milliseconds;
-
-                // 記録を更新
-                const index = recordsData.findIndex(r => r.id === recordId);
-                if (index !== -1) {
-                    recordsData[index] = editedRecord;
-                    
-                    // 保存して画面更新
-                    saveRecordsToStorage();
-                    renderRecordsTable();
-                    updateRankings();
-                    updateStatistics();
-                    updateChecklist();
-                    
-                    // モーダルを閉じる
-                    modal.classList.remove('active');
-                    setTimeout(() => modal.remove(), 300);
-                    
-                    alert('記録が更新されました');
-                }
+            // 編集した値を取得
+            const editedRecord = {
+              ...record,
+              monster: document.getElementById('edit-monster').value,
+              weapon: document.getElementById('edit-weapon').value,
+              questType: document.getElementById('edit-quest-type').value,
+              stage: document.getElementById('edit-stage').value,
+              strength: document.getElementById('edit-strength').value,
+              notes: document.getElementById('edit-notes').value,
+              tags: document.getElementById('edit-tags').value.split(',').map(tag => tag.trim()).filter(tag => tag !== ''),
+              equipmentPresetId: document.getElementById('edit-preset').value || null
             };
 
-            // 閉じるボタンの処理
-            const closeBtn = modal.querySelector('.share-modal-close');
-            closeBtn.onclick = () => {
-                modal.classList.remove('active');
-                setTimeout(() => modal.remove(), 300);
-            };
+            // タイムを更新
+            const minutes = parseInt(document.getElementById('edit-minutes').value) || 0;
+            const seconds = parseInt(document.getElementById('edit-seconds').value) || 0;
+            const milliseconds = parseInt(document.getElementById('edit-milliseconds').value) || 0;
+            
+            editedRecord.timeString = `${minutes}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+            editedRecord.timeValue = (minutes * 60 * 1000) + (seconds * 1000) + milliseconds;
+
+            // 記録を更新
+            const index = recordsData.findIndex(r => r.id === recordId);
+            if (index !== -1) {
+              recordsData[index] = editedRecord;
+              
+              // 保存して画面更新
+              saveRecordsToStorage();
+              renderRecordsTable();
+              updateRankings();
+              updateStatistics();
+              updateChecklist();
+              
+              // モーダルを閉じる
+              closeAllModals();
+              
+              alert('記録が更新されました');
+            }
+          };
         }
 
         // 記録を削除
@@ -4024,104 +4053,90 @@
 
         // プリセット編集モーダル表示
         function editPreset(presetId) {
-            const preset = getPresetById(presetId);
-            if (!preset) return;
+          const preset = getPresetById(presetId);
+          if (!preset) return;
 
-            // モーダルを作成・表示
-            const modal = document.createElement('div');
-            modal.className = 'share-modal active';
-            modal.innerHTML = `
-                <div class="share-modal-content">
-                    <span class="share-modal-close">&times;</span>
-                    <h3>プリセット編集</h3>
-                    <div class="form-group">
-                        <label for="preset-name-edit" class="form-label">プリセット名:</label>
-                        <input type="text" id="preset-name-edit" class="form-control" value="${preset.name}">
-                    </div>
-                    <div class="form-group">
-                        <label for="preset-notes-edit" class="form-label">メモ:</label>
-                        <textarea id="preset-notes-edit" class="form-control" rows="3">${preset.notes || ''}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <button id="edit-equipment-btn" class="btn btn-secondary btn-block">装備内容を編集</button>
-                    </div>
-                    <div class="form-group">
-                        <button id="save-preset-edit" class="btn btn-primary btn-block">保存</button>
-                    </div>
-                </div>
+          const modalContent = `
+            <h3>プリセット編集</h3>
+            <div class="form-group">
+              <label for="preset-name-edit" class="form-label">プリセット名:</label>
+              <input type="text" id="preset-name-edit" class="form-control" value="${preset.name}">
+            </div>
+            <div class="form-group">
+              <label for="preset-notes-edit" class="form-label">メモ:</label>
+              <textarea id="preset-notes-edit" class="form-control" rows="3">${preset.notes || ''}</textarea>
+            </div>
+            <div class="form-group">
+              <button id="edit-equipment-btn" class="btn btn-secondary btn-block">装備内容を編集</button>
+            </div>
+            <div class="form-group">
+              <button id="save-preset-edit" class="btn btn-primary btn-block">保存</button>
+            </div>
+          `;
+
+          const modal = showModal(modalContent);
+
+          // 装備編集ボタンの処理
+          const editEquipBtn = modal.querySelector('#edit-equipment-btn');
+          editEquipBtn.onclick = () => {
+            // シミュレーションタブに移動して装備をセット
+            openTab('simulation');
+            
+            // プリセットの装備をシミュレーションに設定
+            loadPresetToSimulation(preset);
+            
+            // 編集の案内メッセージを表示
+            const message = document.createElement('div');
+            message.className = 'equipment-edit-message';
+            message.innerHTML = `
+              <div class="message-content">
+                <p><strong>${preset.name}</strong>の装備内容を編集しています。編集が完了したら「シミュレーション実行」を押した後、「この装備をプリセットとして保存」を押してください。</p>
+                <button class="btn btn-primary" id="close-message-btn">了解</button>
+              </div>
             `;
+            message.style.position = 'fixed';
+            message.style.top = '50%';
+            message.style.left = '50%';
+            message.style.transform = 'translate(-50%, -50%)';
+            message.style.backgroundColor = 'white';
+            message.style.padding = '20px';
+            message.style.borderRadius = '8px';
+            message.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
+            message.style.zIndex = '9999';
+            
+            document.body.appendChild(message);
+            
+            document.getElementById('close-message-btn').onclick = () => {
+              message.remove();
+            };
+            
+            // モーダルを閉じる
+            closeAllModals();
+          };
 
-            document.body.appendChild(modal);
+          // 保存ボタンの処理
+          const saveBtn = modal.querySelector('#save-preset-edit');
+          saveBtn.onclick = () => {
+            const newName = document.getElementById('preset-name-edit').value.trim();
+            const newNotes = document.getElementById('preset-notes-edit').value.trim();
 
-            // 閉じるボタンの処理
-            const closeBtn = modal.querySelector('.share-modal-close');
-            closeBtn.onclick = () => {
-                modal.classList.remove('active');
-                setTimeout(() => modal.remove(), 300);
+            if (!newName) {
+              alert('プリセット名を入力してください');
+              return;
+            }
+
+            const updatedPreset = {
+              ...preset,
+              name: newName,
+              notes: newNotes
             };
 
-            // 装備編集ボタンの処理
-            const editEquipBtn = document.getElementById('edit-equipment-btn');
-            editEquipBtn.onclick = () => {
-                // シミュレーションタブに移動して装備をセット
-                openTab('simulation');
-                
-                // プリセットの装備をシミュレーションに設定
-                loadPresetToSimulation(preset);
-                
-                // 編集の案内メッセージを表示
-                const message = document.createElement('div');
-                message.className = 'equipment-edit-message';
-                message.innerHTML = `
-                    <div class="message-content">
-                        <p><strong>${preset.name}</strong>の装備内容を編集しています。編集が完了したら「シミュレーション実行」を押した後、「この装備をプリセットとして保存」を押してください。</p>
-                        <button class="btn btn-primary" id="close-message-btn">了解</button>
-                    </div>
-                `;
-                message.style.position = 'fixed';
-                message.style.top = '50%';
-                message.style.left = '50%';
-                message.style.transform = 'translate(-50%, -50%)';
-                message.style.backgroundColor = 'white';
-                message.style.padding = '20px';
-                message.style.borderRadius = '8px';
-                message.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
-                message.style.zIndex = '9999';
-                
-                document.body.appendChild(message);
-                
-                document.getElementById('close-message-btn').onclick = () => {
-                    message.remove();
-                };
-                
-                // モーダルを閉じる
-                modal.classList.remove('active');
-                setTimeout(() => modal.remove(), 300);
-            };
-
-            // 保存ボタンの処理
-            const saveBtn = document.getElementById('save-preset-edit');
-            saveBtn.onclick = () => {
-                const newName = document.getElementById('preset-name-edit').value.trim();
-                const newNotes = document.getElementById('preset-notes-edit').value.trim();
-
-                if (!newName) {
-                    alert('プリセット名を入力してください');
-                    return;
-                }
-
-                const updatedPreset = {
-                    ...preset,
-                    name: newName,
-                    notes: newNotes
-                };
-
-                if (updatePreset(presetId, updatedPreset)) {
-                    updatePresetList('presets-container');
-                    modal.classList.remove('active');
-                    setTimeout(() => modal.remove(), 300);
-                }
-            };
+            if (updatePreset(presetId, updatedPreset)) {
+              updatePresetList('presets-container');
+              closeAllModals();
+              alert('プリセットを更新しました');
+            }
+          };
         }
 
         // プリセットをシミュレーションにロードする関数
@@ -4208,104 +4223,88 @@
         }
 
 
-        // プロフィール編集モーダル表示
+        // プロフィール編集モーダル表示を修正
         function showProfileModal() {
-            // モーダルを作成・表示
-            const modal = document.createElement('div');
-            modal.className = 'share-modal active';
-            modal.innerHTML = `
-                <div class="share-modal-content profile-modal">
-                    <span class="share-modal-close">&times;</span>
-                    <h3>プロフィール設定</h3>
-                    <div class="form-group">
-                        <label for="hunter-name" class="form-label">ハンター名:</label>
-                        <input type="text" id="hunter-name" class="form-control" value="${profileData.hunterName || ''}">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group half">
-                            <label for="hunter-rank" class="form-label">ハンターランク:</label>
-                            <input type="number" id="hunter-rank" class="form-control" min="1" value="${profileData.hunterRank || 1}">
-                        </div>
-                        <div class="form-group half">
-                            <label for="platform" class="form-label">プラットフォーム:</label>
-                            <select id="platform" class="form-control">
-                                <option value="PS5" ${profileData.platform === 'PS5' ? 'selected' : ''}>PS5</option>
-                                <option value="PC" ${profileData.platform === 'PC' ? 'selected' : ''}>PC</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="player-id" class="form-label">プレイヤーID:</label>
-                        <input type="text" id="player-id" class="form-control" value="${profileData.playerId || ''}">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group half">
-                            <label for="main-weapon" class="form-label">メイン武器:</label>
-                            <select id="main-weapon" class="form-control">
-                                <option value="">選択してください</option>
-                                <option value="大剣" ${profileData.mainWeapon === '大剣' ? 'selected' : ''}>大剣</option>
-                                <option value="太刀" ${profileData.mainWeapon === '太刀' ? 'selected' : ''}>太刀</option>
-                                <option value="片手剣" ${profileData.mainWeapon === '片手剣' ? 'selected' : ''}>片手剣</option>
-                                <option value="双剣" ${profileData.mainWeapon === '双剣' ? 'selected' : ''}>双剣</option>
-                                <option value="ハンマー" ${profileData.mainWeapon === 'ハンマー' ? 'selected' : ''}>ハンマー</option>
-                                <option value="狩猟笛" ${profileData.mainWeapon === '狩猟笛' ? 'selected' : ''}>狩猟笛</option>
-                                <option value="ランス" ${profileData.mainWeapon === 'ランス' ? 'selected' : ''}>ランス</option>
-                                <option value="ガンランス" ${profileData.mainWeapon === 'ガンランス' ? 'selected' : ''}>ガンランス</option>
-                                <option value="スラッシュアックス" ${profileData.mainWeapon === 'スラッシュアックス' ? 'selected' : ''}>スラッシュアックス</option>
-                                <option value="チャージアックス" ${profileData.mainWeapon === 'チャージアックス' ? 'selected' : ''}>チャージアックス</option>
-                                <option value="操虫棍" ${profileData.mainWeapon === '操虫棍' ? 'selected' : ''}>操虫棍</option>
-                                <option value="ライトボウガン" ${profileData.mainWeapon === 'ライトボウガン' ? 'selected' : ''}>ライトボウガン</option>
-                                <option value="ヘヴィボウガン" ${profileData.mainWeapon === 'ヘヴィボウガン' ? 'selected' : ''}>ヘヴィボウガン</option>
-                                <option value="弓" ${profileData.mainWeapon === '弓' ? 'selected' : ''}>弓</option>
-                            </select>
-                        </div>
-                        <div class="form-group half">
-                            <label for="play-time" class="form-label">プレイ時間(時間):</label>
-                            <input type="number" id="play-time" class="form-control" min="0" value="${profileData.playTime || 0}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="bio" class="form-label">自己紹介:</label>
-                        <textarea id="bio" class="form-control" rows="3">${profileData.bio || ''}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <button id="save-profile" class="btn btn-primary btn-block">プロフィールを保存</button>
-                    </div>
-                </div>
-            `;
+          const modalContent = `
+            <h3>プロフィール設定</h3>
+            <div class="form-group">
+              <label for="hunter-name" class="form-label">ハンター名:</label>
+              <input type="text" id="hunter-name" class="form-control" value="${profileData.hunterName || ''}">
+            </div>
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="hunter-rank" class="form-label">ハンターランク:</label>
+                <input type="number" id="hunter-rank" class="form-control" min="1" value="${profileData.hunterRank || 1}">
+              </div>
+              <div class="form-group half">
+                <label for="platform" class="form-label">プラットフォーム:</label>
+                <select id="platform" class="form-control">
+                  <option value="PS5" ${profileData.platform === 'PS5' ? 'selected' : ''}>PS5</option>
+                  <option value="PC" ${profileData.platform === 'PC' ? 'selected' : ''}>PC</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="player-id" class="form-label">プレイヤーID:</label>
+              <input type="text" id="player-id" class="form-control" value="${profileData.playerId || ''}">
+            </div>
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="main-weapon" class="form-label">メイン武器:</label>
+                <select id="main-weapon" class="form-control">
+                  <option value="">選択してください</option>
+                  <option value="大剣" ${profileData.mainWeapon === '大剣' ? 'selected' : ''}>大剣</option>
+                  <option value="太刀" ${profileData.mainWeapon === '太刀' ? 'selected' : ''}>太刀</option>
+                  <option value="片手剣" ${profileData.mainWeapon === '片手剣' ? 'selected' : ''}>片手剣</option>
+                  <option value="双剣" ${profileData.mainWeapon === '双剣' ? 'selected' : ''}>双剣</option>
+                  <option value="ハンマー" ${profileData.mainWeapon === 'ハンマー' ? 'selected' : ''}>ハンマー</option>
+                  <option value="狩猟笛" ${profileData.mainWeapon === '狩猟笛' ? 'selected' : ''}>狩猟笛</option>
+                  <option value="ランス" ${profileData.mainWeapon === 'ランス' ? 'selected' : ''}>ランス</option>
+                  <option value="ガンランス" ${profileData.mainWeapon === 'ガンランス' ? 'selected' : ''}>ガンランス</option>
+                  <option value="スラッシュアックス" ${profileData.mainWeapon === 'スラッシュアックス' ? 'selected' : ''}>スラッシュアックス</option>
+                  <option value="チャージアックス" ${profileData.mainWeapon === 'チャージアックス' ? 'selected' : ''}>チャージアックス</option>
+                  <option value="操虫棍" ${profileData.mainWeapon === '操虫棍' ? 'selected' : ''}>操虫棍</option>
+                  <option value="ライトボウガン" ${profileData.mainWeapon === 'ライトボウガン' ? 'selected' : ''}>ライトボウガン</option>
+                  <option value="ヘヴィボウガン" ${profileData.mainWeapon === 'ヘヴィボウガン' ? 'selected' : ''}>ヘヴィボウガン</option>
+                  <option value="弓" ${profileData.mainWeapon === '弓' ? 'selected' : ''}>弓</option>
+                </select>
+              </div>
+              <div class="form-group half">
+                <label for="play-time" class="form-label">プレイ時間(時間):</label>
+                <input type="number" id="play-time" class="form-control" min="0" value="${profileData.playTime || 0}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bio" class="form-label">自己紹介:</label>
+              <textarea id="bio" class="form-control" rows="3">${profileData.bio || ''}</textarea>
+            </div>
+            <div class="form-group">
+              <button id="save-profile" class="btn btn-primary btn-block">プロフィールを保存</button>
+            </div>
+          `;
 
-            document.body.appendChild(modal);
+          const modal = showModal(modalContent);
 
-            // 閉じるボタンの処理
-            const closeBtn = modal.querySelector('.share-modal-close');
-            closeBtn.onclick = () => {
-                modal.classList.remove('active');
-                setTimeout(() => modal.remove(), 300);
-            };
+          // 保存ボタンの処理
+          const saveBtn = modal.querySelector('#save-profile');
+          saveBtn.onclick = () => {
+            // プロフィールデータを更新
+            profileData.hunterName = document.getElementById('hunter-name').value.trim();
+            profileData.hunterRank = parseInt(document.getElementById('hunter-rank').value) || 1;
+            profileData.platform = document.getElementById('platform').value;
+            profileData.playerId = document.getElementById('player-id').value.trim();
+            profileData.mainWeapon = document.getElementById('main-weapon').value;
+            profileData.playTime = parseInt(document.getElementById('play-time').value) || 0;
+            profileData.bio = document.getElementById('bio').value.trim();
 
-            // 保存ボタンの処理
-            const saveBtn = document.getElementById('save-profile');
-            saveBtn.onclick = () => {
-                // プロフィールデータを更新
-                profileData.hunterName = document.getElementById('hunter-name').value.trim();
-                profileData.hunterRank = parseInt(document.getElementById('hunter-rank').value) || 1;
-                profileData.platform = document.getElementById('platform').value;
-                profileData.playerId = document.getElementById('player-id').value.trim();
-                profileData.mainWeapon = document.getElementById('main-weapon').value;
-                profileData.playTime = parseInt(document.getElementById('play-time').value) || 0;
-                profileData.bio = document.getElementById('bio').value.trim();
+            // プロフィールを保存
+            saveProfile();
 
-
-                // プロフィールを保存
-                saveProfile();
-
-                // モーダルを閉じる
-                modal.classList.remove('active');
-                setTimeout(() => modal.remove(), 300);
-
-                // ヘッダープロフィール表示を更新
-                updateHeaderProfile();
-            };
+            // モーダルを閉じる
+            closeAllModals();
+            // ヘッダープロフィール表示を更新
+            updateHeaderProfile();
+          };
         }
 
 
@@ -5156,260 +5155,273 @@
 
         // プリセット管理モーダルを表示
         function showPresetManagementModal() {
-            // モーダルを作成・表示
-            const modal = document.createElement('div');
-            modal.className = 'share-modal active';
-            modal.innerHTML = `
-                <div class="share-modal-content preset-management-modal">
-                    <span class="share-modal-close">&times;</span>
-                    <h3>装備プリセット管理</h3>
-                    <div class="preset-tabs">
-                        <button class="preset-tab active" data-tab="presets-list">プリセット一覧</button>
-                        <button class="preset-tab" data-tab="add-preset">新規作成</button>
-                    </div>
-                    <div class="preset-tab-content active" id="presets-list">
-                        <div id="presets-container" class="presets-container">
-                            <!-- プリセットリストはJavaScriptで動的に生成 -->
-                        </div>
-                    </div>
-                    <div class="preset-tab-content" id="add-preset">
-                        <div class="form-group">
-                            <label for="new-preset-name" class="form-label">プリセット名:</label>
-                            <input type="text" id="new-preset-name" class="form-control" placeholder="新しいプリセット名">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">現在の装備をインポート:</label>
-                            <button id="import-from-simulation" class="btn btn-secondary btn-block">シミュレーションから装備をインポート</button>
-                        </div>
-                        <div class="form-group">
-                            <label for="new-preset-notes" class="form-label">メモ:</label>
-                            <textarea id="new-preset-notes" class="form-control" rows="3" placeholder="メモ（オプション）"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button id="create-new-preset" class="btn btn-primary btn-block">プリセットを作成</button>
-                        </div>
-                    </div>
-                </div>
-            `;
+          // タブ切り替え用のHTMLを作成
+          const modalContent = `
+            <h3>装備プリセット管理</h3>
+            <div class="preset-tabs">
+              <button class="preset-tab active" data-tab="presets-list">プリセット一覧</button>
+              <button class="preset-tab" data-tab="add-preset">新規作成</button>
+            </div>
+            <div class="preset-tab-content active" id="presets-list">
+              <div id="modal-presets-container" class="presets-container">
+                <!-- プリセットリストはJavaScriptで動的に生成 -->
+              </div>
+            </div>
+            <div class="preset-tab-content" id="add-preset">
+              <div class="form-group">
+                <label for="new-preset-name" class="form-label">プリセット名:</label>
+                <input type="text" id="new-preset-name" class="form-control" placeholder="新しいプリセット名">
+              </div>
+              <div class="form-group">
+                <label class="form-label">現在の装備をインポート:</label>
+                <button id="import-from-simulation" class="btn btn-secondary btn-block">シミュレーションから装備をインポート</button>
+              </div>
+              <div class="form-group">
+                <label for="new-preset-notes" class="form-label">メモ:</label>
+                <textarea id="new-preset-notes" class="form-control" rows="3" placeholder="メモ（オプション）"></textarea>
+              </div>
+              <div class="form-group">
+                <button id="create-new-preset" class="btn btn-primary btn-block">プリセットを作成</button>
+              </div>
+            </div>
+          `;
 
-            document.body.appendChild(modal);
+          const modal = showModal(modalContent);
 
-            // タブ切り替え
-            const tabs = modal.querySelectorAll('.preset-tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    // アクティブなタブを解除
-                    tabs.forEach(t => t.classList.remove('active'));
-                    modal.querySelectorAll('.preset-tab-content').forEach(content => {
-                        content.classList.remove('active');
-                    });
+          // タブ切り替えの処理
+          const tabs = modal.querySelectorAll('.preset-tab');
+          tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+              // アクティブなタブを解除
+              tabs.forEach(t => t.classList.remove('active'));
+              modal.querySelectorAll('.preset-tab-content').forEach(content => {
+                content.classList.remove('active');
+              });
 
-                    // 選択されたタブをアクティブに
-                    tab.classList.add('active');
-                    const tabId = tab.getAttribute('data-tab');
-                    document.getElementById(tabId).classList.add('active');
-                });
+              // 選択されたタブをアクティブに
+              tab.classList.add('active');
+              const tabId = tab.getAttribute('data-tab');
+              modal.querySelector(`#${tabId}`).classList.add('active');
             });
+          });
 
-            // プリセットリストを更新
-            const presetsContainer = modal.querySelector('#presets-list #presets-container');
-            if (presetsContainer) {
-                // プリセットリストをモーダル内の要素に直接描画
-                presetsContainer.innerHTML = '';
-                
-                if (equipmentPresets.length === 0) {
-                    presetsContainer.innerHTML = '<div class="empty-state"><i class="fas fa-scroll empty-icon"></i><p>プリセットがありません</p><p class="text-muted">新しいプリセットを追加してください</p></div>';
-                } else {
-                    // プリセットをソート（最後に使用した順）
-                    const sortedPresets = [...equipmentPresets].sort((a, b) =>
-                        new Date(b.lastUsed || b.created) - new Date(a.lastUsed || a.created)
-                    );
+          // プリセットリストを更新
+          updateModalPresetList(modal);
 
-                    sortedPresets.forEach(preset => {
-                        const presetCard = document.createElement('div');
-                        presetCard.className = 'preset-card card';
+          // シミュレーションからインポートボタンの処理
+          const importBtn = modal.querySelector('#import-from-simulation');
+          importBtn.addEventListener('click', () => {
+            // シミュレーションタブの装備データを取得
+            const simulationData = getSimulationEquipmentData();
 
-                        // スキル一覧を構築
-                        let skillsList = '';
-                        if (preset.skills && preset.skills.length > 0) {
-                            skillsList = preset.skills.map(skill =>
-                                `<span class="tag-badge">${skill.name} Lv${skill.level}</span>`
-                            ).join(' ');
-                        } else {
-                            skillsList = '<span class="text-muted">スキル情報なし</span>';
-                        }
+            if (simulationData && simulationData.equipment && Object.values(simulationData.equipment).some(item => item)) {
+              // プリセット名に装備名を反映
+              const presetNameInput = modal.querySelector('#new-preset-name');
+              if (!presetNameInput.value) {
+                const equipName = simulationData.equipment.weapon ? simulationData.equipment.weapon.name : '装備セット';
+                presetNameInput.value = equipName;
+              }
 
-                        // 武器種アイコンの選択
-                        let weaponIcon = 'fa-question';
-                        if (preset.equipment.weapon) {
-                            const weaponType = preset.equipment.weapon.type;
-                            if (weaponType.includes('大剣')) weaponIcon = 'fa-khanda';
-                            else if (weaponType.includes('太刀')) weaponIcon = 'fa-wind';
-                            else if (weaponType.includes('片手剣')) weaponIcon = 'fa-sword';
-                            else if (weaponType.includes('双剣')) weaponIcon = 'fa-swords';
-                            else if (weaponType.includes('ハンマー')) weaponIcon = 'fa-hammer';
-                            else if (weaponType.includes('狩猟笛')) weaponIcon = 'fa-music';
-                            else if (weaponType.includes('ランス')) weaponIcon = 'fa-splotch';
-                            else if (weaponType.includes('ガンランス')) weaponIcon = 'fa-rocket';
-                            else if (weaponType.includes('スラッシュアックス')) weaponIcon = 'fa-axe';
-                            else if (weaponType.includes('チャージアックス')) weaponIcon = 'fa-bolt';
-                            else if (weaponType.includes('操虫棍')) weaponIcon = 'fa-bug';
-                            else if (weaponType.includes('ライトボウガン')) weaponIcon = 'fa-gun';
-                            else if (weaponType.includes('ヘヴィボウガン')) weaponIcon = 'fa-bazooka';
-                            else if (weaponType.includes('弓')) weaponIcon = 'fa-bow-arrow';
-                        }
+              // 適用メッセージを表示
+              const message = document.createElement('div');
+              message.className = 'modal-message success';
+              message.innerHTML = `<i class="fas fa-check-circle"></i> シミュレーションの装備をインポートしました`;
 
-                        presetCard.innerHTML = `
-                            <div class="card-header">
-                                <div>
-                                    <i class="fas ${weaponIcon}"></i> ${preset.name}
-                                </div>
-                                <div class="preset-actions">
-                                    <span class="action-btn" onclick="editPreset('${preset.id}')">
-                                        <i class="fas fa-edit"></i>
-                                    </span>
-                                    <span class="action-btn delete" onclick="confirmDeletePreset('${preset.id}')">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="preset-equipment">
-                                    <div><strong>武器:</strong> ${preset.equipment.weapon ? preset.equipment.weapon.name : '未設定'}</div>
-                                    <div><strong>頭:</strong> ${preset.equipment.head ? preset.equipment.head.name : '未設定'}</div>
-                                    <div><strong>胴:</strong> ${preset.equipment.body ? preset.equipment.body.name : '未設定'}</div>
-                                    <div><strong>腕:</strong> ${preset.equipment.arms ? preset.equipment.arms.name : '未設定'}</div>
-                                    <div><strong>腰:</strong> ${preset.equipment.waist ? preset.equipment.waist.name : '未設定'}</div>
-                                    <div><strong>脚:</strong> ${preset.equipment.legs ? preset.equipment.legs.name : '未設定'}</div>
-                                    <div><strong>護石:</strong> ${preset.equipment.charm ? preset.equipment.charm.name : '未設定'}</div>
-                                </div>
-                                <div class="preset-skills">
-                                    <div><strong>発動スキル:</strong></div>
-                                    <div class="skills-container">
-                                        ${skillsList}
-                                    </div>
-                                </div>
-                                <div class="preset-footer">
-                                    <button class="btn btn-primary btn-sm" onclick="applyPreset('${preset.id}')">使用する</button>
-                                </div>
-                            </div>
-                        `;
+              const tabContent = modal.querySelector('#add-preset');
+              tabContent.appendChild(message);
 
-                        presetsContainer.appendChild(presetCard);
-                    });
-                }
+              setTimeout(() => {
+                message.classList.add('show');
+                setTimeout(() => {
+                  message.classList.remove('show');
+                  setTimeout(() => message.remove(), 300);
+                }, 2000);
+              }, 10);
+            } else {
+              // エラーメッセージ
+              alert('シミュレーションからインポートできる装備データがありません。シミュレーションタブで装備を設定してください。');
+            }
+          });
+
+          // 新規プリセット作成ボタンの処理
+          const createBtn = modal.querySelector('#create-new-preset');
+          createBtn.addEventListener('click', () => {
+            const name = modal.querySelector('#new-preset-name').value.trim();
+            const notes = modal.querySelector('#new-preset-notes').value.trim();
+
+            if (!name) {
+              alert('プリセット名を入力してください');
+              return;
             }
 
-            // シミュレーションからインポートボタンの処理
-            const importBtn = document.getElementById('import-from-simulation');
-            importBtn.addEventListener('click', () => {
-                // シミュレーションタブの装備データを取得
-                const simulationData = getSimulationEquipmentData();
+            // シミュレーションから装備データを取得
+            const simulationData = getSimulationEquipmentData();
 
-                if (simulationData && simulationData.equipment && Object.values(simulationData.equipment).some(item => item)) {
-                    // プリセット名に装備名を反映
-                    const presetNameInput = document.getElementById('new-preset-name');
-                    if (!presetNameInput.value) {
-                        const equipName = simulationData.equipment.weapon ? simulationData.equipment.weapon.name : '装備セット';
-                        presetNameInput.value = equipName;
-                    }
+            if (!simulationData || !simulationData.equipment || !Object.values(simulationData.equipment).some(item => item)) {
+              alert('装備データがありません。シミュレーションからインポートするか、先に装備を設定してください。');
+              return;
+            }
 
-                    // 適用メッセージを表示
-                    const message = document.createElement('div');
-                    message.className = 'modal-message success';
-                    message.innerHTML = `<i class="fas fa-check-circle"></i> シミュレーションの装備をインポートしました`;
-
-                    const tabContent = document.getElementById('add-preset');
-                    tabContent.appendChild(message);
-
-                    setTimeout(() => {
-                        message.classList.add('show');
-                        setTimeout(() => {
-                            message.classList.remove('show');
-                            setTimeout(() => message.remove(), 300);
-                        }, 2000);
-                    }, 10);
-                } else {
-                    // エラーメッセージ
-                    alert('シミュレーションからインポートできる装備データがありません。シミュレーションタブで装備を設定してください。');
-                }
-            });
-
-            // 新規プリセット作成ボタンの処理
-            const createBtn = document.getElementById('create-new-preset');
-            createBtn.addEventListener('click', () => {
-                const name = document.getElementById('new-preset-name').value.trim();
-                const notes = document.getElementById('new-preset-notes').value.trim();
-
-                if (!name) {
-                    alert('プリセット名を入力してください');
-                    return;
-                }
-
-                // シミュレーションから装備データを取得
-                const simulationData = getSimulationEquipmentData();
-
-                if (!simulationData || !simulationData.equipment || !Object.values(simulationData.equipment).some(item => item)) {
-                    alert('装備データがありません。シミュレーションからインポートするか、先に装備を設定してください。');
-                    return;
-                }
-
-                // プリセットを作成
-                const newPreset = {
-                    id: Date.now().toString(),
-                    name: name,
-                    created: new Date().toISOString(),
-                    lastUsed: new Date().toISOString(),
-                    equipment: simulationData.equipment,
-                    skills: simulationData.skills || [],
-                    notes: notes
-                };
-
-                // プリセットを保存
-                equipmentPresets.push(newPreset);
-                savePresets();
-
-                // プリセットリストを更新
-                updatePresetList('presets-container');
-
-                // プリセットセレクトボックスを更新
-                updatePresetSelect();
-
-                // フォームをリセット
-                document.getElementById('new-preset-name').value = '';
-                document.getElementById('new-preset-notes').value = '';
-
-                // 成功メッセージを表示
-                const message = document.createElement('div');
-                message.className = 'modal-message success';
-                message.innerHTML = `<i class="fas fa-check-circle"></i> プリセット「${newPreset.name}」を作成しました`;
-
-                const tabContent = document.getElementById('add-preset');
-                tabContent.appendChild(message);
-
-                setTimeout(() => {
-                    message.classList.add('show');
-                    setTimeout(() => {
-                        message.classList.remove('show');
-                        setTimeout(() => message.remove(), 300);
-
-                        // タブをプリセット一覧に切り替え
-                        tabs[0].click();
-                    }, 2000);
-                }, 10);
-            });
-
-            // 閉じるボタンの処理
-            const closeBtn = modal.querySelector('.share-modal-close');
-            closeBtn.onclick = () => {
-                modal.classList.remove('active');
-                setTimeout(() => modal.remove(), 300);
-
-                // プリセットセレクトボックスを更新
-                updatePresetSelect();
+            // プリセットを作成
+            const newPreset = {
+              id: Date.now().toString(),
+              name: name,
+              created: new Date().toISOString(),
+              lastUsed: new Date().toISOString(),
+              equipment: simulationData.equipment,
+              skills: simulationData.skills || [],
+              notes: notes
             };
+
+            // プリセットを保存
+            equipmentPresets.push(newPreset);
+            savePresets();
+
+            // メインのプリセットリストを更新
+            updatePresetList('presets-container');
+
+            // モーダル内のリストを更新
+            updateModalPresetList(modal);
+
+            // プリセットセレクトボックスを更新
+            updatePresetSelect();
+
+            // フォームをリセット
+            modal.querySelector('#new-preset-name').value = '';
+            modal.querySelector('#new-preset-notes').value = '';
+
+            // 成功メッセージを表示
+            const message = document.createElement('div');
+            message.className = 'modal-message success';
+            message.innerHTML = `<i class="fas fa-check-circle"></i> プリセット「${newPreset.name}」を作成しました`;
+
+            const tabContent = modal.querySelector('#add-preset');
+            tabContent.appendChild(message);
+
+            setTimeout(() => {
+              message.classList.add('show');
+              setTimeout(() => {
+                message.classList.remove('show');
+                setTimeout(() => message.remove(), 300);
+
+                // タブをプリセット一覧に切り替え
+                tabs[0].click();
+              }, 2000);
+            }, 10);
+          });
+        }
+        function updateModalPresetList(modal) {
+          const presetsContainer = modal.querySelector('#modal-presets-container');
+          if (!presetsContainer) return;
+
+          presetsContainer.innerHTML = '';
+
+          if (equipmentPresets.length === 0) {
+            presetsContainer.innerHTML = '<div class="empty-state"><i class="fas fa-scroll empty-icon"></i><p>プリセットがありません</p><p class="text-muted">新しいプリセットを追加してください</p></div>';
+            return;
+          }
+
+          // プリセットをソート（最後に使用した順）
+          const sortedPresets = [...equipmentPresets].sort((a, b) =>
+            new Date(b.lastUsed || b.created) - new Date(a.lastUsed || a.created)
+          );
+
+          sortedPresets.forEach(preset => {
+            const presetCard = document.createElement('div');
+            presetCard.className = 'preset-card card';
+
+            // スキル一覧を構築
+            let skillsList = '';
+            if (preset.skills && preset.skills.length > 0) {
+              skillsList = preset.skills.map(skill =>
+                `<span class="tag-badge">${skill.name} Lv${skill.level}</span>`
+              ).join(' ');
+            } else {
+              skillsList = '<span class="text-muted">スキル情報なし</span>';
+            }
+
+            // 武器種アイコンの選択
+            let weaponIcon = 'fa-question';
+            if (preset.equipment.weapon) {
+              const weaponType = preset.equipment.weapon.type;
+              if (weaponType && weaponType.includes('大剣')) weaponIcon = 'fa-khanda';
+              else if (weaponType && weaponType.includes('太刀')) weaponIcon = 'fa-wind';
+              else if (weaponType && weaponType.includes('片手剣')) weaponIcon = 'fa-sword';
+              else if (weaponType && weaponType.includes('双剣')) weaponIcon = 'fa-swords';
+              else if (weaponType && weaponType.includes('ハンマー')) weaponIcon = 'fa-hammer';
+              else if (weaponType && weaponType.includes('狩猟笛')) weaponIcon = 'fa-music';
+              else if (weaponType && weaponType.includes('ランス')) weaponIcon = 'fa-splotch';
+              else if (weaponType && weaponType.includes('ガンランス')) weaponIcon = 'fa-rocket';
+              else if (weaponType && weaponType.includes('スラッシュアックス')) weaponIcon = 'fa-axe';
+              else if (weaponType && weaponType.includes('チャージアックス')) weaponIcon = 'fa-bolt';
+              else if (weaponType && weaponType.includes('操虫棍')) weaponIcon = 'fa-bug';
+              else if (weaponType && weaponType.includes('ライトボウガン')) weaponIcon = 'fa-gun';
+              else if (weaponType && weaponType.includes('ヘヴィボウガン')) weaponIcon = 'fa-bazooka';
+              else if (weaponType && weaponType.includes('弓')) weaponIcon = 'fa-bow-arrow';
+            }
+
+            presetCard.innerHTML = `
+              <div class="card-header">
+                <div>
+                  <i class="fas ${weaponIcon}"></i> ${preset.name}
+                </div>
+                <div class="preset-actions">
+                  <span class="action-btn" onclick="editPreset('${preset.id}'); closeAllModals();">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                  <span class="action-btn delete" onclick="if(confirm('このプリセットを削除してもよろしいですか？')) { deletePreset('${preset.id}'); updateModalPresetList(document.getElementById('customModal')); }">
+                    <i class="fas fa-trash-alt"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="preset-equipment">
+                  <div><strong>武器:</strong> ${preset.equipment.weapon ? preset.equipment.weapon.name : '未設定'}</div>
+                  <div><strong>頭:</strong> ${preset.equipment.head ? preset.equipment.head.name : '未設定'}</div>
+                  <div><strong>胴:</strong> ${preset.equipment.body ? preset.equipment.body.name : '未設定'}</div>
+                  <div><strong>腕:</strong> ${preset.equipment.arms ? preset.equipment.arms.name : '未設定'}</div>
+                  <div><strong>腰:</strong> ${preset.equipment.waist ? preset.equipment.waist.name : '未設定'}</div>
+                  <div><strong>脚:</strong> ${preset.equipment.legs ? preset.equipment.legs.name : '未設定'}</div>
+                  <div><strong>護石:</strong> ${preset.equipment.charm ? preset.equipment.charm.name : '未設定'}</div>
+                </div>
+                <div class="preset-skills">
+                  <div><strong>発動スキル:</strong></div>
+                  <div class="skills-container">
+                    ${skillsList}
+                  </div>
+                </div>
+                <div class="preset-footer">
+                  <button class="btn btn-primary btn-sm" onclick="applyPreset('${preset.id}'); closeAllModals();">使用する</button>
+                </div>
+              </div>
+            `;
+
+            presetsContainer.appendChild(presetCard);
+          });
         }
 
+        // 画像モーダル表示関数を修正
+        window.showImageModal = function(imageUrl) {
+          closeAllModals();
+          
+          const modal = document.getElementById('imageModal');
+          const modalImage = document.getElementById('modalImage');
+
+          // XSS対策：Base64データの場合のみ表示
+          if (imageUrl.startsWith('data:image/')) {
+            modalImage.src = imageUrl;
+            modal.style.display = 'block';
+            
+            // ESCキーで閉じる
+            const escHandler = function(e) {
+              if (e.key === 'Escape') {
+                modal.style.display = 'none';
+                document.removeEventListener('keydown', escHandler);
+              }
+            };
+            document.addEventListener('keydown', escHandler);
+          }
+        };
         // シミュレーションから装備データを取得
         function getSimulationEquipmentData() {
             try {
