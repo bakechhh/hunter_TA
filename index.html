@@ -2204,7 +2204,13 @@
                     throw new Error('無効な入力: 文字列ではありません');
                 }
                 
-                return decodeURIComponent(atob(str).split('').map(function(c) {
+                // URLセーフBase64を標準Base64に変換
+                const base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+                
+                // パディングの追加（4の倍数にする）
+                const paddedBase64 = base64.padEnd(base64.length + (4 - base64.length % 4) % 4, '=');
+                
+                return decodeURIComponent(atob(paddedBase64).split('').map(function(c) {
                     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
                 }).join(''));
             } catch (e) {
