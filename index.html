@@ -3022,73 +3022,143 @@
         }
         // 共通モーダル関数
         function showModal(contentHTML) {
-        // 既存のモーダルを閉じる
-        closeAllModals();
-        
-        // 新しいモーダルを作成
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.id = 'customModal';
-        modal.style.display = 'block';
-        modal.style.position = 'fixed';
-        modal.style.zIndex = '1000';
-        modal.style.left = '0';
-        modal.style.top = '0';
-        modal.style.width = '100%';
-        modal.style.height = '100%';
-        modal.style.overflow = 'auto';
-        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-        
-        modal.innerHTML = `
-            <div class="modal-content" style="background-color: var(--card-bg); margin: 10% auto; padding: 20px; border-radius: var(--border-radius); width: 80%; max-width: 700px; position: relative; animation: modalFadeIn 0.3s;">
-            <span class="modal-close" style="position: absolute; top: 10px; right: 15px; color: var(--text); font-size: 24px; font-weight: bold; cursor: pointer;">&times;</span>
-            ${contentHTML}
+          // 既存のモーダルを閉じる
+          closeAllModals();
+          
+          // 新しいモーダルを作成
+          const modal = document.createElement('div');
+          modal.className = 'modal';
+          modal.id = 'customModal';
+          modal.style.display = 'block';
+          modal.style.position = 'fixed';
+          modal.style.zIndex = '1000';
+          modal.style.left = '0';
+          modal.style.top = '0';
+          modal.style.width = '100%';
+          modal.style.height = '100%';
+          modal.style.overflow = 'auto';
+          modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+          
+          // モーダルのコンテンツ部分のHTMLを構築
+          // ここで表示幅とセンタリングをCSS内で調整
+          modal.innerHTML = `
+            <div class="modal-content custom-modal">
+              <span class="modal-close">&times;</span>
+              ${contentHTML}
             </div>
-        `;
-        
-        // スタイルを追加
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
+          `;
+          
+          // モーダル用の追加スタイルを適用
+          const style = document.createElement('style');
+          style.textContent = `
+            .custom-modal {
+              background-color: var(--card-bg);
+              margin: 5% auto;
+              padding: 20px;
+              border-radius: var(--border-radius);
+              width: 90%;
+              max-width: 550px;
+              position: relative;
+              animation: modalFadeIn 0.3s;
+              box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             }
             
-            .modal-content {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            .modal-close {
+              position: absolute;
+              top: 10px;
+              right: 15px;
+              color: var(--text);
+              font-size: 24px;
+              font-weight: bold;
+              cursor: pointer;
             }
             
             .modal-close:hover {
-            color: var(--primary);
+              color: var(--primary);
             }
-        `;
-        document.head.appendChild(style);
-        
-        // ドキュメントに追加
-        document.body.appendChild(modal);
-        
-        // 閉じるボタンのイベントリスナー
-        modal.querySelector('.modal-close').addEventListener('click', function() {
+            
+            @keyframes modalFadeIn {
+              from { opacity: 0; transform: translateY(-50px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            
+            /* 記録詳細モーダル専用スタイル */
+            .record-detail-modal {
+              max-width: 500px;
+            }
+            
+            /* 編集モーダル専用スタイル */
+            .record-edit-modal {
+              max-width: 450px;
+            }
+            
+            /* 装備プリセット管理モーダル専用スタイル */
+            .preset-management-modal {
+              max-width: 700px;
+            }
+            
+            /* フォーム要素のスタイル調整 */
+            .custom-modal .form-control {
+              width: 100%;
+              box-sizing: border-box;
+            }
+            
+            /* タイム入力の調整 */
+            .custom-modal .time-input {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            
+            .custom-modal .time-input .form-control {
+              width: 60px;
+              text-align: center;
+            }
+            
+            /* モバイル対応 */
+            @media (max-width: 767px) {
+              .custom-modal {
+                width: 95%;
+                margin: 10% auto;
+                padding: 15px;
+              }
+              
+              .custom-modal .form-row {
+                flex-direction: column;
+              }
+              
+              .custom-modal .time-input .form-control {
+                width: 50px;
+              }
+            }
+          `;
+          document.head.appendChild(style);
+          
+          // ドキュメントに追加
+          document.body.appendChild(modal);
+          
+          // 閉じるボタンのイベントリスナー
+          modal.querySelector('.modal-close').addEventListener('click', function() {
             closeModal(modal);
-        });
-        
-        // モーダル外クリックで閉じる
-        modal.addEventListener('click', function(e) {
+          });
+          
+          // モーダル外クリックで閉じる
+          modal.addEventListener('click', function(e) {
             if (e.target === modal) {
-            closeModal(modal);
+              closeModal(modal);
             }
-        });
-        
-        // ESCキーで閉じる
-        const escHandler = function(e) {
+          });
+          
+          // ESCキーで閉じる
+          const escHandler = function(e) {
             if (e.key === 'Escape') {
-            closeModal(modal);
-            document.removeEventListener('keydown', escHandler);
+              closeModal(modal);
+              document.removeEventListener('keydown', escHandler);
             }
-        };
-        document.addEventListener('keydown', escHandler);
-        
-        return modal;
+          };
+          document.addEventListener('keydown', escHandler);
+          
+          return modal;
         }
         // 記録の詳細を表示する関数
         function showRecordDetails(recordId) {
@@ -3161,30 +3231,32 @@
 
           // モーダルコンテンツを作成
           const modalContent = `
-            <h3>記録詳細</h3>
-            <div class="record-info">
-              <div class="record-basic-info">
-                <h4>基本情報</h4>
-                <div><strong>モンスター:</strong> ${record.monster}</div>
-                <div><strong>武器種:</strong> ${record.weapon}</div>
-                <div><strong>クエストタイプ:</strong> ${record.questType || '通常'}</div>
-                <div><strong>ステージ:</strong> ${record.stage || '-'}</div>
-                <div><strong>強さ:</strong> ${record.strength || '-'}</div>
-                <div><strong>タイム:</strong> ${record.timeString}</div>
-                <div><strong>日時:</strong> ${formatDate(record.date)}</div>
-                ${record.notes ? `<div><strong>メモ:</strong> ${record.notes}</div>` : ''}
-                ${tagsHtml}
+            <div class="record-detail-modal">
+              <h3>記録詳細</h3>
+              <div class="record-info">
+                <div class="record-basic-info">
+                  <h4>基本情報</h4>
+                  <div><strong>モンスター:</strong> ${record.monster}</div>
+                  <div><strong>武器種:</strong> ${record.weapon}</div>
+                  <div><strong>クエストタイプ:</strong> ${record.questType || '通常'}</div>
+                  <div><strong>ステージ:</strong> ${record.stage || '-'}</div>
+                  <div><strong>強さ:</strong> ${record.strength || '-'}</div>
+                  <div><strong>タイム:</strong> ${record.timeString}</div>
+                  <div><strong>日時:</strong> ${formatDate(record.date)}</div>
+                  ${record.notes ? `<div><strong>メモ:</strong> ${record.notes}</div>` : ''}
+                  ${tagsHtml}
+                </div>
+                ${presetInfo}
+                ${imageHtml}
               </div>
-              ${presetInfo}
-              ${imageHtml}
-            </div>
-            <div class="record-detail-actions">
-              <button class="btn btn-primary" onclick="editRecord('${record.id}'); closeAllModals();">
-                <i class="fas fa-edit"></i> 編集
-              </button>
-              <button class="btn btn-danger" onclick="if(confirm('この記録を削除してもよろしいですか？')) { deleteRecord('${record.id}'); closeAllModals(); }">
-                <i class="fas fa-trash-alt"></i> 削除
-              </button>
+              <div class="record-detail-actions">
+                <button class="btn btn-primary" onclick="editRecord('${record.id}'); closeAllModals();">
+                  <i class="fas fa-edit"></i> 編集
+                </button>
+                <button class="btn btn-danger" onclick="if(confirm('この記録を削除してもよろしいですか？')) { deleteRecord('${record.id}'); closeAllModals(); }">
+                  <i class="fas fa-trash-alt"></i> 削除
+                </button>
+              </div>
             </div>
           `;
 
@@ -3352,86 +3424,88 @@
           if (!record) return;
 
           const modalContent = `
-            <h3>記録を編集</h3>
-            <form id="edit-record-form">
-              <div class="form-group">
-                <label for="edit-monster" class="form-label">モンスター:</label>
-                <select id="edit-monster" class="form-control" required>
-                  ${monsters.sort().map(m => `<option value="${m}" ${record.monster === m ? 'selected' : ''}>${m}</option>`).join('')}
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="edit-weapon" class="form-label">武器種:</label>
-                <select id="edit-weapon" class="form-control" required>
-                  <option value="大剣" ${record.weapon === '大剣' ? 'selected' : ''}>大剣</option>
-                  <option value="太刀" ${record.weapon === '太刀' ? 'selected' : ''}>太刀</option>
-                  <option value="片手剣" ${record.weapon === '片手剣' ? 'selected' : ''}>片手剣</option>
-                  <option value="双剣" ${record.weapon === '双剣' ? 'selected' : ''}>双剣</option>
-                  <option value="ハンマー" ${record.weapon === 'ハンマー' ? 'selected' : ''}>ハンマー</option>
-                  <option value="狩猟笛" ${record.weapon === '狩猟笛' ? 'selected' : ''}>狩猟笛</option>
-                  <option value="ランス" ${record.weapon === 'ランス' ? 'selected' : ''}>ランス</option>
-                  <option value="ガンランス" ${record.weapon === 'ガンランス' ? 'selected' : ''}>ガンランス</option>
-                  <option value="スラッシュアックス" ${record.weapon === 'スラッシュアックス' ? 'selected' : ''}>スラッシュアックス</option>
-                  <option value="チャージアックス" ${record.weapon === 'チャージアックス' ? 'selected' : ''}>チャージアックス</option>
-                  <option value="操虫棍" ${record.weapon === '操虫棍' ? 'selected' : ''}>操虫棍</option>
-                  <option value="ライトボウガン" ${record.weapon === 'ライトボウガン' ? 'selected' : ''}>ライトボウガン</option>
-                  <option value="ヘビィボウガン" ${record.weapon === 'ヘビィボウガン' ? 'selected' : ''}>ヘビィボウガン</option>
-                  <option value="弓" ${record.weapon === '弓' ? 'selected' : ''}>弓</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="edit-quest-type" class="form-label">クエストタイプ:</label>
-                <select id="edit-quest-type" class="form-control" required>
-                  <option value="通常" ${record.questType === '通常' ? 'selected' : ''}>通常</option>
-                  <option value="歴戦" ${record.questType === '歴戦' ? 'selected' : ''}>歴戦</option>
-                  <option value="狂竜化" ${record.questType === '狂竜化' ? 'selected' : ''}>狂竜化</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="edit-stage" class="form-label">ステージ:</label>
-                <select id="edit-stage" class="form-control" required>
-                  ${stages.map(s => `<option value="${s}" ${record.stage === s ? 'selected' : ''}>${s}</option>`).join('')}
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="edit-strength" class="form-label">強さ:</label>
-                <select id="edit-strength" class="form-control" required>
-                  <option value="1" ${record.strength === '1' ? 'selected' : ''}>1</option>
-                  <option value="2" ${record.strength === '2' ? 'selected' : ''}>2</option>
-                  <option value="3" ${record.strength === '3' ? 'selected' : ''}>3</option>
-                  <option value="4" ${record.strength === '4' ? 'selected' : ''}>4</option>
-                  <option value="5" ${record.strength === '5' ? 'selected' : ''}>5</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">タイム:</label>
-                <div class="time-input">
-                  <input type="number" id="edit-minutes" class="form-control" min="0" value="${record.timeString.split(':')[0]}" required />
-                  <span>:</span>
-                  <input type="number" id="edit-seconds" class="form-control" min="0" max="59" value="${record.timeString.split(':')[1].split('.')[0]}" required />
-                  <span>.</span>
-                  <input type="number" id="edit-milliseconds" class="form-control" min="0" max="99" value="${record.timeString.split('.')[1]}" required />
+            <div class="record-edit-modal">
+              <h3>記録を編集</h3>
+              <form id="edit-record-form">
+                <div class="form-group">
+                  <label for="edit-monster" class="form-label">モンスター:</label>
+                  <select id="edit-monster" class="form-control" required>
+                    ${monsters.sort().map(m => `<option value="${m}" ${record.monster === m ? 'selected' : ''}>${m}</option>`).join('')}
+                  </select>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="edit-notes" class="form-label">メモ:</label>
-                <input type="text" id="edit-notes" class="form-control" value="${record.notes || ''}" />
-              </div>
-              <div class="form-group">
-                <label for="edit-tags" class="form-label">タグ:</label>
-                <input type="text" id="edit-tags" class="form-control" value="${record.tags ? record.tags.join(', ') : ''}" />
-              </div>
-              <div class="form-group">
-                <label for="edit-preset" class="form-label">装備プリセット:</label>
-                <select id="edit-preset" class="form-control">
-                  <option value="">選択なし</option>
-                  ${equipmentPresets.map(p => `<option value="${p.id}" ${record.equipmentPresetId === p.id ? 'selected' : ''}>${p.name}</option>`).join('')}
-                </select>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block">
-                更新
-              </button>
-            </form>
+                <div class="form-group">
+                  <label for="edit-weapon" class="form-label">武器種:</label>
+                  <select id="edit-weapon" class="form-control" required>
+                    <option value="大剣" ${record.weapon === '大剣' ? 'selected' : ''}>大剣</option>
+                    <option value="太刀" ${record.weapon === '太刀' ? 'selected' : ''}>太刀</option>
+                    <option value="片手剣" ${record.weapon === '片手剣' ? 'selected' : ''}>片手剣</option>
+                    <option value="双剣" ${record.weapon === '双剣' ? 'selected' : ''}>双剣</option>
+                    <option value="ハンマー" ${record.weapon === 'ハンマー' ? 'selected' : ''}>ハンマー</option>
+                    <option value="狩猟笛" ${record.weapon === '狩猟笛' ? 'selected' : ''}>狩猟笛</option>
+                    <option value="ランス" ${record.weapon === 'ランス' ? 'selected' : ''}>ランス</option>
+                    <option value="ガンランス" ${record.weapon === 'ガンランス' ? 'selected' : ''}>ガンランス</option>
+                    <option value="スラッシュアックス" ${record.weapon === 'スラッシュアックス' ? 'selected' : ''}>スラッシュアックス</option>
+                    <option value="チャージアックス" ${record.weapon === 'チャージアックス' ? 'selected' : ''}>チャージアックス</option>
+                    <option value="操虫棍" ${record.weapon === '操虫棍' ? 'selected' : ''}>操虫棍</option>
+                    <option value="ライトボウガン" ${record.weapon === 'ライトボウガン' ? 'selected' : ''}>ライトボウガン</option>
+                    <option value="ヘビィボウガン" ${record.weapon === 'ヘビィボウガン' ? 'selected' : ''}>ヘビィボウガン</option>
+                    <option value="弓" ${record.weapon === '弓' ? 'selected' : ''}>弓</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="edit-quest-type" class="form-label">クエストタイプ:</label>
+                  <select id="edit-quest-type" class="form-control" required>
+                    <option value="通常" ${record.questType === '通常' ? 'selected' : ''}>通常</option>
+                    <option value="歴戦" ${record.questType === '歴戦' ? 'selected' : ''}>歴戦</option>
+                    <option value="狂竜化" ${record.questType === '狂竜化' ? 'selected' : ''}>狂竜化</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="edit-stage" class="form-label">ステージ:</label>
+                  <select id="edit-stage" class="form-control" required>
+                    ${stages.map(s => `<option value="${s}" ${record.stage === s ? 'selected' : ''}>${s}</option>`).join('')}
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="edit-strength" class="form-label">強さ:</label>
+                  <select id="edit-strength" class="form-control" required>
+                    <option value="1" ${record.strength === '1' ? 'selected' : ''}>1</option>
+                    <option value="2" ${record.strength === '2' ? 'selected' : ''}>2</option>
+                    <option value="3" ${record.strength === '3' ? 'selected' : ''}>3</option>
+                    <option value="4" ${record.strength === '4' ? 'selected' : ''}>4</option>
+                    <option value="5" ${record.strength === '5' ? 'selected' : ''}>5</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">タイム:</label>
+                  <div class="time-input">
+                    <input type="number" id="edit-minutes" class="form-control" min="0" value="${record.timeString.split(':')[0]}" required />
+                    <span>:</span>
+                    <input type="number" id="edit-seconds" class="form-control" min="0" max="59" value="${record.timeString.split(':')[1].split('.')[0]}" required />
+                    <span>.</span>
+                    <input type="number" id="edit-milliseconds" class="form-control" min="0" max="99" value="${record.timeString.split('.')[1]}" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="edit-notes" class="form-label">メモ:</label>
+                  <input type="text" id="edit-notes" class="form-control" value="${record.notes || ''}" />
+                </div>
+                <div class="form-group">
+                  <label for="edit-tags" class="form-label">タグ:</label>
+                  <input type="text" id="edit-tags" class="form-control" value="${record.tags ? record.tags.join(', ') : ''}" />
+                </div>
+                <div class="form-group">
+                  <label for="edit-preset" class="form-label">装備プリセット:</label>
+                  <select id="edit-preset" class="form-control">
+                    <option value="">選択なし</option>
+                    ${equipmentPresets.map(p => `<option value="${p.id}" ${record.equipmentPresetId === p.id ? 'selected' : ''}>${p.name}</option>`).join('')}
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                  更新
+                </button>
+              </form>
+            </div>
           `;
 
           const modal = showModal(modalContent);
