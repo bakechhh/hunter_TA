@@ -799,10 +799,6 @@
           padding: 0.8rem;
         }
 
-        .share-options {
-          flex-direction: column;
-        }
-
         .tab-button {
           padding: 0.8rem 1.2rem;
         }
@@ -1123,7 +1119,6 @@
                               <th>ベストタイム</th>
                               <th>武器種</th>
                               <th>日付</th>
-                              <th>共有</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1142,7 +1137,6 @@
                               <th>モンスター</th>
                               <th>ベストタイム</th>
                               <th>日付</th>
-                              <th>共有</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1170,7 +1164,6 @@
                               <th>武器種</th>
                               <th>ベストタイム</th>
                               <th>日付</th>
-                              <th>共有</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1190,7 +1183,6 @@
                               <th>武器種</th>
                               <th>ベストタイム</th>
                               <th>日付</th>
-                              <th>共有</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1210,7 +1202,6 @@
                               <th>武器種</th>
                               <th>ベストタイム</th>
                               <th>日付</th>
-                              <th>共有</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -2589,11 +2580,6 @@
                     <td>${record.monster}</td>
                     <td>${record.timeString}</td>
                     <td>${record.date ? formatDate(record.date) : '-'}</td>
-                    <td>
-                        <span class="action-btn share" onclick="shareRecord('${record.id}')">
-                            <i class="fas fa-share-alt"></i>
-                        </span>
-                    </td>
                 `;
                 weaponTable.appendChild(row);
             });
@@ -3166,9 +3152,6 @@
                         <button class="btn btn-primary" onclick="editRecord('${record.id}')">
                             <i class="fas fa-edit"></i> 編集
                         </button>
-                        <button class="btn btn-secondary" onclick="shareRecord('${record.id}')">
-                            <i class="fas fa-share-alt"></i> 共有
-                        </button>
                         <button class="btn btn-danger" onclick="if(confirm('この記録を削除してもよろしいですか？')) { deleteRecord('${record.id}'); closeModal(this); }">
                             <i class="fas fa-trash-alt"></i> 削除
                         </button>
@@ -3323,9 +3306,6 @@
                     <div class="preset-actions">
                         <button class="btn btn-primary" onclick="editPreset('${preset.id}')">
                             <i class="fas fa-edit"></i> 編集
-                        </button>
-                        <button class="btn btn-secondary" onclick="sharePreset('${preset.id}')">
-                            <i class="fas fa-share-alt"></i> 共有
                         </button>
                     </div>
                 </div>
@@ -5727,181 +5707,6 @@
             setupSkillConversionTest();
         });
 
-        // 記録の共有拡張（装備データを含める）
-        function shareRecord(recordId) {
-            const record = recordsData.find(r => r.id === recordId);
-            if (!record) return;
-
-            // 現在の共有データを取得
-            let shareData = {
-                type: 'record',
-                data: record
-            };
-
-            // 装備データがあれば追加
-            if (record.equipmentPresetId) {
-                const preset = getPresetById(record.equipmentPresetId);
-                if (preset) {
-                    shareData.equipment = preset;
-                }
-            }
-
-            // モーダルを作成
-            const modal = document.createElement('div');
-            modal.className = 'share-modal';
-            modal.innerHTML = `
-                <div class="share-modal-content">
-                    <span class="share-modal-close">&times;</span>
-                    <h3>記録を共有</h3>
-                    <div class="share-details">
-                        <p><strong>モンスター:</strong> ${record.monster}</p>
-                        <p><strong>武器種:</strong> ${record.weapon}</p>
-                        <p><strong>タイム:</strong> ${record.timeString}</p>
-                        <p><strong>日付:</strong> ${formatDate(record.date)}</p>
-                        ${shareData.equipment ? `<p><strong>装備セット:</strong> ${shareData.equipment.name}</p>` : ''}
-                    </div>
-                    <div class="share-options">
-                        <button class="btn btn-secondary share-btn" id="copyShareLink">
-                            <i class="fas fa-link"></i> リンクをコピー
-                          </button>
-                          <button class="btn btn-secondary share-btn" id="generateQR">
-                              <i class="fas fa-qrcode"></i> QRコードを生成
-                          </button>
-                          <button class="btn btn-secondary share-btn" id="shareTwitter">
-                              <i class="fab fa-twitter"></i> Twitterで共有
-                          </button>
-                          ${navigator.share ? `
-                          <button class="btn btn-secondary share-btn" id="nativeShare">
-                              <i class="fas fa-share-alt"></i> ネイティブ共有
-                          </button>` : ''}
-                      </div>
-                      <div id="qrCodeContainer" class="qr-code-container"></div>
-                      <div id="shareStatus" class="share-status"></div>
-                  </div>
-              `;
-
-              document.body.appendChild(modal);
-
-              // モーダルを表示（DOMに追加された後に）
-              setTimeout(() => {
-                  modal.classList.add('active');
-
-                  // ここでイベントリスナーを設定（DOM要素が確実に存在する）
-                  const closeBtn = modal.querySelector('.share-modal-close');
-                  closeBtn.onclick = () => {
-                      modal.classList.remove('active');
-                      setTimeout(() => modal.remove(), 300);
-                  };
-
-                  // 共有用のURLを作成
-                  // Base64エンコード（非ASCII文字対応）
-                  const shareString = utf8_to_b64(JSON.stringify(shareData));
-                  const shareUrl = `${window.location.href.split('?')[0]}?share=${shareString}`;
-
-                  // リンクコピーボタンの処理
-                  const copyBtn = document.getElementById('copyShareLink');
-                  copyBtn.onclick = () => {
-                      navigator.clipboard.writeText(shareUrl).then(() => {
-                          document.getElementById('shareStatus').textContent = 'リンクをコピーしました！';
-                          setTimeout(() => {
-                              document.getElementById('shareStatus').textContent = '';
-                          }, 2000);
-                      }).catch(err => {
-                          console.error('クリップボードへのコピーに失敗しました:', err);
-                          // フォールバック: テキストフィールドを作成してコピー
-                          const textArea = document.createElement('textarea');
-                          textArea.value = shareUrl;
-                          document.body.appendChild(textArea);
-                          textArea.select();
-                          document.execCommand('copy');
-                          document.body.removeChild(textArea);
-                          document.getElementById('shareStatus').textContent = 'リンクをコピーしました！';
-                          setTimeout(() => {
-                              document.getElementById('shareStatus').textContent = '';
-                          }, 2000);
-                      });
-                  };
-
-                  // QRコード生成ボタンの処理
-                  const qrBtn = document.getElementById('generateQR');
-                  qrBtn.onclick = () => {
-                      const qrContainer = document.getElementById('qrCodeContainer');
-                      qrContainer.innerHTML = '';
-
-                      try {
-                          // QRコード生成
-                          new QRCode(qrContainer, {
-                              text: shareUrl,
-                              width: 200,
-                              height: 200,
-                              colorDark: '#8a5319',
-                              colorLight: '#ffffff',
-                              correctLevel: QRCode.CorrectLevel.H
-                          });
-
-                          // 成功メッセージ
-                          document.getElementById('shareStatus').textContent = 'QRコードを生成しました！';
-                          setTimeout(() => {
-                              document.getElementById('shareStatus').textContent = '';
-                          }, 2000);
-                      } catch (error) {
-                          console.error('QRコード生成に失敗しました:', error);
-                          document.getElementById('shareStatus').textContent = 'QRコード生成に失敗しました';
-                      }
-                  };
-
-                  // Twitterで共有ボタンの処理
-                  const twitterBtn = document.getElementById('shareTwitter');
-                  twitterBtn.onclick = () => {
-                      // スキル情報をテキスト化
-                      let skillsText = '';
-                      if (shareData.equipment && shareData.equipment.skills && shareData.equipment.skills.length > 0) {
-                          const skillNames = shareData.equipment.skills.map(skill => `${skill.name}Lv${skill.level}`).join('/');
-                          skillsText = ` 【スキル: ${skillNames}】`;
-                      }
-
-                      // ツイート本文
-                      const text = `MHワイルズ タイムアタック: ${record.monster} / ${record.weapon} / ${record.timeString}${skillsText}`;
-
-                      // Twitter共有URL
-                      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`;
-                      window.open(twitterUrl, '_blank');
-                  };
-
-                  // ネイティブ共有APIの処理（モバイルデバイス向け）
-                  const nativeShareBtn = document.getElementById('nativeShare');
-                  if (nativeShareBtn && navigator.share) {
-                      nativeShareBtn.onclick = async () => {
-                          try {
-                              // スキル情報をテキスト化
-                              let skillsText = '';
-                              if (shareData.equipment && shareData.equipment.skills && shareData.equipment.skills.length > 0) {
-                                  const skillNames = shareData.equipment.skills.map(skill => `${skill.name}Lv${skill.level}`).join('/');
-                                  skillsText = ` 【スキル: ${skillNames}】`;
-                              }
-
-                              // 共有テキスト
-                              const text = `MHワイルズ タイムアタック: ${record.monster} / ${record.weapon} / ${record.timeString}${skillsText}`;
-
-                              await navigator.share({
-                                  title: 'モンハン タイムアタック記録',
-                                  text: text,
-                                  url: shareUrl
-                              });
-
-                              document.getElementById('shareStatus').textContent = '共有しました！';
-                              setTimeout(() => {
-                                  document.getElementById('shareStatus').textContent = '';
-                              }, 2000);
-                          } catch (error) {
-                              console.error('共有に失敗しました:', error);
-                              document.getElementById('shareStatus').textContent = '共有に失敗しました';
-                          }
-                      };
-                  }
-                });   // setTimeout の閉じ
-            }          // shareRecord の閉じ
-
           // 新しいタブを追加: プロフィールと装備プリセット
           function addProfileEquipmentTabs(nb) {
           // --- プロフィールタブ本体 ------------------------------
@@ -6636,29 +6441,7 @@
               flex-shrink: 0;
           }
 
-          /* 共有コンテンツのスタイル */
-          .shared-equipment {
-              margin-top: 20px;
-              padding: 15px;
-              border: 1px solid var(--accent);
-              border-radius: var(--border-radius);
-              background-color: rgba(231, 199, 142, 0.1);
-          }
 
-          .shared-equipment h4 {
-              margin-top: 0;
-              margin-bottom: 10px;
-              color: var(--primary);
-          }
-
-          .equipment-details, .equipment-skills {
-              margin-bottom: 15px;
-          }
-
-          .equipment-notes {
-              padding-top: 10px;
-              border-top: 1px solid rgba(0, 0, 0, 0.1);
-          }
           /* 装備プリセットバッジ */
           .preset-badge {
               display: inline-flex;
