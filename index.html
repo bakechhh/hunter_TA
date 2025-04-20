@@ -2633,11 +2633,6 @@
                     <td>${record.weapon}</td>
                     <td>${record.timeString}</td>
                     <td>${record.date ? formatDate(record.date) : '-'}</td>
-                    <td>
-                        <span class="action-btn share" onclick="shareRecord('${record.id}')">
-                            <i class="fas fa-share-alt"></i>
-                        </span>
-                    </td>
                 `;
                 combinedTable.appendChild(row);
             });
@@ -2673,11 +2668,6 @@
                     <td>${record.weapon}</td>
                     <td>${record.timeString}</td>
                     <td>${record.date ? formatDate(record.date) : '-'}</td>
-                    <td>
-                        <span class="action-btn share" onclick="shareRecord('${record.id}')">
-                            <i class="fas fa-share-alt"></i>
-                        </span>
-                    </td>
                 `;
                 stageTable.appendChild(row);
             });
@@ -2713,11 +2703,6 @@
                     <td>${record.weapon}</td>
                     <td>${record.timeString}</td>
                     <td>${record.date ? formatDate(record.date) : '-'}</td>
-                    <td>
-                        <span class="action-btn share" onclick="shareRecord('${record.id}')">
-                            <i class="fas fa-share-alt"></i>
-                        </span>
-                    </td>
                 `;
                 questTable.appendChild(row);
             });
@@ -3012,9 +2997,6 @@
                     <td class="actions-cell">
                         <span class="action-btn edit" onclick="event.stopPropagation(); editRecord('${record.id}')">
                             <i class="fas fa-edit"></i>
-                        </span>
-                        <span class="action-btn share" onclick="event.stopPropagation(); shareRecord('${record.id}')">
-                            <i class="fas fa-share-alt"></i>
                         </span>
                         <span class="action-btn delete" onclick="event.stopPropagation(); deleteRecord('${record.id}')">
                             <i class="fas fa-trash-alt"></i>
